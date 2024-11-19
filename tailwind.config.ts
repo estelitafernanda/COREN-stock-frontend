@@ -1,3 +1,4 @@
+import { DiBlackberry } from "react-icons/di";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -9,8 +10,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#56cbec",
+        blackPrimary: "#141e22",
+        blackSecondary: "#1a262d",
+        blackThirdy: "#202e36",
+        red: "#fd3b75",
+        yellow: "#ffeb39",
+        green: "#39db7d",
+        lightW: "#eceef0"
       },
     },
   },
