@@ -44,7 +44,7 @@ function Header() {
         <h1 className="font-black text-2xl tracking-wider text-primary">CorenStock</h1>
         <ul className='flex gap-6'>
             {headerLinks.map((link) => (
-                <li key={link.id} className="cursor-pointer max-h-min py-2 px-5 border border-white/15 rounded-full bg-white/5 backdrop-blur"><a href="" className='text-sm font-semibold flex items-center gap-1'>{link.icon}{link.title}</a></li>
+                <li key={link.id} className="group cursor-pointer max-h-min py-2 px-5 border border-white/15 rounded-full bg-white/5 backdrop-blur"><a href="" className='text-sm font-semibold flex items-center gap-1 transition duration-300 group-hover:text-primary'>{link.icon}{link.title}</a></li>
             ))}
         </ul>
         <div className="flex gap-5 items-center">
