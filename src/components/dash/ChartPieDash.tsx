@@ -138,8 +138,8 @@ function ChartPieDash() {
     }, [])
 
   return (
-    <div className='-ml-10 mt-3'>
-        { chartState && <Chart type={'donut'} width={400} height={210} series={options.series} options={options} />}
+    <div className='-ml-16 mt-3'>
+        { chartState && <Chart type={'donut'} width={430} height={220} series={options.series} options={options} />}
     </div>
   )
 }

@@ -40,7 +40,7 @@ const headerLinks = [
 
 function Header() {
   return (
-    <div className="container mx-auto mt-10 z-50 flex min-w-[95vw] justify-between">
+    <div className="container mx-auto mt-7 z-50 flex min-w-[95vw] justify-between">
         <h1 className="font-black text-2xl tracking-wider text-primary">CorenStock</h1>
         <ul className='flex gap-6'>
             {headerLinks.map((link) => (
@@ -50,7 +50,7 @@ function Header() {
         <div className="flex gap-5 items-center">
             <div className="cursor-pointer relative flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
                 <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-red"></div>
-                <IoIosNotifications size={25}/>
+                <IoIosNotifications size={25}/>     
             </div>
 
             <div className="cursor-pointer flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
