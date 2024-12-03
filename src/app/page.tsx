@@ -6,6 +6,7 @@ import Trash from "../../public/lixeira.png";
 import Chair from "../../public/cadeira.png";
 import Cookie from "../../public/biscoito.png";
 import Image from "next/image";
+import {Footer} from "@/components/Footer";
 
 
 
@@ -186,7 +187,7 @@ export default function Home() {
 
       </div>
 
-      <div className="grid grid-cols-2 gap-4 w-full h-60 mt-5">
+      <div className="grid grid-cols-2 gap-4 w-full h-56 mb-10 mt-5">
         <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">Movimento Recente:</h2>
@@ -229,7 +230,9 @@ export default function Home() {
           <div className="max-w-60"></div>
         </div>
       </div>
-
+      <div className="mt-36">
+        <Footer/>
+      </div>
     </div>
   );
 }
