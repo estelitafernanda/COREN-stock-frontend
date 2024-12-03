@@ -230,9 +230,6 @@ export default function Home() {
           <div className="max-w-60"></div>
         </div>
       </div>
-      <div className="mt-36">
-        <Footer/>
-      </div>
     </div>
   );
 }
