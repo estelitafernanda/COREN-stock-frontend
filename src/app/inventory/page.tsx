@@ -91,16 +91,15 @@ function Inventory() {
         </div>
 
         <div className='flex flex-col gap-5 bg-blackSecondary p-5 rounded-lg w-[75%]'>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
+          <ProductCard/>
         </div>
         
-
       </section>
     </div>
   )
