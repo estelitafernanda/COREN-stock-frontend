@@ -9,16 +9,18 @@ const headerLinks = [
     {
         id: 1,
         title: "Dashboard",
-        icon: <MdSpaceDashboard size={17}/>
+        icon: <MdSpaceDashboard size={17}/>, 
+        link: '/'
     },
     {
         id: 2,
         title: "Inventory",
-        icon: <MdInventory size={20}/>
+        icon: <MdInventory size={20}/>,
+        link: '/inventory'
     },
     {
         id: 3,
-        title: "Sales",
+        title: "Supliers",
         icon: <MdPayments size={20}/>
     },
     {
@@ -44,7 +46,7 @@ function Header() {
         <h1 className="font-black text-2xl tracking-wider text-primary">CorenStock</h1>
         <ul className='flex gap-6'>
             {headerLinks.map((link) => (
-                <li key={link.id} className="group cursor-pointer max-h-min py-2 px-5 border border-white/15 rounded-full bg-white/5 backdrop-blur"><a href="" className='text-sm font-semibold flex items-center gap-1 transition duration-300 group-hover:text-primary'>{link.icon}{link.title}</a></li>
+                <li key={link.id} className="group cursor-pointer max-h-min py-2 px-5 border border-white/15 rounded-full bg-white/5 backdrop-blur"><a href={link.link} className='text-sm font-semibold flex items-center gap-1 transition duration-300 group-hover:text-primary'>{link.icon}{link.title}</a></li>
             ))}
         </ul>
         <div className="flex gap-5 items-center">
