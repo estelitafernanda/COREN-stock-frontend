@@ -20,7 +20,6 @@ function ProductForm() {
                                 <p className='text-sm font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Informações Gerais</p>
                             </div>
                         </div>
-
                     </div>
                     <div className='flex items-center p-4 rounded-lg'>
                         <FaWpforms size={30}/>
