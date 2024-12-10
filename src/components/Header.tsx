@@ -26,7 +26,8 @@ const headerLinks = [
     {
         id: 4,
         title: "Orders",
-        icon: <FaCalendar size={16}/>
+        icon: <FaCalendar size={16}/>,
+        link: '/orders'
     },
     {
         id: 5,

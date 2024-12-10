@@ -191,7 +191,7 @@ export default function Home() {
         <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">Movimento Recente:</h2>
-              <a href="" className="text-lg font-bold text-primary pr-3 hover:text-primary/80 flex gap-1 items-center transition duration-300"><span>Ver Movimentos</span><IoIosArrowForward/></a>
+              <a href="/orders" className="text-lg font-bold text-primary pr-3 hover:text-primary/80 flex gap-1 items-center transition duration-300"><span>Ver Movimentos</span><IoIosArrowForward/></a>
             </div>
             <div className="bg-blackThirdy h-36 p-5 rounded-lg mt-4 flex flex-col gap-3">
               <div className="flex items-center justify-between gap-3">
