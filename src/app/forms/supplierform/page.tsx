@@ -6,9 +6,9 @@ function SupplierForm() {
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
-            <aside className=' w-[18%] flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold'>Adicionar Produto</h2>
-                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de produtos</a>
+            <aside className=' w-[20%] flex flex-col gap-5'>
+                <h2 className='text-3xl font-bold'>Adicionar Fornecedor</h2>
+                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de fornecedores</a>
                 <div className='flex flex-col gap-[38px]'>
                     <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
                         <div className='absolute w-[6px] h-[40px] rounded-full bg-primary  group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
@@ -25,7 +25,7 @@ function SupplierForm() {
                         <FaWpforms size={30}/>
                         <div className='flex flex-col ml-4'>
                             <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 2</h3>
-                            <p className='text-sm font-bold'>Informações Gerais</p>
+                            <p className='text-sm font-bold'>Vincular Produtos</p>
                         </div>
                     </div>
                     <div className='flex items-center p-4 rounded-lg'>
@@ -54,26 +54,26 @@ function SupplierForm() {
                     </div>
                     <div className='flex'>
                         <div className='flex flex-col gap-2 w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Código</label>
+                            <label htmlFor="" className='text-md font-bold'>Razão Social</label>
                             <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
                         <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Local de armazenamento</label>
+                            <label htmlFor="" className='text-md font-bold'>Endereço</label>
                             <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
                     </div>
                     <div className='flex'>
                         <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Código</label>
+                            <label htmlFor="" className='text-md font-bold'>Telefone</label>
                             <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
                         <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Local de armazenamento</label>
+                            <label htmlFor="" className='text-md font-bold'>E-mail</label>
                             <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
                     </div>
                     <div className='flex flex-col gap-[2px]'>
-                        <label className='text-md font-bold' htmlFor="">Descrição</label>
+                        <label className='text-md font-bold' htmlFor="">Observações</label>
                         <input type="textarea" className='w-[100%] rounded-lg h-36 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <div className='flex flex-col gap-[2px]'>

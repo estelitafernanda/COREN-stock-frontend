@@ -14,19 +14,25 @@ const headerLinks = [
     },
     {
         id: 2,
-        title: "Inventory",
+        title: "Inventario",
         icon: <MdInventory size={20}/>,
         link: '/inventory'
     },
     {
         id: 3,
-        title: "Supliers",
+        title: "Fornecedores",
         icon: <MdPayments size={20}/>,
         link: "/suppliers"
     },
     {
         id: 4,
-        title: "Orders",
+        title: "Movimentação",
+        icon: <FaCalendar size={16}/>,
+        link: '/orders'
+    },
+    {
+        id: 5,
+        title: "Departamentos",
         icon: <FaCalendar size={16}/>,
         link: '/orders'
     }

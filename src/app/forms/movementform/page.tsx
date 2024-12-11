@@ -7,8 +7,8 @@ function MovementForm() {
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[18%] flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold'>Adicionar Produto</h2>
-                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de produtos</a>
+                <h2 className='text-3xl font-bold'>Solicitar Movimento</h2>
+                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de movimentos</a>
                 <div className='flex flex-col gap-[38px]'>
                     <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
                         <div className='absolute w-[6px] h-[40px] rounded-full bg-primary  group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>

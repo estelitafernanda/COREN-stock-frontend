@@ -1,12 +1,8 @@
 import React from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
-import { FaSearch } from "react-icons/fa";
-import { GiConfirmed } from "react-icons/gi";
-import { GrValidate } from "react-icons/gr";
-import { FaTruckMoving } from "react-icons/fa6";
+import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import Image from 'next/image';
-import { FaReceipt } from "react-icons/fa";
 import Avatar from  "../../../public/memoji.png";
 
 function Suppliers() {
@@ -35,7 +31,7 @@ function Suppliers() {
 
           <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg'>
             <div> 
-                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de produto</h2>
+                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de Fornecedor</h2>
                 <div className='grid grid-cols-2 gap-3 py-3'>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                     Todos
@@ -66,112 +62,43 @@ function Suppliers() {
           </div>
 
           <div className='flex flex-col gap-4 w-full'>
-                <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-60">
+                <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-48">
                 <div className="flex justify-between items-center">
+                    
                         <div className='flex items-center gap-3'>
-                            <h3 className="font-bold text-lg">MO-001</h3>
-                            <div className='h-5 w-[2px] bg-lightW/30'></div>
-                            <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
+                            <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
+                                <Image src={Avatar} alt='avatar' width={45}/>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-lg">Acme Corp</h3>
+                                <p className="font-semibold text-lightW/70 text-sm">Geraldo Silva</p>
+                            </div>
+                            
+                            <div className='h-12 w-[2px] bg-lightW/30'></div>
+                            <div className='flex gap-5'>
+                                <div className='flex flex-col gap-1'>
+                                    <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Número</h3>
+                                    <p className="border-b font-semibold text-lightW text-sm">+55 (11) 99999-9999</p>
+                                </div>
+
+                                <div className='flex flex-col gap-1'>
+                                    <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Email</h3>
+                                    <p className="border-b font-semibold text-lightW text-sm">XHt4U@example.com</p>
+                                </div>
+                            </div>
                         </div>
                         <a href="" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
                     </div>
-        
-                    <div className="flex gap-2 items-center">
-                        <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
-                            <Image src={Avatar} alt='avatar' width={45}/>
+
+                    <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>
+                        <div className='flex items-center gap-2'>
+                            <FaMapMarkedAlt size={25}/>
+                            <p className='text-base text-lightW/70 font-semibold'>R. dos Gerânios, 1805 - Lagoa Nova, Natal - RN, 59077-040</p>
                         </div>
-                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">User1</p>
-                        <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
-                        <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary group-hover:text-[#B4FFFF] transition duration-300"> -&gt; </span>Recursos Humanos</span></p>
-                        <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
-                        <p className="font-semibold text-lightW/50 text-sm ">Em Andamento</p>
-                    </div>
-
-                    <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
-                        <span className='flex items-center gap-2'>
-                            <p className='text-sm font-bold'>Aguardando Validação</p>
-                            <div className='h-5 w-[2px] bg-lightW/30'></div>
-                            <p className='text-sm font-bold text-lightW/50'>Dezembro 10, 2024</p>
-                        </span>
-                        <div className='flex flex-col w-full px-5 py-2 h-12 mt-3 items-center'>
-                            <div className='flex justify-between w-full h-[5px] bg-primary rounded-full mt-3'>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackThirdy rounded-full'><FaReceipt size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GrValidate size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full text-primary'><FaTruckMoving size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GiConfirmed size={25}/></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="border border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-60">
-                    <div className="flex items-center gap-3">
-                        <h3 className="font-bold text-lg">MO-001</h3>
-                        <div className='h-5 w-[2px] bg-lightW/30'></div>
-                        <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
-                    </div>
-        
-                    <div className="flex gap-2 items-center">
-                        <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
-                            <Image src={Avatar} alt='avatar' width={45}/>
-                        </div>
-                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">User1</p>
-                        <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary"> -&gt; </span>Recursos Humanos</span></p>
-                        <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/50 text-sm">Em Andamento</p>
-                    </div>
-
-                    <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
-                        <span className='flex items-center gap-2'>
-                            <p className='text-sm font-bold'>Aguardando Validação</p>
-                            <div className='h-5 w-[2px] bg-lightW/30'></div>
-                            <p className='text-sm font-bold text-lightW/50'>Dezembro 10, 2024</p>
-                        </span>
-                        <div className='flex flex-col w-full px-5 py-2 h-12 mt-3 items-center'>
-                            <div className='flex justify-between w-full h-[5px] bg-red rounded-full mt-3'>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackThirdy rounded-full text-red'><FaReceipt size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GrValidate size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><FaTruckMoving size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GiConfirmed size={25}/></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="border border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-60">
-                    <div className="flex items-center gap-3">
-                        <h3 className="font-bold text-lg">MO-001</h3>
-                        <div className='h-5 w-[2px] bg-lightW/30'></div>
-                        <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
-                    </div>
-        
-                    <div className="flex gap-2 items-center">
-                        <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
-                            <Image src={Avatar} alt='avatar' width={45}/>
-                        </div>
-                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">User1</p>
-                        <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary"> -&gt; </span>Recursos Humanos</span></p>
-                        <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/50 text-sm">Em Andamento</p>
-                    </div>
-
-                    <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
-                        <span className='flex items-center gap-2'>
-                            <p className='text-sm font-bold'>Aguardando Validação</p>
-                            <div className='h-5 w-[2px] bg-lightW/30'></div>
-                            <p className='text-sm font-bold text-lightW/50'>Dezembro 10, 2024</p>
-                        </span>
-                        <div className='flex flex-col w-full px-5 py-2 h-12 mt-3 items-center'>
-                            <div className='flex justify-between w-full h-[5px] bg-green rounded-full mt-3'>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackThirdy rounded-full'><FaReceipt size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GrValidate size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><FaTruckMoving size={25}/></div>
-                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full text-green'><GiConfirmed size={25}/></div>
-                            </div>
+                        <div className='size-2 rounded-full bg-lightW/50 group-hover:bg-primary transition duration-300'></div>
+                        <div className='flex items-center gap-2'>
+                            <FaBoxOpen size={25}/>
+                            <p className='text-base text-lightW/70 font-semibold'>12 Produtos</p>
                         </div>
                     </div>
 
