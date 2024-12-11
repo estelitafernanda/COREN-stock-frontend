@@ -21,23 +21,14 @@ const headerLinks = [
     {
         id: 3,
         title: "Supliers",
-        icon: <MdPayments size={20}/>
+        icon: <MdPayments size={20}/>,
+        link: "/suppliers"
     },
     {
         id: 4,
         title: "Orders",
         icon: <FaCalendar size={16}/>,
         link: '/orders'
-    },
-    {
-        id: 5,
-        title: "Report",
-        icon: <IoIosStats size={20}/>
-    },
-    {
-        id: 6,
-        title: "Documents",
-        icon: <FaFolderOpen size={18}/>
     }
 ]
 
