@@ -1,7 +1,7 @@
 import { IoIosNotifications, IoIosStats } from "react-icons/io";
 import { FaGear, FaCalendar, FaFolderOpen } from "react-icons/fa6";
 import Avatar from  "../../public/memoji.png";
-import { MdSpaceDashboard, MdInventory, MdPayments } from "react-icons/md";
+import { MdSpaceDashboard, MdInventory, MdPayments, MdMeetingRoom } from "react-icons/md";
 import React from 'react'
 import Image from "next/image";
 
@@ -34,7 +34,7 @@ const headerLinks = [
         id: 5,
         title: "Departamentos",
         icon: <FaCalendar size={16}/>,
-        link: '/orders'
+        link: '/departments'
     }
 ]
 
