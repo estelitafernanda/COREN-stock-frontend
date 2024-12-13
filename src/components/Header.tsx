@@ -33,7 +33,7 @@ const headerLinks = [
     {
         id: 5,
         title: "Departamentos",
-        icon: <FaCalendar size={16}/>,
+        icon: <MdMeetingRoom size={16}/>,
         link: '/departments'
     }
 ]

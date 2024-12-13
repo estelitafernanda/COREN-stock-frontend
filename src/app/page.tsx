@@ -29,7 +29,7 @@ export default function Home() {
       <div className="grid grid-cols-7 gap-4 w-full min-h-[340px] mt-5">
         <div className="bg-blackSecondary p-5 rounded-lg col-span-4">
           <h2 className="text-2xl font-bold">Nivel de estoque:</h2>
-          <div className="flex gap-5">
+          <div className="flex gap-5 px-4">
             <ChartPieDash/>
             <div className="w-full h-full flex flex-col justify-between gap-5 -mt-5">
               <div className="flex flex-col">
