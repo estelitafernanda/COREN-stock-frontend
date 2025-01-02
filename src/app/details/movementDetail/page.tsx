@@ -1,9 +1,10 @@
 import React from 'react'
 import { FaArrowLeft } from "react-icons/fa";
 import Image from 'next/image'
+import { FaLongArrowAltRight } from "react-icons/fa";
 import Trash from '../../../../public/lixeira.png'
 
-function ProductDetail() {
+function MovementDetail() {
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center   font-[family-name:var(--font-geist-sans)] rounded-md">
         <span className='group dispĺay flex items-center gap-1 w-fit'>
@@ -16,14 +17,24 @@ function ProductDetail() {
             </div>
             <div className='w-50%'>
                 <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
-                    <h2 className='text-3xl font-bold text-lightW'>Lixeira de Aço Acabamento Polido Tramontina</h2>
+                    <span className='flex gap-3 items-center'>
+                    <h2 className='text-3xl font-bold text-lightW'>MO - 000001</h2>
+                    <div className="w-[2px] h-6 bg-lightW/50"></div>
+                    <h2 className='text-3xl font-bold text-lightW'>Lixeira de Aço Acabamento Polido Tramontina</h2> 
+                    </span>
+
                     <span className='flex gap-1'>
-                        <p className='font-black'>Fornecedor: </p>
-                        <p>Fornecedor tal</p>
+                        <p className='font-black'>Licitante: </p>
+                        <p>Fulano de tal</p>
                     </span>
                     <span className='flex gap-1'>
-                        <p className='font-black'>Número de compras: </p>
-                        <p>780</p>
+                        <p className='font-black'>Movimentação: </p>
+                        <span className='flex items-center gap-3'>
+                            <p>DTIC</p>
+                            <FaLongArrowAltRight/>
+                            <p>Contabilidade</p>
+                        </span>
+
                     </span>
                 </div>
                 <div className='flex flex-col gap-2 border-b-[2px] py-5 border-lightW/20'>
@@ -60,4 +71,4 @@ function ProductDetail() {
   )
 }
 
-export default ProductDetail
+export default MovementDetail
