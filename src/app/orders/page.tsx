@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { GiConfirmed } from "react-icons/gi";
 import { GrValidate } from "react-icons/gr";
 import { FaTruckMoving } from "react-icons/fa6";
+import { MdArrowDropDown } from "react-icons/md";
 import Image from 'next/image';
 import { FaReceipt } from "react-icons/fa";
 import Avatar from  "../../../public/memoji.png";
@@ -35,31 +36,50 @@ function Order() {
 
           <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg'>
             <div> 
-                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de produto</h2>
+                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Status de movimento</h2>
                 <div className='grid grid-cols-2 gap-3 py-3'>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Todos
+                    Validando
                     <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                     386
                     </span>                
                     </button>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Alimentos
+                    Validado
                     <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                     78
                     </span>                
                     </button>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Escritório
+                    Transição
                     <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                     94
                     </span>                
                     </button>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                        Limpeza
+                        Recebido
                         <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                         178
                         </span>                
+                    </button>
+                </div>
+                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Filtrar por</h2>
+                <div className='grid gap-3 py-3'>
+                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                    Local
+                    <MdArrowDropDown size={20}/>
+                    </button>
+                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                    Data de Pedido
+                    <MdArrowDropDown size={20}/>
+                    </button>
+                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                    Produto
+                    <MdArrowDropDown size={20}/>
+                    </button>
+                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                    Status
+                    <MdArrowDropDown size={20}/>
                     </button>
                 </div>
             </div>
@@ -73,7 +93,7 @@ function Order() {
                             <div className='h-5 w-[2px] bg-lightW/30'></div>
                             <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
                         </div>
-                        <a href="" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                        <a href="/details/movementDetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
                     </div>
         
                     <div className="flex gap-2 items-center">
@@ -120,7 +140,7 @@ function Order() {
                         <div className="rounded-full size-2 bg-lightW/50"></div>
                         <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary"> -&gt; </span>Recursos Humanos</span></p>
                         <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/50 text-sm">Em Andamento</p>
+                        <p className="font-semibold text-lightW/50 text-sm">Deferido</p>
                     </div>
 
                     <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
@@ -156,7 +176,7 @@ function Order() {
                         <div className="rounded-full size-2 bg-lightW/50"></div>
                         <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary"> -&gt; </span>Recursos Humanos</span></p>
                         <div className="rounded-full size-2 bg-lightW/50"></div>
-                        <p className="font-semibold text-lightW/50 text-sm">Em Andamento</p>
+                        <p className="font-semibold text-lightW/50 text-sm">Concluído</p>
                     </div>
 
                     <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>

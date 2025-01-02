@@ -32,7 +32,7 @@ function Suppliers() {
           <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg'>
             <div> 
                 <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de Fornecedor</h2>
-                <div className='grid grid-cols-2 gap-3 py-3'>
+                <div className='grid gap-3 py-3'>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                     Todos
                     <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>

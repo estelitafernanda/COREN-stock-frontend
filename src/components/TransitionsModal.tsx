@@ -61,6 +61,10 @@ export default function TransitionsModal() {
                         <p className='font-black'>Número de compras: </p>
                         <p className='text-lightW/50'>780</p>
                     </span>
+                    <span className='flex gap-1'>
+                        <p className='font-black'>Categoria: </p>
+                        <p className='text-lightW/50'>Limpeza</p>
+                    </span>
                 </div>
                 <div className='py-3'>
                     <div className='flex flex-col gap-2'>
@@ -81,7 +85,9 @@ export default function TransitionsModal() {
                           <p className='w-[50%] text-lightW/50'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dolor accusantium quisquam quod. Repellendus, unde iste labore</p>
                       </span>
                         <div>
+                        <a href="forms/movementform">
                         <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Realizar Movimentação<IoIosAdd size={20}/></button>
+                        </a>
                         </div>
                     </div>
                 </div>

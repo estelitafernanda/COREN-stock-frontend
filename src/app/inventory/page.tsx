@@ -151,13 +151,14 @@ function Inventory() {
         </div>
 
         <div className='flex flex-col gap-5 bg-blackSecondary p-5 rounded-lg w-[75%]'>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
+          <ProductCard name='Lixeira de Aço Acabamento Polido Tramontina' category='Limpeza' stock={2} />
+          <ProductCard name='Água Sanitaria' category='Limpeza' stock={2} />
+          <ProductCard name='Biscoito Água e sal' category='alimentos' stock={30} />
+          <ProductCard name='Cadeira de Escritorio' category='Limpeza' stock={2} />
+          <ProductCard name='Lixeira de Aço Acabamento Polido Tramontina' category='Limpeza' stock={2} />
+          <ProductCard name='Lixeira de Aço Acabamento Polido Tramontina' category='Limpeza' stock={2} />
+          <ProductCard name='Lixeira de Aço Acabamento Polido Tramontina' category='Limpeza' stock={2} />
+          
         </div>
         
       </section>

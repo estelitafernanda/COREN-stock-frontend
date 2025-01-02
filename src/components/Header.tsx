@@ -2,6 +2,7 @@ import { IoIosNotifications, IoIosStats } from "react-icons/io";
 import { FaGear, FaCalendar, FaFolderOpen } from "react-icons/fa6";
 import Avatar from  "../../public/memoji.png";
 import { MdSpaceDashboard, MdInventory, MdPayments, MdMeetingRoom } from "react-icons/md";
+import { FaSun } from "react-icons/fa";
 import React from 'react'
 import Image from "next/image";
 
@@ -54,7 +55,7 @@ function Header() {
             </div>
 
             <div className="cursor-pointer flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
-                <FaGear size={20}/>
+                <FaSun size={20}/>
             </div>
 
             <div className="cursor-pointer flex items-center justify-center rounded-full bg-lightW/15 backdrop-blur">

@@ -13,32 +13,18 @@ function ProductForm() {
                     <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
                         <div className='absolute w-[6px] h-[40px] rounded-full bg-primary  group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
                         <div className='absolute bg-primary w-[6px] h-[40px] rounded-full group-hover:blur-md group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
-                        <div className='flex items-center'>
+                        <div className='flex items-center cursor-pointer'>
                             <FaWpforms size={30} className='text-primary group-hover:text-[#B4FFFF] transition duration-300'/>
-                            <div className='flex flex-col ml-4'>
+                            <div className='flex flex-col ml-4 '>
                                 <h3 className='uppercase font-bold text-base text-lightW tracking-widest'>step 1</h3>
                                 <p className='text-sm font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Informações Gerais</p>
                             </div>
                         </div>
                     </div>
-                    <div className='flex items-center p-4 rounded-lg'>
+                    <div className='flex items-center p-4 rounded-lg cursor-pointer'>
                         <FaWpforms size={30}/>
                         <div className='flex flex-col ml-4'>
                             <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 2</h3>
-                            <p className='text-sm font-bold'>Informações Gerais</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center p-4 rounded-lg'>
-                        <FaWpforms size={30}/>
-                        <div className='flex flex-col ml-4'>
-                            <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 3</h3>
-                            <p className='text-sm font-bold'>Informações Gerais</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center p-4 rounded-lg'>
-                        <FaWpforms size={30}/>
-                        <div className='flex flex-col ml-4'>
-                            <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 4</h3>
                             <p className='text-sm font-bold'>Informações Gerais</p>
                         </div>
                     </div>
@@ -54,16 +40,6 @@ function ProductForm() {
                     </div>
                     <div className='flex'>
                         <div className='flex flex-col gap-2 w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Código</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
-                        <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Local de armazenamento</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
-                    </div>
-                    <div className='flex'>
-                        <div className='flex flex-col gap-2  w-[50%]'>
                             <label htmlFor="" className='text-md font-bold'>Código</label>
                             <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>

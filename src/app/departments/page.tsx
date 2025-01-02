@@ -64,9 +64,9 @@ function Departments() {
 
           <div className='flex flex-col gap-4 w-full'>
 
-            <DepartmentCard name="DTIC" superUser="Iran Vital" func={12} local="Natal/RN"/>
-            <DepartmentCard name="Contabilidade" superUser="Aldeise" func={12} local="Natal/RN"/>
-            <DepartmentCard name="Alimentos" superUser="Iran Vital" func={12} local="Natal/RN"/>
+            <DepartmentCard name="DTIC" superUser="Iran Vital" func={4} local="Natal/RN"/>
+            <DepartmentCard name="Contabilidade" superUser="User 2" func={6} local="Natal/RN"/>
+            <DepartmentCard name="Financeiro" superUser="Aldeíse" func={5} local="Natal/RN"/>
 
           </div>
 
