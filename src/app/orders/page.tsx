@@ -93,7 +93,7 @@ export default function Order() {
                             <div className='h-5 w-[2px] bg-lightW/30'></div>
                             <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
                         </div>
-                        <a href="/details/movementDetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                        <a href="/details/orderdetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
                     </div>
         
                     <div className="flex gap-2 items-center">

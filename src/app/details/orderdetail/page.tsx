@@ -9,7 +9,7 @@ function MovementDetail() {
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center   font-[family-name:var(--font-geist-sans)] rounded-md">
         <span className='group dispĺay flex items-center gap-1 w-fit'>
             <FaArrowLeft className='group-hover:text-primary transition duration-300'/>
-            <a href="/inventory" className='text-xl font-semibold group-hover:text-primary transition duration-300'>Voltar</a>
+            <a href="/orders" className='text-xl font-semibold group-hover:text-primary transition duration-300'>Voltar</a>
         </span>
         <div className='className="mx-auto w-[95vw] mt-7 flex py-6 px-8 min-h-[calc(100vh-30rem)] gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] rounded-md'>
             <div className='flex items-center justify-center bg-blackThirdy min-h-[calc(100vh-20rem)] w-[50%] p-5  rounded-lg'>
@@ -18,7 +18,7 @@ function MovementDetail() {
             <div className='w-50%'>
                 <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
                     <span className='flex gap-3 items-center'>
-                    <h2 className='text-3xl font-black text-lightW'>MO - 000001</h2>
+                    <h2 className='text-3xl font-black text-primary'>MO - 000001</h2>
                     <div className="w-[2px] h-6 bg-lightW/50"></div>
                     <h2 className='text-3xl font-black text-lightW'>Lixeira de Aço Acabamento Polido Tramontina</h2> 
                     </span>

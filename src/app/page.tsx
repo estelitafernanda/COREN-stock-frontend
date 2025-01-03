@@ -7,6 +7,7 @@ import Chair from "../../public/cadeira.png";
 import Cookie from "../../public/biscoito.png";
 import Image from "next/image";
 import ButtonMenu from "@/components/ButtonMenu";
+import ProductCard from "@/components/ProductCard";
 
 
 
@@ -58,52 +59,12 @@ export default function Home() {
         <div className="bg-blackSecondary p-5 rounded-lg col-span-3">
           <div className="flex w-full justify-between">
            <h2 className="text-2xl font-bold">Produtos mais usados:</h2>
-           <a href="/inventory" className="text-lg font-bold text-primary pr-3 hover:text-primary/80 flex gap-1 items-center transition duration-300"><span>Ver Produtos</span><IoIosArrowForward/></a>
+           <a href="/inventory" className="text-lg font-bold text-primary pr-3 hover:text-[#B4FFFF] flex gap-1 items-center transition duration-300"><span>Ver Produtos</span><IoIosArrowForward/></a>
           </div>
           <div className="flex flex-col gap-3 mt-3">
-            <div className="flex bg-blackThirdy gap-3 p-2 rounded-lg">
-              <div className="bg-lightW/90 h-16 w-16 rounded-lg flex items-center justify-center">
-                <Image src={Trash} alt="Avatar" width={50} height={50}/>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
-                <div className="flex gap-2 items-center mt-2">
-                  <p className="bg-lightW/10 px-2 rounded-full text-sm text-lightW font-semibold">Limpeza</p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                  <p className="font-semibold text-lightW/50 text-sm rounded-full">Produtos em Estoque: <span className="text-white"><span className="text-primary">3</span> Em Estoque</span></p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                </div>
-              </div>
-            </div>
-            <div className="flex bg-blackThirdy p-2 gap-3 rounded-lg">
-              <div className="bg-lightW/90 h-16 w-16 rounded-lg flex items-center justify-center">
-                <Image src={Chair} alt="Avatar" width={50} height={50}/>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">	
-                Cadeira De Escritório New Best Preta</h3>
-                <div className="flex gap-2 items-center mt-2">
-                  <p className="bg-lightW/10 px-2 rounded-full text-sm text-lightW font-semibold">Limpeza</p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                  <p className="font-semibold text-lightW/50 text-sm rounded-full">Produtos em Estoque: <span className="text-white"><span className="text-primary">3</span> Em Estoque</span></p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                </div>
-              </div>
-            </div>
-            <div className="flex bg-blackThirdy p-2 gap-3 rounded-lg">
-              <div className="bg-lightW/90 h-16 w-16 rounded-lg flex items-center justify-center">
-                <Image src={Cookie} alt="Avatar" width={50} height={50}/>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">Biscoito Doce Maizena Tradicional Fortaleza</h3>
-                <div className="flex gap-2 items-center mt-2">
-                  <p className="bg-lightW/10 px-2 rounded-full text-sm text-lightW font-semibold">Limpeza</p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                  <p className="font-semibold text-lightW/50 text-sm rounded-full">Produtos em Estoque: <span className="text-white"><span className="text-primary">3</span> Em Estoque</span></p>
-                  <div className="rounded-full size-2 bg-lightW/50"></div>
-                </div>
-              </div>
-            </div>
+            <ProductCard name="Lixeira de Aço Polido Tramontina" category="Cadeira" stock={10}/>
+            <ProductCard name="Cadeira de Escritorio" category="Cadeira" stock={2}/>
+            <ProductCard name="Água Sanitária Dragão 1.5L" category="Cadeira" stock={8}/>
           </div>
         </div>
       </div>
@@ -192,7 +153,7 @@ export default function Home() {
         <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">Movimento Recente:</h2>
-              <a href="/orders" className="text-lg font-bold text-primary pr-3 hover:text-primary/80 flex gap-1 items-center transition duration-300"><span>Ver Movimentos</span><IoIosArrowForward/></a>
+              <a href="/orders" className="text-lg font-bold text-primary pr-3 hover:text-[#B4FFFF] flex gap-1 items-center transition duration-300"><span>Ver Movimentos</span><IoIosArrowForward/></a>
             </div>
             <div className="bg-blackThirdy h-36 p-5 rounded-lg mt-4 flex flex-col gap-3">
               <div className="flex items-center justify-between gap-3">
@@ -205,7 +166,7 @@ export default function Home() {
                     <p className="text-sm font-black">Financeiro</p>
                   </span>
                 </div>
-                <a href="" className="text-md font-bold text-primary pr-3 hover:text-primary/80 flex gap-1 items-center transition duration-300"><span>Mais Detalhes</span><IoIosArrowForward/></a>
+                <a href="/details/orderdetail" className="text-md font-bold text-primary pr-3 hover:text-[#B4FFFF] flex gap-1 items-center transition duration-300"><span>Mais Detalhes</span><IoIosArrowForward/></a>
               </div>
               <div className="w-full h-5 bg-yellow rounded-full text-center text-blackPrimary font-semibold">Aguardando Validação</div>
               <div className="flex gap-10">

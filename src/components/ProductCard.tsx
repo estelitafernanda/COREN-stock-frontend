@@ -17,7 +17,7 @@ function ProductCard({name, category, stock}:{name: string, category: string, st
             <div className="flex gap-2 items-center mt-2">
               <p className="bg-lightW/10 px-2 rounded-full text-sm text-lightW font-semibold">{category}</p>
               <div className="rounded-full size-2 bg-lightW/50"></div>
-              <p className="font-semibold text-lightW/50 text-sm rounded-full">Produtos em Estoque: <span className="text-white"><span className="text-primary">{stock}</span> Em Estoque</span></p>
+              <p className="font-semibold text-lightW/50 text-sm rounded-full">Produtos em Estoque: <span className="text-white"><span className="text-primary">{stock}</span></span></p>
               <div className="rounded-full size-2 bg-lightW/50"></div>
             </div>
           </div>

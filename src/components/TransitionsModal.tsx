@@ -4,11 +4,9 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Trash from '../../public/lixeira.png';
 import { IoIosAdd } from "react-icons/io";
 import Image from 'next/image';
-import ButtonMenu from './ButtonMenu';
 
 const style = {
   position: 'absolute',
