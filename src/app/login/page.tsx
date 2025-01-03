@@ -1,14 +1,13 @@
 import React from 'react'
 import Background from '../../../public/bg.jpg' 
+import Computer from '../../../public/login-image.png'
 import Image from 'next/image'
 import { Tape } from '@/components/Tape'
 
 function page() {
   return (
     <main className='grid grid-cols-2 h-screen w-full font-[family-name:var(--font-geist-sans)] overflow-clip'>
-        <section>
-            <Image src={Background} alt='background' className='w-full h-full object-cover' />
-        </section>
+
         <section className='bg-blackPrimary p-10 flex flex-col items-center overflow-clip'>
             <h2 className=" mt-10 font-black text-3xl tracking-wider text-primary">CorenStock</h2>
             <div className='mt-36 w-[70%] text-center'>
@@ -33,6 +32,11 @@ function page() {
                 <a href="" className='text-sm font-bold text-primary'>Clique aqui!</a>
             </span>
             <Tape/>
+        </section>
+
+        <section className='bg-primary h-screen flex flex-col items-center justify-center rounded-r-3xl'>
+            <Image src={Computer} alt='background' className='w-[70%]' />
+            {/* <Image src={Background} alt='background' className='w-full h-full object-cover' /> */}
         </section>
 
 
