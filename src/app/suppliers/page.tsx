@@ -1,9 +1,11 @@
-import React from 'react'
+"use client";
+import React, { use } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import Image from 'next/image';
 import Avatar from  "../../../public/memoji.png";
+import TransitionsModalSupplier from '@/components/TransitionsModalSupplier';
 
 function Suppliers() {
   return (
@@ -87,7 +89,7 @@ function Suppliers() {
                                 </div>
                             </div>
                         </div>
-                        <a href="" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                        <TransitionsModalSupplier/>
                     </div>
 
                     <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>

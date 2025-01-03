@@ -13,10 +13,10 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1100,
-  height: 500,
+  width: 1200,
+  height: 600,
   bgcolor: '#1a262d',
-  border: '2px solid #56cbec',
+  border: '2px solid #202e36',
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,
@@ -45,7 +45,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <Box sx={style} className='flex items-center py-12 font-[family-name:var(--font-geist-sans)]'>
-            <div className='bg-lightW h-fit rounded-md'>
+            <div className='bg-lightW h-fit rounded-lg border-[3px] border-primary/50'>
               <Image src={Trash} alt="Avatar" width={800} height={800}/>
             </div>
             <div className='w-full ml-7 mt-1'>
