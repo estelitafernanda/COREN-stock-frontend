@@ -1,12 +1,11 @@
 'use client';
 import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar  } from "react-icons/fa";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import ChartPieDash from "@/components/dash/ChartPieDash";
 import Trash from "../../public/lixeira.png";
 import Chair from "../../public/cadeira.png";
 import Cookie from "../../public/biscoito.png";
 import Image from "next/image";
-import {Footer} from "@/components/Footer";
 import ButtonMenu from "@/components/ButtonMenu";
 
 
@@ -235,3 +234,4 @@ export default function Home() {
     </div>
   );
 }
+

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { FaReceipt } from "react-icons/fa";
 import Avatar from  "../../../public/memoji.png";
 
-function Order() {
+export default function Order() {
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="flex justify-between w-full">
@@ -206,4 +206,3 @@ function Order() {
   )
 }
 
-export default Order
