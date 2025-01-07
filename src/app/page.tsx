@@ -8,6 +8,7 @@ import Cookie from "../../public/biscoito.png";
 import Image from "next/image";
 import ButtonMenu from "@/components/ButtonMenu";
 import ProductCard from "@/components/ProductCard";
+import LineChartDash from "@/components/dash/LineChartDash";
 
 
 
@@ -189,7 +190,8 @@ export default function Home() {
 
         </div>
         <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
-          <div className="max-w-60"></div>
+            <h2 className="text-2xl font-bold">Controle de movimentações:</h2>
+            <LineChartDash/>
         </div>
       </div>
     </div>
