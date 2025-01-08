@@ -1,6 +1,7 @@
 import React from 'react'
 import Background from '../../../public/bg.jpg' 
 import Computer from '../../../public/login-image.png'
+import Worm from '../../../public/worm.png'
 import Image from 'next/image'
 import { Tape } from '@/components/Tape'
 
@@ -8,7 +9,7 @@ function page() {
   return (
     <main className='grid grid-cols-2 h-screen w-full font-[family-name:var(--font-geist-sans)] overflow-clip'>
 
-        <section className='bg-blackPrimary p-10 flex flex-col items-center overflow-clip'>
+        <section className='bg-blackPrimary p-10 flex flex-col items-center overflow-clip z-20'>
             <h2 className=" mt-10 font-black text-3xl tracking-wider text-primary">CorenStock</h2>
             <div className='mt-36 w-[70%] text-center'>
                 <h1 className='text-5xl font-black'>Olá! Seja bem-vindo de volta👋</h1>
@@ -34,9 +35,11 @@ function page() {
             <Tape/>
         </section>
 
-        <section className='bg-primary h-screen flex flex-col items-center justify-center rounded-r-3xl'>
-            <Image src={Computer} alt='background' className='w-[70%] animate-[bounce_6s_ease-in-out_infinite]' />
-            {/* <Image src={Background} alt='background' className='w-full h-full object-cover' /> */}
+        <section className='bg-primary h-screen flex flex-col items-center justify-center rounded-r-3xl relative'>
+            <Image src={Computer} alt='background' className='w-[70%] animate-[bounce_6s_ease-in-out_infinite] z-10' />
+            {/* <Image src={Background} alt='background' className='w-full h-full object-cover absolute' /> */}
+            <Image src={Worm} alt='background' className='w-[70%] -bottom-20 -right-[240px]  z-10 absolute' />
+            <Image src={Worm} alt='background' className='w-[70%] -top-[200px] right-[500px] rotate-180  z-10 absolute' />
         </section>
 
 
