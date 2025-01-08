@@ -35,7 +35,7 @@ function page() {
         </section>
 
         <section className='bg-primary h-screen flex flex-col items-center justify-center rounded-r-3xl'>
-            <Image src={Computer} alt='background' className='w-[70%]' />
+            <Image src={Computer} alt='background' className='w-[70%] animate-[bounce_6s_ease-in-out_infinite]' />
             {/* <Image src={Background} alt='background' className='w-full h-full object-cover' /> */}
         </section>
 
