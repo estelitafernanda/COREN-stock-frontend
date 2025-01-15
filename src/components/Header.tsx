@@ -1,5 +1,7 @@
-import { IoIosNotifications, IoIosStats } from "react-icons/io";
-import { FaGear, FaCalendar, FaFolderOpen } from "react-icons/fa6";
+import { IoIosNotifications } from "react-icons/io";
+import { FaCalendar } from "react-icons/fa6";
+import { VscGitPullRequestNewChanges } from "react-icons/vsc";
+
 import Avatar from  "../../public/memoji.png";
 import { MdSpaceDashboard, MdInventory, MdPayments, MdMeetingRoom } from "react-icons/md";
 import { FaSun } from "react-icons/fa";
@@ -29,13 +31,19 @@ const headerLinks = [
         id: 4,
         title: "Movimentação",
         icon: <FaCalendar size={16}/>,
-        link: '/orders'
+        link: '/movements'
     },
     {
         id: 5,
         title: "Departamentos",
         icon: <MdMeetingRoom size={16}/>,
         link: '/departments'
+    },
+    {
+        id: 6,
+        title: "Pedidos",
+        icon: <VscGitPullRequestNewChanges size={16}/>,
+        link: '/requests'
     }
 ]
 

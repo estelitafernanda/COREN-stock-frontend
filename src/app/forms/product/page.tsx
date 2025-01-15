@@ -183,9 +183,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
                 <div className='h-[30px] w-[1px] bg-lightW/50'></div>
                 <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary mr-36">Próximo</button>
             </div>
-        </div>
-
-    
+        </div>    
   )
 }
 

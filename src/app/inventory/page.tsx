@@ -7,6 +7,7 @@ import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
+import Loading from '@/components/Loading';
 
 // Tipagem do produto
 interface Product {
@@ -37,7 +38,7 @@ const Inventory: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Carregando produtos...</div>;
+    return <Loading/>
   }
 
   if (error) {
