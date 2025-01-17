@@ -1,9 +1,7 @@
 import React from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
-import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
-import Image from 'next/image';
-import Avatar from  "../../../public/memoji.png";
+import { FaSearch,} from "react-icons/fa";
 import DepartmentCard from '@/components/DepartmentCard';
 
 function Departments() {

@@ -4,7 +4,6 @@ import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { useState, useEffect } from 'react';
 import api from '@/app/api/axios';
-import axios from 'axios';
 
 interface Product {
     idProduct: number;

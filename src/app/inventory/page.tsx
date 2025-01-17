@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
@@ -61,7 +60,7 @@ const Inventory: React.FC = () => {
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW"/> Contato com suporte
           </button>
-          <a href="/forms/productform">
+          <a href="/forms/product">
             <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Adicionar Produto <IoIosAdd size={20}/></button>
           </a>
 

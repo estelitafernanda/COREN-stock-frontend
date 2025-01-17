@@ -2,12 +2,7 @@
 import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar  } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import ChartPieDash from "@/components/dash/ChartPieDash";
-import Trash from "../../public/lixeira.png";
-import Chair from "../../public/cadeira.png";
-import Cookie from "../../public/biscoito.png";
-import Image from "next/image";
 import ButtonMenu from "@/components/ButtonMenu";
-import ProductCard from "@/components/ProductCard";
 import LineChartDash from "@/components/dash/LineChartDash";
 
 

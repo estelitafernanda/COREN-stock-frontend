@@ -2,14 +2,7 @@ import React from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
-import { GiConfirmed } from "react-icons/gi";
-import { GrValidate } from "react-icons/gr";
-import { FaTruckMoving } from "react-icons/fa6";
 import { MdArrowDropDown } from "react-icons/md";
-import Image from 'next/image';
-import { FaReceipt } from "react-icons/fa";
-import Avatar from  "../../../public/memoji.png";
-import DepartmentCard from '@/components/DepartmentCard';
 import RequestCard from '@/components/RequestCard';
 
 export default function Order() {

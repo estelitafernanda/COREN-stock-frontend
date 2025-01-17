@@ -1,7 +1,6 @@
 'use client';
 import React from 'react'
 import Image from 'next/image'
-import Trash from '../../public/lixeira.png'
 import TransitionsModal from './TransitionsModal'
 
 function ProductCard({name, category, stock, image}:{name: string, image:string, category: string, stock: number} ) {

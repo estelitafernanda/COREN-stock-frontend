@@ -1,7 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
-import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
-import { SiSuperuser } from 'react-icons/si';
 
 
 function RequestCard({product, department, userName, desc, date, qnt}: {product: string, department: string, userName: string , desc: string, date: string, qnt: number}) {
