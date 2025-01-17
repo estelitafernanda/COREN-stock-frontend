@@ -149,11 +149,11 @@ export default function TransitionsModalSupplier() {
                   <div className='w-[50%]'>
                     <h2 className='text-lg font-bold mb-1'>Produtos <span className='text-lightW/50'>(<span className='text-primary'>12</span>)</span></h2>
                     <div className='flex flex-col gap-3'>
-                      <ProductCard name="Produto 1" category="Categoria 1" stock={10}/>
+                      {/* <ProductCard name="Produto 1" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 2" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 3" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 4" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 5" category="Categoria 1" stock={10}/>
+                      <ProductCard name="Produto 5" category="Categoria 1" stock={10}/> */}
                     </div>
                   </div>
               </div>

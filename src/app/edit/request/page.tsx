@@ -1,18 +1,10 @@
 'use client';
-import React, { useState,useEffect , ChangeEvent, FormEvent } from 'react'
-import { useRouter } from "next/navigation";
+import React from 'react'
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
+import { useState, useEffect } from 'react';
 import api from '@/app/api/axios';
 import axios from 'axios';
-
-type FormDataType = {
-    describe: string;
-    requestDate: string;
-    quantity: string;
-    idProduct: string;
-    idUser: string;
-};
 
 interface Product {
     idProduct: number;
@@ -35,80 +27,26 @@ interface User{
 }
 
 function MovementForm() {
-    const router = useRouter()
 
-    //AXIOS POST SECTION
-
-    const [formData, setFormData] = useState<FormDataType>({
-        describe: '',
-        requestDate: '',
-        quantity: '',
-        idProduct: '',
-        idUser: '',
-    });
-    
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-      
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
-    
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formDataToSend = new FormData();
-        
-        for (let key in formData) {
-            if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
-            }
-        }
-      
-        try {
-          const response = await axios.post(
-            "http://127.0.0.1:8000/api/addRequest",
-            formDataToSend,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-          
-          router.push("/requests");
-          alert("Pedido criado com sucesso");
-        } catch (error) {
-          console.error("Erro ao adicionar pedido:", error);
-          alert("Erro ao adicionar pedido.");
-          console.log(formData);
-        }
-    };
-
-
-    //AXIOS GET SECTION
     const [users , setUsers] = useState<User[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
   
-    //CARREGAR PRODUTOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
     useEffect(() => {
-      api.get<Product[]>('/show')
+      api.get<Product[]>('/show')  // Usando a instância api
         .then(response => {
           setProducts(response.data);
           setLoading(false);
         })
-        .catch(err => {
+        .catch(error => {
           setError('Erro ao carregar os dados da API');
           setLoading(false);
         });
     }, []);
 
-    //CARREGAR USUÁRIOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
     useEffect(() => {
-        api.get<User[]>('/users') 
+        api.get<User[]>('/users')  // Usando a instância api
           .then(response => {
             setUsers(response.data);
             setLoading(false);
@@ -117,24 +55,23 @@ function MovementForm() {
             setError('Erro ao carregar os dados da API');
             setLoading(false);
           });
-          
       }, []);
   
-      if (loading) {
-        return <div>Carregando dados...</div>;
-      }
-    
-      if (error) {
-        return <div>{error}</div>;
+    if (loading) {
+      return <div>Carregando dados...</div>;
     }
-    
+  
+    if (error) {
+      return <div>{error}</div>;
+    }
+  
 
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)] mb-52">
         {error && <div style={{ color: 'red' }}>{error}</div>}
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[18%] flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold'>Solicitar Pedido</h2>
+                <h2 className='text-3xl font-bold'>Editar Pedido</h2>
                 <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de movimentos</a>
                 <div className='flex flex-col gap-[38px]'>
                     <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
@@ -153,15 +90,15 @@ function MovementForm() {
             </aside>
             <section className='w-[85%] flex flex-col gap-4'>
                 <h2 className='text-center text-2xl font-bold'>Fazer Pedido</h2>
-                <form onSubmit={handleSubmit} action="" className='p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]'>
+                <form action="" className='p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]'>
                 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Usuário</label>
-                        <select name="idUser" value={formData.idUser} onChange={handleChange} id="idUser" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
+                        <select name="idUser" id="idUser" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
                             <option value="" className='bg-blackSecondary'>Selecione um Usuário</option>
                             {users.map((user) => (
                                 <option key={user.idUser} className='bg-blackSecondary' value={user.idUser}>
-                                    {user.nameUser}
+                                {user.nameUser}
                                 </option>
                             ))}
                         </select>
@@ -169,11 +106,11 @@ function MovementForm() {
 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Produto</label>
-                        <select name="idProduct" value={formData.idProduct} onChange={handleChange} id="idProduct" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
+                        <select name="idProduct" id="idProduct" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
                             <option value="" className='bg-blackSecondary'>Selecione um Produto</option>
                             {products.map((product) => (
                                 <option key={product.idProduct} value={product.idProduct} className='bg-blackSecondary'>
-                                    {product.nameProduct}
+                                {product.nameProduct}
                                 </option>
                             ))}
                         </select>
@@ -181,17 +118,17 @@ function MovementForm() {
 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Descrição</label>
-                        <input type="text" name='describe' value={formData.describe} onChange={handleChange} placeholder='Escreva a descrição do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="text" placeholder='Escreva a descrição do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Quantidade</label>
-                        <input type="number" name='quantity' value={formData.quantity} onChange={handleChange} placeholder='quantidade de produtos do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="number" placeholder='quantidade de produtos do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Data</label>
-                        <input type="date" name='requestDate' onChange={handleChange} value={formData.requestDate} placeholder='data do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="date" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <input type="submit" value="Fazer Pedido" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                 </form>

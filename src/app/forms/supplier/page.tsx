@@ -1,12 +1,77 @@
-import React from 'react'
+'use client';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 
+type FormDataType = {
+    describe: string;
+    requestDate: string;
+    quantity: string;
+    idProduct: string;
+    idUser: string;
+};
+
 function SupplierForm() {
+
+    const router = useRouter()
+
+    //AXIOS POST SECTION
+
+    const [formData, setFormData] = useState<FormDataType>({
+        describe: '',
+        requestDate: '',
+        quantity: '',
+        idProduct: '',
+        idUser: '',
+    });
+    
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+      
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
+    
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formDataToSend = new FormData();
+        
+        for (let key in formData) {
+            if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
+            }
+        }
+      
+        try {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/addSupplier",
+            formDataToSend,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          
+          router.push("/requests");
+          alert("fornecedor criado com sucesso");
+        } catch (error) {
+          console.error("Erro ao adicionar fornecedor:", error);
+          alert("Erro ao adicionar fornecedor.");
+          console.log(formData);
+        }
+    };
+
+
   return (
-    <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
+    <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)] mb-[252px]">
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[20%] flex flex-col gap-5'>
+
                 <h2 className='text-3xl font-bold'>Adicionar Fornecedor</h2>
                 <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de fornecedores</a>
                 <div className='flex flex-col gap-[38px]'>
@@ -21,76 +86,34 @@ function SupplierForm() {
                             </div>
                         </div>
                     </div>
-                    <div className='flex items-center p-4 rounded-lg'>
-                        <FaWpforms size={30}/>
-                        <div className='flex flex-col ml-4'>
-                            <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 2</h3>
-                            <p className='text-sm font-bold'>Vincular Produtos</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center p-4 rounded-lg'>
-                        <FaWpforms size={30}/>
-                        <div className='flex flex-col ml-4'>
-                            <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 3</h3>
-                            <p className='text-sm font-bold'>Informações Gerais</p>
-                        </div>
-                    </div>
-                    <div className='flex items-center p-4 rounded-lg'>
-                        <FaWpforms size={30}/>
-                        <div className='flex flex-col ml-4'>
-                            <h3 className='uppercase font-bold text-base text-lightW/50 tracking-widest'>step 4</h3>
-                            <p className='text-sm font-bold'>Informações Gerais</p>
-                        </div>
-                    </div>
                 </div>
+
             </aside>
             <section className='w-[85%] flex flex-col gap-4'>
                 <h2 className='text-center text-2xl font-bold'>Informações Gerais</h2>
-                <form action="" className='p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]'>
+                <form action="" onSubmit={handleSubmit} className='p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]'>
                 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Nome</label>
                         <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
-                    <div className='flex'>
-                        <div className='flex flex-col gap-2 w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Razão Social</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
-                        <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Endereço</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
+                    <div className='flex flex-col gap-2 '>
+                        <label htmlFor="" className='text-md font-bold'>Razão Social</label>
+                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
-                    <div className='flex'>
-                        <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>Telefone</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
-                        <div className='flex flex-col gap-2  w-[50%]'>
-                            <label htmlFor="" className='text-md font-bold'>E-mail</label>
-                            <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                        </div>
+                    <div className='flex flex-col gap-2 '>
+                        <label htmlFor="" className='text-md font-bold'>Endereço</label>
+                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
-                    <div className='flex flex-col gap-[2px]'>
-                        <label className='text-md font-bold' htmlFor="">Observações</label>
-                        <input type="textarea" className='w-[100%] rounded-lg h-36 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                    <div className='flex flex-col gap-2 '>
+                        <label htmlFor="" className='text-md font-bold'>Contato</label>
+                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
-                    <div className='flex flex-col gap-[2px]'>
-                        <label className='text-md font-bold' htmlFor="">Imagem</label>
-                        <input type="textarea" className='w-[100%] rounded-lg h-44 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                    </div>
+                    <input type="submit" value="Fazer Pedido" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                 </form>
             </section>
         </div>
-        
-        <div className='fixed w-[100vw] border-t-[1px] p-5 flex justify-end items-center gap-5 border-t-lightW/20 bg-blackSecondary h-32 left-0 bottom-0'>
-
-            <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Voltar</button>
-            <div className='h-[30px] w-[1px] bg-lightW/50'></div>
-            <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary mr-36">Próximo</button>
-
-        </div>
+    
     </div>
   )
 }
