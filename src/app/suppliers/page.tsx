@@ -1,19 +1,79 @@
 "use client";
-import React, { use } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import Image from 'next/image';
 import Avatar from  "../../../public/memoji.png";
 import TransitionsModalSupplier from '@/components/TransitionsModalSupplier';
+import axios from 'axios';
+import Loading from '@/components/Loading';
+import SupplierCard from '@/components/SupplierCard';
+
+
+interface Product {
+    idProduct: number;
+    code: string;
+    idDepartment: number;
+    nameProduct: string;
+    category: string;
+    describe: string;
+    minQuantity: number;
+    currentQuantity: number;
+    location: string;
+    validity: string;
+    unitPrice: number;
+    image: string;
+    created_at: string | null;
+    updated_at: string | null;
+}
+  
+interface Supplier {
+    idSupplier: number;
+    corporateReason: string;
+    name: string;
+    telephone: string;
+    email: string;
+    responsible: string;
+    cnpj: string;
+    address: string;
+    created_at: string | null;
+    updated_at: string | null;
+    products: Product[];
+}
 
 function Suppliers() {
+
+    const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+    const [loading, setLoading] = useState<boolean>(true); 
+      const [error, setError] = useState<string | null>(null); 
+  
+    useEffect(() => {
+        axios.get<Supplier[]>('http://127.0.0.1:8000/api/showSuppliers')
+          .then(response => {
+            setSuppliers(response.data);
+            setLoading(false);
+          })
+          .catch(error => {
+            setError('Erro ao carregar os dados da API');
+            setLoading(false);
+          });
+      }, []);
+    
+      if (loading) {
+        return <Loading/>
+      }
+    
+      if (error) {
+        return <div>{error}</div>;
+      }
+
   return (
-<div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
+    <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="flex justify-between w-full">
             <div className='flex items-center gap-5'>
                 <h1 className="text-3xl font-bold text-lightW">Fornecedores:</h1>
-                <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de fornecedores: <span className='text-lightW'>18</span></p>
+                <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de fornecedores: <span className='text-lightW'>{suppliers.length}</span></p>
             </div>
             <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
                 <FaSearch size={20} className='text-lightW/30'/>
@@ -63,50 +123,16 @@ function Suppliers() {
             </div>
           </div>
 
-          <div className='flex flex-col gap-4 w-full'>
-                <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-48">
-                <div className="flex justify-between items-center">
-                    
-                        <div className='flex items-center gap-3'>
-                            <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
-                                <Image src={Avatar} alt='avatar' width={45}/>
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-lg">Acme Corp</h3>
-                                <p className="font-semibold text-lightW/70 text-sm">Geraldo Silva</p>
-                            </div>
-                            
-                            <div className='h-12 w-[2px] bg-lightW/30'></div>
-                            <div className='flex gap-5'>
-                                <div className='flex flex-col gap-1'>
-                                    <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Número</h3>
-                                    <p className="border-b font-semibold text-lightW text-sm">+55 (11) 99999-9999</p>
-                                </div>
-
-                                <div className='flex flex-col gap-1'>
-                                    <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Email</h3>
-                                    <p className="border-b font-semibold text-lightW text-sm">XHt4U@example.com</p>
-                                </div>
-                            </div>
-                        </div>
-                        <TransitionsModalSupplier/>
-                    </div>
-
-                    <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>
-                        <div className='flex items-center gap-2'>
-                            <FaMapMarkedAlt size={25}/>
-                            <p className='text-base text-lightW/70 font-semibold'>R. dos Gerânios, 1805 - Lagoa Nova, Natal - RN, 59077-040</p>
-                        </div>
-                        <div className='size-2 rounded-full bg-lightW/50 group-hover:bg-primary transition duration-300'></div>
-                        <div className='flex items-center gap-2'>
-                            <FaBoxOpen size={25}/>
-                            <p className='text-base text-lightW/70 font-semibold'>12 Produtos</p>
-                        </div>
-                    </div>
-
-                </div>
-                
-          </div>
+          {suppliers.map((supplier, index) => (
+            <SupplierCard
+              key={index}
+              name={supplier.name}
+              responsible={supplier.responsible}
+              email={supplier.email}
+              telephone={supplier.telephone}
+              adress={supplier.address}
+            />
+          ))}
 
 
         </section>

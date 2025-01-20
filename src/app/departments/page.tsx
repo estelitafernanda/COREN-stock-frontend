@@ -1,12 +1,48 @@
-import React from 'react'
+'use client';
+import React, { useEffect, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import Image from 'next/image';
 import Avatar from  "../../../public/memoji.png";
 import DepartmentCard from '@/components/DepartmentCard';
+import axios from 'axios';
+import Loading from '@/components/Loading';
+
+
+interface Sector {
+  name: string;
+  unity: string;
+  headSector:string;
+  users_count: number;
+}
 
 function Departments() {
+
+  const [sectors, setSectors] = useState<Sector[]>([]); 
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null); 
+
+  useEffect(() => {
+    axios.get<Sector[]>('http://127.0.0.1:8000/api/showDepartments')
+      .then(response => {
+        setSectors(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError('Erro ao carregar os dados da API');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <Loading/>
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
 <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="flex justify-between w-full">
@@ -64,9 +100,9 @@ function Departments() {
 
           <div className='flex flex-col gap-4 w-full'>
 
-            <DepartmentCard name="DTIC" superUser="Iran Vital" func={4} local="Natal/RN"/>
-            <DepartmentCard name="Contabilidade" superUser="User 2" func={6} local="Natal/RN"/>
-            <DepartmentCard name="Financeiro" superUser="Aldeíse" func={5} local="Natal/RN"/>
+              {sectors.map((sector, index) => (
+                <DepartmentCard key={index} name={sector.name} superUser={sector.headSector} func={sector.users_count} local={sector.unity} />
+              ))}
 
           </div>
 

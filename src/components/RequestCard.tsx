@@ -4,7 +4,7 @@ import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import { SiSuperuser } from 'react-icons/si';
 
 
-function RequestCard({product, department, userName, desc, date, qnt}: {product: string, department: string, userName: string , desc: string, date: string, qnt: number}) {
+function RequestCard({product,  userName, desc, date, qnt, department}: {product: string, department: string, userName: string , desc: string, date: string, qnt: number}) {
   return (
     <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg max-h-44">
     <div className="flex justify-between items-center">

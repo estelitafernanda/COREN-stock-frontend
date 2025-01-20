@@ -118,11 +118,7 @@ export default function TransitionsModalSupplier() {
                               <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Telefone:</h2>
                               <p className='text-md font-semibold'>(84) 99999-9999</p>
                             </div>
-
-                            <div className='cursor-pointer relative flex items-center justify-center size-8 rounded-xl bg-white/10 hover:text-green/50 text-green transition duration-300'>
-                              <FaPlus size={14}/>
-                            </div>
-
+                            
                           </div>
                         </div>
                       </div>

@@ -6,11 +6,12 @@ import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 
 type FormDataType = {
-    describe: string;
-    requestDate: string;
-    quantity: string;
-    idProduct: string;
-    idUser: string;
+    corporateReason: string;
+    name: string;
+    address: string;
+    telephone: string;
+    email: string;
+    responsible: string;
 };
 
 function SupplierForm() {
@@ -20,11 +21,12 @@ function SupplierForm() {
     //AXIOS POST SECTION
 
     const [formData, setFormData] = useState<FormDataType>({
-        describe: '',
-        requestDate: '',
-        quantity: '',
-        idProduct: '',
-        idUser: '',
+        corporateReason: '',
+        name: '',
+        address: '',
+        telephone: '',
+        email: '',
+        responsible: '',
     });
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -57,7 +59,7 @@ function SupplierForm() {
             }
           );
           
-          router.push("/requests");
+          router.push("/suppliers");
           alert("fornecedor criado com sucesso");
         } catch (error) {
           console.error("Erro ao adicionar fornecedor:", error);
@@ -95,19 +97,27 @@ function SupplierForm() {
                 
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Nome</label>
-                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="text" value={formData.name} name='name' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Razão Social</label>
-                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="text" value={formData.corporateReason} name='corporateReason' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <div className='flex flex-col gap-2 '>
                         <label htmlFor="" className='text-md font-bold'>Endereço</label>
-                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <input type="text" value={formData.address} name='address' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <div className='flex flex-col gap-2 '>
-                        <label htmlFor="" className='text-md font-bold'>Contato</label>
-                        <input type="text" placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                        <label htmlFor="" className='text-md font-bold'>Email</label>
+                        <input type="text" value={formData.email} name='email' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                    </div>
+                    <div className='flex flex-col gap-2 '>
+                        <label htmlFor="" className='text-md font-bold'>Número</label>
+                        <input type="text" value={formData.telephone} name='telephone' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                    </div>
+                    <div className='flex flex-col gap-2 '>
+                        <label htmlFor="" className='text-md font-bold'>Responsavel</label>
+                        <input type="text" value={formData.responsible} name='responsible' onChange={handleChange} placeholder='Nome do produto' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                     </div>
                     <input type="submit" value="Fazer Pedido" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                 </form>

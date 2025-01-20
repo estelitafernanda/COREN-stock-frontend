@@ -20,8 +20,9 @@ interface Request {
     describe: string;
     requestDate: string;
     quantity: number;
-    idProduct: number;
-    idUser: number;
+    product_name: string;
+    user_name: string;
+    sector_name: string;
 }
 
 export default function Order() {
@@ -124,8 +125,8 @@ export default function Order() {
        
           </div>
             <div className='flex flex-col w-full gap-5'>
-                {requests.map(request=>(
-                    <RequestCard key={request.id} product={request.idProduct} department={request.idUser} userName={request.userName} desc={request.describe} date={request.date} qnt={request.qnt}/>
+                {requests.map((request, index)=>(
+                    <RequestCard key={index} product={request.product_name} department={request.sector_name} userName={request.user_name} desc={request.describe} date={request.requestDate} qnt={request.quantity}/>
                 ))}
             </div>
         </section>
