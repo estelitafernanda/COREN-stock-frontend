@@ -1,7 +1,6 @@
 'use client';
 
 import axios from 'axios';
-import {useRouter} from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -22,7 +21,6 @@ type FormDataType = {
 
 function ProductForm() {
 
-const router = useRouter();
       
 const [formData, setFormData] = useState<FormDataType>({
     nameProduct: "",
@@ -80,8 +78,9 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
           },
         }
       );
-      router.push("/products");
+  
       alert("Produto adicionado com sucesso!");
+      console.log(response.data);
     } catch (error) {
       console.error("Erro ao adicionar produto:", error);
       alert("Erro ao adicionar produto.");
@@ -93,7 +92,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
         <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
             <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
                 <aside className=' w-[18%] flex flex-col gap-5'>
-                    <h2 className='text-3xl font-bold'>Adicionar Produto</h2>
+                    <h2 className='text-3xl font-bold'>Editar Produto</h2>
                     <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de produtos</a>
                     <div className='flex flex-col gap-[38px]'>
                         <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>

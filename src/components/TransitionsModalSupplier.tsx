@@ -118,11 +118,7 @@ export default function TransitionsModalSupplier() {
                               <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Telefone:</h2>
                               <p className='text-md font-semibold'>(84) 99999-9999</p>
                             </div>
-
-                            <div className='cursor-pointer relative flex items-center justify-center size-8 rounded-xl bg-white/10 hover:text-green/50 text-green transition duration-300'>
-                              <FaPlus size={14}/>
-                            </div>
-
+                            
                           </div>
                         </div>
                       </div>
@@ -149,11 +145,11 @@ export default function TransitionsModalSupplier() {
                   <div className='w-[50%]'>
                     <h2 className='text-lg font-bold mb-1'>Produtos <span className='text-lightW/50'>(<span className='text-primary'>12</span>)</span></h2>
                     <div className='flex flex-col gap-3'>
-                      <ProductCard name="Produto 1" category="Categoria 1" stock={10}/>
+                      {/* <ProductCard name="Produto 1" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 2" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 3" category="Categoria 1" stock={10}/>
                       <ProductCard name="Produto 4" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 5" category="Categoria 1" stock={10}/>
+                      <ProductCard name="Produto 5" category="Categoria 1" stock={10}/> */}
                     </div>
                   </div>
               </div>

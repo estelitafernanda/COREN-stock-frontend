@@ -1,11 +1,48 @@
-import React from 'react'
+'use client';
+import React, { useEffect, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import { MdArrowDropDown } from "react-icons/md";
 import RequestCard from '@/components/RequestCard';
+import axios from 'axios';
+import Loading from '@/components/Loading';
+
+
+interface Request {
+    describe: string;
+    requestDate: string;
+    quantity: number;
+    product_name: string;
+    user_name: string;
+    sector_name: string;
+}
 
 export default function Order() {
+    const [requests, setRequests] = useState<Request[]>([]); 
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null); 
+  
+    useEffect(() => {
+      axios.get<Request[]>('http://127.0.0.1:8000/api/showRequests')
+        .then(response => {
+          setRequests(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError('Erro ao carregar os dados da API');
+          setLoading(false);
+        });
+    }, []);
+  
+    if (loading) {
+      return <Loading/>
+    }
+  
+    if (error) {
+      return <div>{error}</div>;
+    }
+  
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
         <div className="flex justify-between w-full">
@@ -81,7 +118,9 @@ export default function Order() {
        
           </div>
             <div className='flex flex-col w-full gap-5'>
-                <RequestCard product="Copo de plástico" qnt={1} department="DTIC" userName="Augusto" desc="descrição do produto" date="15/01/2025"/>
+                {requests.map((request, index)=>(
+                    <RequestCard key={index} product={request.product_name} department={request.sector_name} userName={request.user_name} desc={request.describe} date={request.requestDate} qnt={request.quantity}/>
+                ))}
             </div>
         </section>
 
