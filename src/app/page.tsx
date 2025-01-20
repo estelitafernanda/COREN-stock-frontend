@@ -2,7 +2,12 @@
 import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar  } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import ChartPieDash from "@/components/dash/ChartPieDash";
+import Trash from "../../public/lixeira.png";
+import Chair from "../../public/cadeira.png";
+import Cookie from "../../public/biscoito.png";
+import Image from "next/image";
 import ButtonMenu from "@/components/ButtonMenu";
+import ProductCard from "@/components/ProductCard";
 import LineChartDash from "@/components/dash/LineChartDash";
 
 
@@ -58,7 +63,9 @@ export default function Home() {
            <a href="/inventory" className="text-lg font-bold text-primary pr-3 hover:text-[#B4FFFF] flex gap-1 items-center transition duration-300"><span>Ver Produtos</span><IoIosArrowForward/></a>
           </div>
           <div className="flex flex-col gap-3 mt-3">
-
+            <ProductCard name="Lixeira de Aço Polido Tramontina" category="Cadeira" stock={10}/>
+            <ProductCard name="Cadeira de Escritorio" category="Cadeira" stock={2}/>
+            <ProductCard name="Água Sanitária Dragão 1.5L" category="Cadeira" stock={8}/>
           </div>
         </div>
       </div>

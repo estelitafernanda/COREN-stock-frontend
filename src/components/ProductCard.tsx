@@ -1,15 +1,16 @@
 'use client';
 import React from 'react'
 import Image from 'next/image'
+import Trash from '../../public/lixeira.png'
 import TransitionsModal from './TransitionsModal'
 
-function ProductCard({name, category, stock, image}:{name: string, image:string, category: string, stock: number} ) {
+function ProductCard({name, category, stock}:{name: string, category: string, stock: number} ) {
   return (
     
     <div className="border border-transparent hover:border-primary justify-between items-center transition duration-300 flex bg-blackThirdy gap-3 p-2 rounded-lg">
       <div className='flex gap-3'>
       <div className="bg-lightW/90 h-16 w-16 rounded-lg flex items-center justify-center">
-            <Image src={`http://127.0.0.1:8000/images/products/${image}`} alt='image' width={50} height={50}/>
+            <Image src={Trash} alt="Avatar" width={50} height={50}/>
           </div>
           <div>
             <h3 className="font-bold text-lg">{name}</h3>
