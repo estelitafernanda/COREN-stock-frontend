@@ -6,6 +6,7 @@ import { FaSun } from "react-icons/fa";
 import React from 'react'
 import Image from "next/image";
 import Link from "next/link";
+import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 
 const headerLinks = [
     {
@@ -16,28 +17,35 @@ const headerLinks = [
     },
     {
         id: 2,
+        title: "Pedidos",
+        icon: <VscGitPullRequestNewChanges size={16}/>,
+        link: '/requests'
+    },
+    {
+        id: 3,
+        title: "Movimentação",
+        icon: <FaCalendar size={16}/>,
+        link: '/movements'
+    },
+    {
+        id: 4,
         title: "Inventario",
         icon: <MdInventory size={20}/>,
         link: '/inventory'
     },
     {
-        id: 3,
+        id: 5,
         title: "Fornecedores",
         icon: <MdPayments size={20}/>,
         link: "/suppliers"
     },
     {
-        id: 4,
-        title: "Movimentação",
-        icon: <FaCalendar size={16}/>,
-        link: '/orders'
-    },
-    {
-        id: 5,
+        id: 6,
         title: "Departamentos",
         icon: <MdMeetingRoom size={16}/>,
         link: '/departments'
-    }
+    },
+
 ]
 
 function Header() {

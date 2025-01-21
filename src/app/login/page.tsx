@@ -35,7 +35,7 @@ function page() {
         </section>
 
         <section className='bg-primary h-screen flex flex-col items-center justify-center rounded-r-3xl relative'>
-            <Image src={Computer} alt='background' className='w-[70%] animate-[bounce_6s_ease-in-out_infinite] z-10' />
+            <Image src={Computer} alt='background' className='w-[70%]  z-10' />
             {/* <Image src={Background} alt='background' className='w-full h-full object-cover absolute' /> */}
             <Image src={Worm} alt='background' className='w-[70%] -bottom-20 -right-[240px]  z-10 absolute' />
             <Image src={Worm} alt='background' className='w-[70%] -top-[200px] right-[500px] rotate-180  z-10 absolute' />

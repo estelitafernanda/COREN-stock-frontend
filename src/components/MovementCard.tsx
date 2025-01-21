@@ -1,0 +1,50 @@
+import React from 'react'
+import { FaReceipt, FaTruckMoving } from 'react-icons/fa6'
+import { GiConfirmed } from 'react-icons/gi'
+import { GrValidate } from 'react-icons/gr'
+
+function MovementCard({quantity, movementStatus, product, productQuantity, userName, userSector, requestDescribe} 
+    : {quantity: number, movementStatus: string , product: string, productQuantity: number, userName: string, userSector: string, requestDescribe: string }) {
+  return (
+    <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-60">
+                <div className="flex justify-between items-center">
+                        <div className='flex items-center gap-3'>
+                            <h3 className="font-bold text-lg">MO-001</h3>
+                            <div className='h-5 w-[2px] bg-lightW/30'></div>
+                            <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
+                        </div>
+                        <a href="/details/movementDetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                    </div>
+        
+                    <div className="flex gap-2 items-center">
+                        <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
+                            
+                        </div>
+                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">User1</p>
+                        <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
+                        <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary group-hover:text-[#B4FFFF] transition duration-300"> -&gt; </span>Recursos Humanos</span></p>
+                        <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
+                        <p className="font-semibold text-lightW/50 text-sm ">Em Andamento</p>
+                    </div>
+
+                    <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
+                        <span className='flex items-center gap-2'>
+                            <p className='text-sm font-bold'>Aguardando Validação</p>
+                            <div className='h-5 w-[2px] bg-lightW/30'></div>
+                            <p className='text-sm font-bold text-lightW/50'>Dezembro 10, 2024</p>
+                        </span>
+                        <div className='flex flex-col w-full px-5 py-2 h-12 mt-3 items-center'>
+                            <div className='flex justify-between w-full h-[5px] bg-primary rounded-full group-hover:bg-[#B4FFFF] transition duration-300  mt-3'>
+                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackThirdy rounded-full'><FaReceipt size={25}/></div>
+                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GrValidate size={25}/></div>
+                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy group-hover:text-[#B4FFFF] transition duration-300 rounded-full text-primary'><FaTruckMoving size={25}/></div>
+                                <div className='-mt-4 flex items-center justify-center h-[36px] w-[44px]  bg-blackThirdy  rounded-full'><GiConfirmed size={25}/></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+  )
+}
+
+export default MovementCard

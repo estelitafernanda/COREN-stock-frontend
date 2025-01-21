@@ -68,10 +68,9 @@ export default function TransitionsModalSupplier() {
                 </div>
                 <div className='flex flex-col'>
                   <h2 className='text-2xl font-bold'>Acme Corporation</h2>
-                  <p className='text-sm font-semibold text-lightW/30 uppercase tracking-wider mt-1'>Fornecedor de: </p>
+                  <p className='text-sm font-semibold text-lightW/30 uppercase tracking-wider mt-1'>Pessoa responsavel: </p>
                   <div className='flex mt-1 gap-2'>
-                    <p className='text-sm font-bold py-1 px-3 bg-green rounded-lg'>Alimentos</p>
-                    <p className='text-sm font-bold py-1 px-3 bg-primary rounded-lg'>Escritório</p>
+                    <p className='text-sm font-bold py-1 px-3 bg-blackThirdy rounded-lg'>Maria almeida</p>
                   </div>
                 </div>
 
