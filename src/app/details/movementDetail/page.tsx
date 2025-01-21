@@ -9,7 +9,7 @@ function MovementDetail() {
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center   font-[family-name:var(--font-geist-sans)] rounded-md">
         <span className='group dispĺay flex items-center gap-1 w-fit'>
             <FaArrowLeft className='group-hover:text-primary transition duration-300'/>
-            <a href="/orders" className='text-xl font-semibold group-hover:text-primary transition duration-300'>Voltar</a>
+            <a href="/movements" className='text-xl font-semibold group-hover:text-primary transition duration-300'>Voltar</a>
         </span>
         <div className='className="mx-auto w-[95vw] mt-7 flex py-6 px-8 min-h-[calc(100vh-30rem)] gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] rounded-md'>
             <div className='flex items-center justify-center bg-blackThirdy min-h-[calc(100vh-20rem)] w-[50%] p-5  rounded-lg'>

@@ -17,34 +17,35 @@ const headerLinks = [
     },
     {
         id: 2,
-        title: "Inventario",
-        icon: <MdInventory size={20}/>,
-        link: '/inventory'
+        title: "Pedidos",
+        icon: <VscGitPullRequestNewChanges size={16}/>,
+        link: '/requests'
     },
     {
         id: 3,
-        title: "Fornecedores",
-        icon: <MdPayments size={20}/>,
-        link: "/suppliers"
-    },
-    {
-        id: 4,
         title: "Movimentação",
         icon: <FaCalendar size={16}/>,
         link: '/movements'
     },
     {
+        id: 4,
+        title: "Inventario",
+        icon: <MdInventory size={20}/>,
+        link: '/inventory'
+    },
+    {
         id: 5,
+        title: "Fornecedores",
+        icon: <MdPayments size={20}/>,
+        link: "/suppliers"
+    },
+    {
+        id: 6,
         title: "Departamentos",
         icon: <MdMeetingRoom size={16}/>,
         link: '/departments'
     },
-    {
-        id: 6,
-        title: "Pedidos",
-        icon: <VscGitPullRequestNewChanges size={16}/>,
-        link: '/requests'
-    }
+
 ]
 
 function Header() {
