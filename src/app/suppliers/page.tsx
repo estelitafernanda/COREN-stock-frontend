@@ -1,11 +1,8 @@
 "use client";
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaHeadset } from 'react-icons/fa6'
 import { IoIosAdd } from "react-icons/io";
-import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
-import Image from 'next/image';
-import Avatar from  "../../../public/memoji.png";
-import TransitionsModalSupplier from '@/components/TransitionsModalSupplier';
+import { FaSearch,} from "react-icons/fa";
 import axios from 'axios';
 import Loading from '@/components/Loading';
 import SupplierCard from '@/components/SupplierCard';

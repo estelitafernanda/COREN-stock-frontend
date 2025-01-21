@@ -1,6 +1,6 @@
 'use client';
 
-import axios from 'axios';
+import api from '@/app/api/axios';
 import {useRouter} from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { FaWpforms } from "react-icons/fa";
@@ -71,7 +71,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
     }
   
     try {
-      const response = await axios.post(
+      const response = await api.post(
         "http://127.0.0.1:8000/api/addProduct",
         formDataToSend,
         {

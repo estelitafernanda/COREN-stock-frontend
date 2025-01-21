@@ -1,7 +1,6 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
 import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
-import { SiSuperuser } from 'react-icons/si';
+
 
 
 function DepartmentCard({name, superUser, func, local}: {name: string, superUser: string, func: number , local: string}) {

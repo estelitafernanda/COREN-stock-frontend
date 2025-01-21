@@ -1,5 +1,4 @@
 import React from 'react'
-import Background from '../../../public/bg.jpg' 
 import Computer from '../../../public/login-image.png'
 import Worm from '../../../public/worm.png'
 import Image from 'next/image'

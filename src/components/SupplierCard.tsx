@@ -1,8 +1,7 @@
-import Image from 'next/image'
-import React from 'react'
-import TransitionsModalSupplier from './TransitionsModalSupplier'
-import { FaMapMarkedAlt } from 'react-icons/fa'
-import { FaBoxOpen } from 'react-icons/fa6'
+import React from 'react';
+import TransitionsModalSupplier from './TransitionsModalSupplier';
+import { FaMapMarkedAlt } from 'react-icons/fa';
+import { FaBoxOpen } from 'react-icons/fa6';
 
 function SupplierCard({name, responsible, email, telephone, adress}: {name: string, responsible: string, email: string, telephone: string, adress: string}) {
   return (

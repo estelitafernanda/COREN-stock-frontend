@@ -33,7 +33,7 @@ interface User{
     updated_at: string;
 }
 
-function MovementForm() {
+function RequestForm() {
     const router = useRouter()
 
     //AXIOS POST SECTION
@@ -66,7 +66,7 @@ function MovementForm() {
         }
       
         try {
-          const response = await axios.post(
+          const response = await api.post(
             "http://127.0.0.1:8000/api/addRequest",
             formDataToSend,
             {
@@ -99,7 +99,7 @@ function MovementForm() {
           setProducts(response.data);
           setLoading(false);
         })
-        .catch(err => {
+        .catch(error => {
           setError('Erro ao carregar os dados da API');
           setLoading(false);
         });
@@ -201,4 +201,4 @@ function MovementForm() {
   )
 }
 
-export default MovementForm;
+export default RequestForm;
