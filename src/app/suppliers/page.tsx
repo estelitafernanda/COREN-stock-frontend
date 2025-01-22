@@ -5,7 +5,7 @@ import { IoIosAdd } from "react-icons/io";
 import { FaSearch, FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import Image from 'next/image';
 import Avatar from  "../../../public/memoji.png";
-import TransitionsModalSupplier from '@/components/TransitionsModalSupplier';
+import TransitionsModalSupplier from '@/components/TransitionsModalMovement';
 import axios from 'axios';
 import Loading from '@/components/Loading';
 import SupplierCard from '@/components/SupplierCard';

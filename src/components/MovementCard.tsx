@@ -1,7 +1,9 @@
+'use client';
 import React from 'react'
 import { FaReceipt, FaTruckMoving } from 'react-icons/fa6'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrValidate } from 'react-icons/gr'
+import TransitionsModalMovement from './TransitionsModalMovement'
 
 function MovementCard() {
   return (
@@ -12,7 +14,7 @@ function MovementCard() {
                             <div className='h-5 w-[2px] bg-lightW/30'></div>
                             <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
                         </div>
-                        <a href="/details/movementDetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                        <TransitionsModalMovement/>
                     </div>
         
                     <div className="flex gap-2 items-center">

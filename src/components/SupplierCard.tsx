@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import TransitionsModalSupplier from './TransitionsModalSupplier'
+import TransitionsModalSupplier from './TransitionsModalMovement'
 import { FaMapMarkedAlt } from 'react-icons/fa'
 import { FaBoxOpen } from 'react-icons/fa6'
 
