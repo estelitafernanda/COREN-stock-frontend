@@ -8,11 +8,6 @@ import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
 import { FaEdit, FaLongArrowAltRight, FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import Avatar from  "../../public/memoji.png";
-import CorporationImage from "../../public/generic-electric-logo.png";
-import Image from 'next/image';
-import { MdOutlineConnectWithoutContact } from "react-icons/md";
-import ProductCard from './ProductCard';
 
 const style = {
   position: 'absolute',

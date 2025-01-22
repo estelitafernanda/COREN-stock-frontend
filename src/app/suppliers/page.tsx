@@ -122,7 +122,7 @@ function Suppliers() {
                 </div>
             </div>
           </div>
-
+          <div className='flex flex-col gap-5 w-full'>
           {suppliers.map((supplier, index) => (
             <SupplierCard
               key={index}
@@ -131,10 +131,10 @@ function Suppliers() {
               email={supplier.email}
               telephone={supplier.telephone}
               adress={supplier.address}
+              idSupplier={supplier.idSupplier}
             />
           ))}
-
-
+          </div>
         </section>
 
     </div>

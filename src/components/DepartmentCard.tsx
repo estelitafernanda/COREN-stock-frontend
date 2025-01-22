@@ -4,14 +4,8 @@ import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import { SiSuperuser } from 'react-icons/si';
 import TransitionsModalSupplier from './TransitionsModalSector';
 
-interface DepartmentCardProps {
-    name: string;
-    superUser: string;
-    func: number;
-    local: string;
-  }
 
-  const DepartmentCard: React.FC<DepartmentCardProps> = ({ name, superUser, func, local }) => {
+function DepartmentCard({name, superUser, func, local, idSector}: {name: string, superUser: string, func: number , local: string, idSector: number}) {
   return (
     <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg max-h-44">
     <div className="flex justify-between items-center">
@@ -30,7 +24,7 @@ interface DepartmentCardProps {
                     </div>
                 </div>
             </div>
-            <TransitionsModalSupplier/>
+            <TransitionsModalSupplier infoIdData={idSector}/>
         </div>
 
         <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>

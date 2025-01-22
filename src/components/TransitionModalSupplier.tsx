@@ -13,6 +13,7 @@ import CorporationImage from "../../public/generic-electric-logo.png";
 import Image from 'next/image';
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import ProductCard from './ProductCard';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
@@ -28,14 +29,52 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModalSupplier() {
+interface Product {
+  idProduct: number;
+  nameProduct: string;
+  image: string;
+  category: string;
+  currentQuantity: number;
+  unitPrice: number;
+}
+
+interface Supplier {
+  corporateReason: string;
+  name: string;
+  address: string;
+  telephone: string;
+  email: string;
+  responsible: string;
+  cnpj: string;
+  products: Product[];
+}
+
+
+export default function TransitionModalSupplier({idForData}: {idForData: number}) {
   const [open, setOpen] = React.useState(false);
+  const [supplier, setSupplier] = React.useState<Supplier | null>(null);
+  const products = supplier?.products || [];
+  console.log(products);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  React.useEffect(() => {
+    if (open) {
+      axios
+        .get(`http://127.0.0.1:8000/api/suppliers/${idForData}`)
+        .then((response) => {
+          setSupplier(response.data);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch supplier data:", error);
+        });
+    }
+  }, [open, idForData]);
+
   return (
     <div>
-      <Button onClick={handleOpen} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
+      <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -70,10 +109,10 @@ export default function TransitionsModalSupplier() {
                   <Image src={CorporationImage} alt="Corporation" width={100} height={100}/>
                 </div>
                 <div className='flex flex-col'>
-                  <h2 className='text-2xl font-bold'>Acme Corporation</h2>
+                  <h2 className='text-2xl font-bold'>{supplier?.name}</h2>
                   <p className='text-sm font-semibold text-lightW/30 uppercase tracking-wider mt-1'>Pessoa responsavel: </p>
                   <div className='flex mt-1 gap-2'>
-                    <p className='text-sm font-bold py-1 px-3 bg-blackThirdy rounded-lg'>Maria almeida</p>
+                    <p className='text-sm font-bold py-1 px-3 bg-blackThirdy rounded-lg'>{supplier?.responsible}</p>
                   </div>
                 </div>
 
@@ -84,7 +123,7 @@ export default function TransitionsModalSupplier() {
                     <div className='flex flex-col gap-1'>
                       <h2 className='text-lg font-bold'>Endereço</h2>
                       <div className='bg-blackThirdy w-full h-16 rounded-lg px-3 flex items-center'>
-                        <p className='text-sm font-semibold'>R. dos Gerânios, 1805 - Lagoa Nova, Natal - RN, 59077-040</p>
+                        <p className='text-sm font-semibold'>{supplier?.address}</p>
                       </div>
                     </div>
                     <div className='flex flex-col gap-1'>
@@ -97,8 +136,8 @@ export default function TransitionsModalSupplier() {
                                 <p className='text-3xl text-center font-bold'>MA</p>
                               </div>
                               <div className=' mt-2'>
-                                <h2 className='text-lg font-bold'>Mariana Almeida</h2>
-                                <p className='text-sm font-semibold'>Gestora</p>
+                                <h2 className='text-lg font-bold'>{supplier?.responsible}</h2>
+                                <p className='text-sm font-semibold'>Pessoa responsavel</p>
                               </div>
                             </div>
                             <div className='cursor-pointer relative flex items-center justify-center gap-2 px-4 rounded-md py-3 font-semibold bg-white/10 hover:text-primary  transition duration-300'>
@@ -108,14 +147,14 @@ export default function TransitionsModalSupplier() {
 
                           <div className='flex gap-2 items-center mt-4'>
                             <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Email:</h2>
-                            <p className='text-md font-semibold'>cHx2u@example.com</p>
+                            <p className='text-md font-semibold'>{supplier?.email}</p>
                           </div>
 
                           <div className='flex items-center w-full justify-between'>
 
                             <div className='flex gap-2 items-center'>
                               <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Telefone:</h2>
-                              <p className='text-md font-semibold'>(84) 99999-9999</p>
+                              <p className='text-md font-semibold'>{supplier?.telephone}</p>
                             </div>
                             
                           </div>
@@ -128,12 +167,12 @@ export default function TransitionsModalSupplier() {
                       <div className='flex flex-col gap-3  bg-blackThirdy w-full rounded-lg p-5'>
                           <div className='flex gap-2 items-center'>
                             <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Razão Social:</h2>
-                            <p className='text-md font-semibold'>Acme Corporation LTDA</p>
+                            <p className='text-md font-semibold'>{supplier?.corporateReason}</p>
                           </div>
 
                           <div className='flex gap-2 items-center'>
                             <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>CNPJ:</h2>
-                            <p className='text-md font-semibold'>00.000.000/0000-00</p>
+                            <p className='text-md font-semibold'>{supplier?.cnpj}</p>
                           </div>
 
                       </div>
@@ -142,13 +181,16 @@ export default function TransitionsModalSupplier() {
                   </div>
                   <div className='h-[100%] w-1 flex items-center bg-lightW/10 rounded-full'></div>
                   <div className='w-[50%]'>
-                    <h2 className='text-lg font-bold mb-1'>Produtos <span className='text-lightW/50'>(<span className='text-primary'>12</span>)</span></h2>
+                    <h2 className='text-lg font-bold mb-1'>Produtos <span className='text-lightW/50'>(<span className='text-primary'>{products.length}</span>)</span></h2>
                     <div className='flex flex-col gap-3'>
-                      {/* <ProductCard name="Produto 1" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 2" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 3" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 4" category="Categoria 1" stock={10}/>
-                      <ProductCard name="Produto 5" category="Categoria 1" stock={10}/> */}
+                    {products.map((product) => (
+                      <ProductCard key={product.idProduct}
+                        name={product.nameProduct}
+                        category={product.category}
+                        stock={product.currentQuantity}
+                        image={product.image}
+                      />
+                    ))}
                     </div>
                   </div>
               </div>
