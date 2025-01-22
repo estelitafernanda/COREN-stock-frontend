@@ -1,7 +1,9 @@
+'use client';
 import React from 'react'
 import { FaReceipt, FaTruckMoving } from 'react-icons/fa6'
 import { GiConfirmed } from 'react-icons/gi'
 import { GrValidate } from 'react-icons/gr'
+import TransitionsModalMovement from './TransitionsModalMovement'
 
 function MovementCard({quantity, movementStatus, product, productQuantity, userName, userSector, requestDescribe} 
     : {quantity: number, movementStatus: string , product: string, productQuantity: number, userName: string, userSector: string, requestDescribe: string }) {
@@ -9,27 +11,29 @@ function MovementCard({quantity, movementStatus, product, productQuantity, userN
     <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-60">
                 <div className="flex justify-between items-center">
                         <div className='flex items-center gap-3'>
-                            <h3 className="font-bold text-lg">MO-001</h3>
+                            <h3 className="font-bold text-lg">{quantity}</h3>
                             <div className='h-5 w-[2px] bg-lightW/30'></div>
-                            <h3 className="font-bold text-lg">Lixeira de Aço Acabamento Polido Tramontina</h3>
+                            <h3 className="font-bold text-lg">{product}</h3>
                         </div>
-                        <a href="/details/movementDetail" className='font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Ver Mais &gt;&gt;</a>
+                        <TransitionsModalMovement/>
                     </div>
         
                     <div className="flex gap-2 items-center">
                         <div className='size-10 flex rounded-full bg-primary justify-center items-center'>
                             
                         </div>
-                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">User1</p>
+                        <p className=" text-sm text-light/30 text-lightW/50 font-semibold">{userName}</p>
                         <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
-                        <p className="font-semibold text-lightW/70 text-sm">Departamento Financeiro<span className="text-lightW/70"><span className="text-primary group-hover:text-[#B4FFFF] transition duration-300"> -&gt; </span>Recursos Humanos</span></p>
+                        <p className="font-semibold text-lightW/70 text-sm">{userSector}<span className="text-lightW/70"><span className="text-primary group-hover:text-[#B4FFFF] transition duration-300"> -&gt; </span>{userSector}</span></p>
                         <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
-                        <p className="font-semibold text-lightW/50 text-sm ">Em Andamento</p>
+                        <p className="font-semibold text-lightW/50 text-sm ">{movementStatus}</p>
+                        <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
+                        <p className="font-semibold text-lightW/50 text-sm ">{productQuantity}</p>
                     </div>
 
                     <div className='bg-blackThirdy w-full h-full p-3 rounded-lg'>
                         <span className='flex items-center gap-2'>
-                            <p className='text-sm font-bold'>Aguardando Validação</p>
+                            <p className='text-sm font-bold'>{requestDescribe}</p>
                             <div className='h-5 w-[2px] bg-lightW/30'></div>
                             <p className='text-sm font-bold text-lightW/50'>Dezembro 10, 2024</p>
                         </span>

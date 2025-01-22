@@ -9,6 +9,7 @@ import Loading from '@/components/Loading';
 
 
 interface Sector {
+  idSector: number;
   name: string;
   unity: string;
   headSector:string;
@@ -98,8 +99,8 @@ function Departments() {
 
           <div className='flex flex-col gap-4 w-full'>
 
-              {sectors.map((sector, index) => (
-                <DepartmentCard key={index} name={sector.name} superUser={sector.headSector} func={sector.users_count} local={sector.unity} />
+              {sectors.map((sector) => (
+                <DepartmentCard key={sector.idSector} idSector={sector.idSector} name={sector.name} superUser={sector.headSector} func={sector.users_count} local={sector.unity} />
               ))}
 
           </div>

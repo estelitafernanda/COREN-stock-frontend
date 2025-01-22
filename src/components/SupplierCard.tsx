@@ -1,9 +1,9 @@
-import React from 'react';
-import TransitionsModalSupplier from './TransitionsModalSupplier';
-import { FaMapMarkedAlt } from 'react-icons/fa';
-import { FaBoxOpen } from 'react-icons/fa6';
+import React from 'react'
+import { FaMapMarkedAlt } from 'react-icons/fa'
+import { FaBoxOpen } from 'react-icons/fa6'
+import TransitionModalSupplier from './TransitionModalSupplier'
 
-function SupplierCard({name, responsible, email, telephone, adress}: {name: string, responsible: string, email: string, telephone: string, adress: string}) {
+function SupplierCard({name, responsible, email, telephone, adress, idSupplier}: {name: string, responsible: string, email: string, telephone: string, adress: string, idSupplier: number}) {
   return (
     <div className='flex flex-col gap-4 w-full'>
                 <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-48">
@@ -28,7 +28,7 @@ function SupplierCard({name, responsible, email, telephone, adress}: {name: stri
                                 </div>
                             </div>
                         </div>
-                        <TransitionsModalSupplier/>
+                        <TransitionModalSupplier idForData={idSupplier}/>
                     </div>
 
                     <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>

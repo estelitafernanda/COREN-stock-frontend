@@ -84,7 +84,7 @@ export default function TransitionsModal() {
                       </span>
                         <div>
                         <a href="forms/movementform">
-                        <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Realizar Movimentação<IoIosAdd size={20}/></button>
+                          <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Solicitar Pedido<IoIosAdd size={20}/></button>
                         </a>
                         </div>
                     </div>
