@@ -11,16 +11,6 @@ import { FaReceipt } from "react-icons/fa";
 import Avatar from  "../../../public/memoji.png";
 import MovementCard from '@/components/MovementCard';
 
-interface Product {
-    idProduct: number;
-    code: number;
-    image:string;
-    describe: string;
-    nameProduct: string;
-    category: string;
-    currentQuantity: number;
-  }
-
 export default function Order() {
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">

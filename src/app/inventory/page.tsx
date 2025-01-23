@@ -8,42 +8,80 @@ import { FaSearch } from "react-icons/fa";
 import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Loading from '@/components/Loading';
+import Pagination from '@/components/Pagination';
 
-// Tipagem do produto
+
 interface Product {
   idProduct: number;
-  code: number;
-  image:string;
-  describe: string;
+  code: string;
+  idDepartment: number;
   nameProduct: string;
   category: string;
+  describe: string;
+  minQuantity: number;
   currentQuantity: number;
+  location: string;
+  validity: string;
+  unitPrice: number;
+  image: string;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+interface ApiResponse {
+  current_page: number;
+  data: Product[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: Array<{
+    url: string | null;
+    label: string;
+    active: boolean;
+  }>;
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
 }
 
 const Inventory: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
-  useEffect(() => {
-    axios.get<Product[]>('http://127.0.0.1:8000/api/show')
+  const fetchProducts = (page: number) => {
+    setLoading(true);
+    axios.get<ApiResponse>(`http://127.0.0.1:8000/products?page=${page}`)
       .then(response => {
-        setProducts(response.data);
+        setProducts(response.data.data);
+        setTotalPages(response.data.last_page);
+        setCurrentPage(response.data.current_page);
         setLoading(false);
       })
       .catch(error => {
         setError('Erro ao carregar os dados da API');
         setLoading(false);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchProducts(currentPage);
+  }, [currentPage]);
 
   if (loading) {
-    return <Loading/>
+    return <Loading />;
   }
 
   if (error) {
     return <div>{error}</div>;
   }
+
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
@@ -195,12 +233,18 @@ const Inventory: React.FC = () => {
           {products.map(product => (
             <ProductCard
               key={product.idProduct}
+              idProduct={product.idProduct}
               name={product.nameProduct}
               category={product.category}
               image={product.image}
               stock={product.currentQuantity}
             />
           ))}
+                <Pagination
+                  currentPage={currentPage} 
+                  totalPages={totalPages} 
+                  onPageChange={setCurrentPage}
+                />
         </div>
       </section>
     </div>
