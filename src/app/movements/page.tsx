@@ -1,11 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FaHeadset, FaSearch, FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
+import { FaHeadset, FaSearch,} from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import MovementCard from '@/components/MovementCard';
 import Loading from '@/components/Loading';
 import axios from 'axios';
 import { MdArrowDropDown } from 'react-icons/md';
+import Pagination from '@/components/Pagination';
 
 interface Movement {
     idMovement: number;
@@ -28,52 +29,59 @@ interface ApiResponse {
     from: number;
     last_page: number;
     last_page_url: string;
-    links: Array<{ url: string | null; label: string; active: boolean }>;
+    links: Array<{
+      url: string | null;
+      label: string;
+      active: boolean;
+    }>;
     next_page_url: string | null;
     path: string;
     per_page: number;
     prev_page_url: string | null;
     to: number;
     total: number;
-}
+  }
 
 export default function Movement() {
-    const [movements, setMovements] = useState<Movement[]>([]);
+    const [movements, setMovements] = useState<Movement[]>([]); 
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null); 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [lastPage, setLastPage] = useState<number>(1);
-    const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-    const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
-    const [total, setTotal] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(1);
 
-    const fetchMovements = async (url: string) => {
-        if (!url) return; 
-        try {
-            setLoading(true);
-            setError(null);
-            const response = await axios.get<ApiResponse>(url);
-            const data = response.data;
-            setMovements(data.data || []);
-            setTotal(data.total || 0);
-            setCurrentPage(data.current_page || 1);
-            setLastPage(data.last_page || 1);
-            setNextPageUrl(data.next_page_url);
-            setPrevPageUrl(data.prev_page_url);
-        } catch (error) {
-            setMovements([]);
-            setError('Erro ao carregar os dados da API.');
-        } finally {
+    const fetchMovements= (page: number) => {
+        setLoading(true);
+        axios.get<ApiResponse>('http://127.0.0.1:8000/api/showMovement')
+          .then(response => {
+            console.log('Dados retornados da API:', response.data);
+            setMovements(response.data.data);
+            setTotalPages(response.data.last_page);
+            setCurrentPage(response.data.current_page);
             setLoading(false);
-        }
-    };
+          })
+          .catch(error => {
+            console.error('Erro ao carregar dados:', error);
+            setError('Erro ao carregar os dados da API');
+            setLoading(false);
+          });
+      };
+    
+      useEffect(() => {
+        fetchMovements(currentPage);
+      }, [currentPage]);
 
-    useEffect(() => {
-        fetchMovements('http://127.0.0.1:8000/api/showMovement');
-    }, []);
-
-    if (loading) return <Loading />;
-    if (error) return <div className="text-red-500">{error}</div>;
+      useEffect(() => {
+        console.log(movements);  // Verifique se os dados estão sendo carregados corretamente
+    }, [movements]);
+    
+      if (loading) {
+        return <Loading />;
+      }
+    
+      if (error) {
+        return <div>{error}</div>;
+      }
+    
 
     return (
         <div className="mx-auto w-[95vw] mt-7 flex flex-col gap-5 justify-center min-h-full font-sans">
@@ -81,7 +89,7 @@ export default function Movement() {
                 <div className="flex items-center gap-5">
                     <h1 className="text-3xl font-bold text-lightW">Movimentações:</h1>
                     <p className="text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30">
-                        Total de movimentações: <span className="text-lightW">{total}</span>
+                        Total de movimentações: <span className="text-lightW"></span>
                     </p>
                 </div>
                 <div className="flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2">
@@ -151,54 +159,33 @@ export default function Movement() {
                     </div>
                 </div>
                 <div className='flex flex-col w-full'>
-                <div className="flex flex-col w-full bg-blackSecondary relative h-full rounded-lg">
-                    <div className="flex flex-col gap-4 px-4 pt-4">
-                        {Array.isArray(movements) && movements.length > 0 ? (
-                                movements.map((movement, index) => (
-                                    <MovementCard
-                                        key={index}
-                                        quantity={movement.quantity}
-                                        movementStatus={movement.movementStatus}
-                                        product={movement.product_name}
-                                        productQuantity={movement.currentQuantity}
-                                        userName={movement.user_name_request}
-                                        userSector={movement.user_sector}
-                                        requestDescribe={movement.request_describe}
-                                    />
-                                ))
+                    <div className="flex flex-col w-full bg-blackSecondary relative h-full rounded-lg">
+                        <div className='flex flex-col gap-5 bg-blackSecondary p-5 rounded-lg w-[75%]'>
+                        {movements && Array.isArray(movements) && movements.length > 0 ? (
+                            movements.map(movement => (
+                                <MovementCard
+                                key={movement.idMovement}
+                                idMovement={movement.idMovement}
+                                quantity={movement.quantity}
+                                movementStatus={movement.movementStatus}
+                                product={movement.product_name}
+                                productQuantity={movement.currentQuantity}
+                                userName={movement.user_name_request}
+                                userSector={movement.user_sector}
+                                requestDescribe={movement.request_describe}
+                                />
+                            ))
                             ) : (
-                                <p className="text-center text-gray-500">Nenhuma movimentação encontrada.</p>
-                            )}
-                        </div>
-                        <div className="flex gap-10 justify-center items-center mt-3">
-                            <button
-                                onClick={() => prevPageUrl && fetchMovements(prevPageUrl)}
-                                disabled={!prevPageUrl}
-                                className={`px-5 py-2 rounded-lg ${
-                                    prevPageUrl
-                                        ? 'border gap-1 hover:border-primary bg-lightW hover:bg-transparent hover:text-primary text-blackPrimary'
-                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                }`}
-                            >
-                                <FaLongArrowAltLeft size={20} />
-                            </button>
-                            <p className="text-lightW text-md font-bold">
-                                Página {currentPage} de {lastPage}
-                            </p>
-                            <button
-                                onClick={() => nextPageUrl && fetchMovements(nextPageUrl)}
-                                disabled={!nextPageUrl}
-                                className={`px-5 py-2 rounded-lg ${
-                                    nextPageUrl
-                                        ? 'border gap-1 hover:border-primary bg-lightW hover:bg-transparent hover:text-primary text-blackPrimary'
-                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                }`}
-                            >
-                                <FaLongArrowAltRight size={20} />
-                            </button>
+                            <div>Não há movimentos disponíveis</div>
+                        )}
+                                    <Pagination
+                                        currentPage={currentPage} 
+                                        totalPages={totalPages} 
+                                        onPageChange={setCurrentPage}
+                                    />
+                            </div>
                         </div>
                     </div>
-                </div>
             </section>
         </div>
     );

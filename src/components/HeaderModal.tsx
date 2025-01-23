@@ -12,7 +12,7 @@ const HeaderModal: React.FC<HeaderModalProps> = ({ handleClose }) => {
   return (
     <div className='flex justify-between w-full max-h-min items-center'>
       <div
-        className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-yellow transition duration-300'
+        className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
         onClick={handleClose}
       >
         <ImExit size={20} />
@@ -25,7 +25,7 @@ const HeaderModal: React.FC<HeaderModalProps> = ({ handleClose }) => {
           </button>
         </a>
         <a href="forms/movementform">
-          <button className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red transition duration-300">
+          <button className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300">
             <FaTrash size={20} />
           </button>
         </a>
