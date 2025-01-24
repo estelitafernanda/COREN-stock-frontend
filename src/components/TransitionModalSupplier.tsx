@@ -189,6 +189,7 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
                         category={product.category}
                         stock={product.currentQuantity}
                         image={product.image}
+                        idProduct={product.idProduct}
                       />
                     ))}
                     </div>

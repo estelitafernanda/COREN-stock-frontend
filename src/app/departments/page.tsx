@@ -79,7 +79,7 @@ function Departments() {
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW" /> Contato com suporte
           </button>
-          <a href="/forms/departmentform">
+          <a href="/forms/department">
             <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">
               Adicionar Departamento <IoIosAdd size={20} />
             </button>
@@ -92,7 +92,7 @@ function Departments() {
           <h2 className="text-sm uppercase tracking-widest font-bold text-lightW/50">Tipo de Departamento</h2>
         </div>
 
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">
           {sectors.map((sector) => (
             <DepartmentCard
               key={sector.idSector}

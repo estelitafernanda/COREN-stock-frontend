@@ -70,7 +70,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
   
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/addProduct",
+        "http://127.0.0.1:8000/api/editProduct/{idProduct}/edit",
         formDataToSend,
         {
           headers: {

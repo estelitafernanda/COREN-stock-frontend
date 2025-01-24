@@ -6,7 +6,7 @@ import TransitionModalSupplier from './TransitionModalSupplier'
 function SupplierCard({name, responsible, email, telephone, adress, idSupplier}: {name: string, responsible: string, email: string, telephone: string, adress: string, idSupplier: number}) {
   return (
     <div className='flex flex-col gap-4 w-full'>
-                <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg h-48">
+                <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg h-48">
                 <div className="flex justify-between items-center">
                     
                         <div className='flex items-center gap-3'>
@@ -31,7 +31,7 @@ function SupplierCard({name, responsible, email, telephone, adress, idSupplier}:
                         <TransitionModalSupplier idForData={idSupplier}/>
                     </div>
 
-                    <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>
+                    <div className='flex gap-6 bg-blackSecondary w-full h-24 p-5 items-center rounded-lg'>
                         <div className='flex items-center gap-2'>
                             <FaMapMarkedAlt size={25}/>
                             <p className='text-base text-lightW/70 font-semibold'>{adress}</p>

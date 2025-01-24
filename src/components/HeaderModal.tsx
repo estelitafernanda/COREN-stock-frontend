@@ -18,7 +18,7 @@ const HeaderModal: React.FC<HeaderModalProps> = ({ handleClose }) => {
         <ImExit size={20} />
       </div>
       <div className='flex gap-5'>
-        <a href="forms/movementform">
+        <a href="edit/product/">
           <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
             Editar
             <FaEdit className='group-hover:text-green transition duration-300' size={20} />

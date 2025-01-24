@@ -77,7 +77,7 @@ function Suppliers() {
       setCurrentPage(responseData.current_page);
       setTotalPages(responseData.last_page);
       setLoading(false);
-    } catch (error) {
+    } catch (err) {
       setError("Erro ao carregar os dados da API");
       setLoading(false);
     }
@@ -114,7 +114,7 @@ function Suppliers() {
             <FaHeadset size={20} className="hover:text-lightW" /> Contato com
             suporte
           </button>
-          <a href="/forms/supplierform">
+          <a href="/forms/supplier">
             <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">
               Adicionar Fornecedor <IoIosAdd size={20} />
             </button>
@@ -157,7 +157,7 @@ function Suppliers() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-5 w-full bg-blackSecondary p-5 rounded-lg">
           {suppliers.map((supplier) => (
             <SupplierCard
               key={supplier.idSupplier}

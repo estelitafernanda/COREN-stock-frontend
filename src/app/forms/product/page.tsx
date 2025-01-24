@@ -1,6 +1,6 @@
 'use client';
 
-import api from '@/app/api/axios';
+import axios from 'axios';
 import {useRouter} from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from 'react'
 import { FaWpforms } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { IoMdArrowDropleft } from "react-icons/io";
 type FormDataType = {
     nameProduct: string;
     image: File | null;
-    idDepartment: string;
+    idSector: string;
     code: string;
     describe: string;
     category: string;
@@ -27,7 +27,7 @@ const router = useRouter();
 const [formData, setFormData] = useState<FormDataType>({
     nameProduct: "",
     image: null,
-    idDepartment: "",
+    idSector: "",
     code: "",
     describe: "",
     category: "",
@@ -71,7 +71,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
     }
   
     try {
-      const response = await api.post(
+      const response = await axios.post(
         "http://127.0.0.1:8000/api/addProduct",
         formDataToSend,
         {
@@ -80,7 +80,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
           },
         }
       );
-      router.push("/products");
+      router.push("/inventory");
       alert("Produto adicionado com sucesso!");
     } catch (error) {
       console.error("Erro ao adicionar produto:", error);
@@ -155,7 +155,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
 
                         <div className='flex flex-col gap-2 '>
                             <label htmlFor="" className='text-md font-bold'>Indentificador do departamento</label>
-                            <input type="number" value={formData.idDepartment} name='idDepartment' onChange={handleChange} placeholder='Id do departamento' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                            <input type="number" value={formData.idSector} name='idSector' onChange={handleChange} placeholder='Id do departamento' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
                         <div className='flex'>
@@ -177,12 +177,6 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
                         <input type="submit" value="Criar Produto" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                     </form>
                 </section>
-            </div>
-            
-            <div className='fixed w-[100vw] border-t-[1px] p-5 flex justify-end items-center gap-5 border-t-lightW/20 bg-blackSecondary h-32 left-0 bottom-0'>
-                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Voltar</button>
-                <div className='h-[30px] w-[1px] bg-lightW/50'></div>
-                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary mr-36">Próximo</button>
             </div>
         </div>    
   )

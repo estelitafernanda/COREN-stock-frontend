@@ -93,7 +93,7 @@ export default function Order() {
                 <FaHeadset size={20} className="hover:text-lightW"/> Contato com suporte
             </button>
             <a href="/forms/request">
-            <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Adicionar Movimento <IoIosAdd size={20}/></button>
+            <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Adicionar Pedido <IoIosAdd size={20}/></button>
             </a>
             </div>
         </div>
@@ -155,14 +155,7 @@ export default function Order() {
               <div className='flex flex-col w-full bg-blackSecondary relative h-full rounded-lg '>
                 <div className='flex flex-col gap-4 px-4 pt-4'>
                   {requests.map((request, index)=>(
-                      <RequestCard 
-                      key={index} 
-                      product={request.product_name} 
-                      department={request.sector_name} 
-                      userName={request.user_name} 
-                      desc={request.describe} 
-                      date={request.requestDate} 
-                      qnt={request.quantity}/>
+                      <RequestCard key={index} product={request.product_name} department={request.sector_name} userName={request.user_name} desc={request.describe} date={request.requestDate} qnt={request.quantity}/>
                   ))}
                 </div>
 

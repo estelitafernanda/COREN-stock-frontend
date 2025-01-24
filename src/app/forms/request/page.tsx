@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 import api from '@/app/api/axios';
+import axios from 'axios';
 
 type FormDataType = {
     describe: string;
@@ -12,6 +13,26 @@ type FormDataType = {
     idProduct: string;
     idUser: string;
 };
+
+interface ApiResponse {
+  current_page: number;
+  data: Product[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: Array<{
+    url: string | null;
+    label: string;
+    active: boolean;
+  }>;
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
 
 interface Product {
     idProduct: number;
@@ -33,7 +54,7 @@ interface User{
     updated_at: string;
 }
 
-function RequestForm() {
+function MovementForm() {
     const router = useRouter()
 
     //AXIOS POST SECTION
@@ -66,7 +87,7 @@ function RequestForm() {
         }
       
         try {
-          const response = await api.post(
+          const response = await axios.post(
             "http://127.0.0.1:8000/api/addRequest",
             formDataToSend,
             {
@@ -94,7 +115,7 @@ function RequestForm() {
   
     //CARREGAR PRODUTOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
     useEffect(() => {
-      api.get<Product[]>('/show')
+      api.get<Product[]>('productFiltered')
         .then(response => {
           setProducts(response.data);
           setLoading(false);
@@ -134,7 +155,7 @@ function RequestForm() {
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[18%] flex flex-col gap-5'>
                 <h2 className='text-3xl font-bold'>Solicitar Pedido</h2>
-                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de movimentos</a>
+                <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de peduidos</a>
                 <div className='flex flex-col gap-[38px]'>
                     <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
                         <div className='absolute w-[6px] h-[40px] rounded-full bg-primary  group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
@@ -201,4 +222,4 @@ function RequestForm() {
   )
 }
 
-export default RequestForm;
+export default MovementForm;

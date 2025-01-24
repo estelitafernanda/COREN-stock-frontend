@@ -1,12 +1,13 @@
-'use client'
-import React, {useEffect, useState } from 'react';
-import { FaHeadset } from 'react-icons/fa6'
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { FaHeadset } from 'react-icons/fa6';
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
+import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Loading from '@/components/Loading';
 import Pagination from '@/components/Pagination';
-import axios from 'axios';
 
 
 interface Product {
@@ -83,10 +84,11 @@ const Inventory: React.FC = () => {
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
+      
       <div className="flex justify-between w-full">
         <div className='flex items-center gap-5'>
           <h1 className="text-3xl font-bold text-lightW">Inventario</h1>
-          <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de produtos: <span className='text-lightW'>386</span></p>
+          <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de produtos: <span className='text-lightW'>{products.length}</span></p>
         </div>
         <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
@@ -102,16 +104,16 @@ const Inventory: React.FC = () => {
 
         </div>
       </div>
+
       <section className='h-[80vh] flex gap-5 mt-5'>
-
-        <div className='flex flex-col gap-8 bg-blackSecondary w-[25%] p-5 rounded-lg'>
+      <div className='flex flex-col gap-8 bg-blackSecondary w-[25%] p-5 rounded-lg'>
           <div> 
             <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de produto</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Todos
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  386
+                  {products.length}
                 </span>                
               </button>
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
@@ -171,7 +173,7 @@ const Inventory: React.FC = () => {
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Todos
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  386
+                  9
                 </span>                
               </button>
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
@@ -201,7 +203,7 @@ const Inventory: React.FC = () => {
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Todos
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  386
+                  18
                 </span>                
               </button>
               <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
@@ -243,10 +245,9 @@ const Inventory: React.FC = () => {
                   onPageChange={setCurrentPage}
                 />
         </div>
-        
       </section>
     </div>
-  )
+  );
 }
 
-export default Inventory
+export default Inventory;

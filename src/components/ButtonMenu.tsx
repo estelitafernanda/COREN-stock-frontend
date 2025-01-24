@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled} from '@mui/material/styles';
+import { styled,} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import { AiFillProduct } from "react-icons/ai";
@@ -87,7 +87,7 @@ export default function ButtonMenu() {
         onClose={handleClose}
         className='mt-2 ml-8'
       >
-        <a href="/forms/product" >
+        <a href="/forms/productform" >
         <MenuItem onClick={handleClose} disableRipple className='flex gap-1 text-sm tracking-widest font-semibold  text-blackPrimary'>
           <AiFillProduct />
           Adicionar Produto
@@ -101,7 +101,7 @@ export default function ButtonMenu() {
         </MenuItem>
         </a>
         <Divider sx={{ my: 0.5 }} />
-        <a href="/forms/supplier">
+        <a href="/forms/supplierform">
         <MenuItem onClick={handleClose} disableRipple className='flex gap-1 text-sm tracking-widest font-semibold text-blackPrimary'>
             <FaBoxesPacking />
             Adicionar Fornecedor

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import TransitionsModalSupplier from './TransitionsModalSector';
 
 
 function DepartmentCard({name, superUser, func, local, idSector}: {name: string, superUser: string, func: number , local: string, idSector: number}) {
   return (
-    <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackSecondary gap-3 p-5 rounded-lg max-h-44">
+    <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg max-h-44">
     <div className="flex justify-between items-center">
         
             <div className='flex items-center gap-3'>
@@ -25,7 +25,7 @@ function DepartmentCard({name, superUser, func, local, idSector}: {name: string,
             <TransitionsModalSupplier infoIdData={idSector}/>
         </div>
 
-        <div className='flex gap-6 bg-blackThirdy w-full h-24 p-5 items-center rounded-lg'>
+        <div className='flex gap-6 bg-blackSecondary w-full h-24 p-5 items-center rounded-lg'>
             <div className='flex items-center gap-2'>
                 <FaMapMarkedAlt size={25}/>
                 <p className='text-base text-lightW/70 font-semibold'>unidade: {local}</p>
