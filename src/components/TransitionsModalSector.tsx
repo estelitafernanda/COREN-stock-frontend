@@ -52,6 +52,14 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
     }
   }, [infoIdData]);
 
+  function getInitials(headSector: string): string {
+    const words = headSector.split(' ');
+    const initials = words.slice(0, 2).map(word => word.charAt(0).toUpperCase()).join('');
+    return initials;
+  }
+  
+  
+
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
       <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
@@ -96,7 +104,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
                       <div className='flex gap-3 w-full justify-between items-center'>
                         <div className='flex gap-3 items-center'>
                           <div className='flex bg-primary size-8 rounded-full text-center items-center justify-center'>
-                            <p className='text-sm text-center font-bold'>IV</p>
+                            <p className='text-sm text-center font-bold'>{getInitials(sectorData?.headSector || '')}</p>
                           </div>
                           <h2 className='text-sm font-bold'>{sectorData?.headSector}</h2>
                         </div>
