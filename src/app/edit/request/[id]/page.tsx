@@ -8,6 +8,7 @@ type FormDataType = {
   describe: string;
   requestDate: string;
   quantity: string;
+  status: string;
   idProduct: string;
   idUser: string;
 };
@@ -41,6 +42,7 @@ function EditRequestForm() {
     quantity: '',
     idProduct: '',
     idUser: '',
+    status: '',
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,6 +60,7 @@ function EditRequestForm() {
             quantity: data.quantity || '',
             idProduct: String(data.idProduct) || '',
             idUser: String(data.idUser) || '',
+            status: data.status || '',
           });
           setLoading(false);
         })
@@ -84,7 +87,6 @@ function EditRequestForm() {
       const response = await axios.put(
         `http://127.0.0.1:8000/api/requests/${id}/update`,
         formData,
-
       );
   
       router.push("/requests");
@@ -137,7 +139,7 @@ function EditRequestForm() {
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full">
       <h2 className="text-center text-2xl font-bold">Editar Pedido</h2>
-      <form onSubmit={handleSubmit} className="p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]">
+      <form onSubmit={handleSubmit} method='put' className="p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]">
         {/* <div className="flex flex-col gap-2">
           <label htmlFor="idUser" className="text-md font-bold">Usuário</label>
           <input
@@ -212,6 +214,21 @@ function EditRequestForm() {
             onChange={handleChange}
             className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3"
           />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="status" className="text-md font-bold">Status</label>
+          <select 
+            name="status" 
+            value={formData.status} 
+            onChange={handleChange} 
+            className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3" 
+            required
+          >
+            <option value="" className='bg-blackSecondary'>Selecione o Status</option>
+            <option value="pendente">Pendente</option>
+            <option value="em progresso">Em progresso</option>
+            <option value="aceito">aceito</option>
+          </select>
         </div>
         <button
           type="submit"

@@ -1,15 +1,16 @@
 'use client';
 
+import api from '@/app/api/axios';
 import axios from 'axios';
 import {useRouter} from "next/navigation";
-import React, { useState, ChangeEvent, FormEvent } from 'react'
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 
 type FormDataType = {
     nameProduct: string;
     image: File | null;
-    idSector: string;
+    idDepartment: string;
     code: string;
     describe: string;
     category: string;
@@ -22,72 +23,86 @@ type FormDataType = {
 
 function ProductForm() {
 
-const router = useRouter();
-      
-const [formData, setFormData] = useState<FormDataType>({
-    nameProduct: "",
-    image: null,
-    idSector: "",
-    code: "",
-    describe: "",
-    category: "",
-    minQuantity: "",
-    currentQuantity: "",
-    location: "",
-    validity: "",
-    unitPrice: "",
-});
+    const [sectors, setSectors] = useState<{ idSector: string; name: string }[]>([]);
 
-const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const router = useRouter();
+        
+    const [formData, setFormData] = useState<FormDataType>({
+        nameProduct: "",
+        image: null,
+        idDepartment: "",
+        code: "",
+        describe: "",
+        category: "",
+        minQuantity: "",
+        currentQuantity: "",
+        location: "",
+        validity: "",
+        unitPrice: "",
+    });
 
-    const { name, value, type } = e.target;
+    useEffect(() => {
+        api
+          .get('http://127.0.0.1:8000/api/showDepartments') 
+          .then((response) => {
+              setSectors(response.data.data); 
+          })
+          .catch((error) => {
+              console.error('Erro ao carregar setores:', error);
+              alert('Erro ao carregar setores');
+          });
+      }, []);
+
+      const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+
+        const { name, value, type } = e.target;
+        
+        
+        if (type === "file") {
+          const input = e.target as HTMLInputElement;  
+          const file = input.files ? input.files[0] : null;  
     
-    
-    if (type === "file") {
-      const input = e.target as HTMLInputElement;  
-      const file = input.files ? input.files[0] : null;  
-
-      
-      setFormData({
-        ...formData,
-        [name]: file, 
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formDataToSend = new FormData();
-    
-    for (let key in formData) {
-        if (Object.prototype.hasOwnProperty.call(formData, key)) {
-            formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
+          
+          setFormData({
+            ...formData,
+            [name]: file, 
+          });
+        } else {
+          setFormData({
+            ...formData,
+            [name]: value,
+          });
         }
-    }
-  
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/addProduct",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      };
+    
+      const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formDataToSend = new FormData();
+        
+        for (let key in formData) {
+            if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
+            }
         }
-      );
-      router.push("/inventory");
-      alert("Produto adicionado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao adicionar produto:", error);
-      alert("Erro ao adicionar produto.");
-      console.log(formData);
-    }
-};
+      
+        try {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/addProduct",
+            formDataToSend,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          router.push("/inventory");
+          alert("Produto adicionado com sucesso!");
+        } catch (error) {
+          console.error("Erro ao adicionar produto:", error);
+          alert("Erro ao adicionar produto.");
+          console.log(formData);
+        }
+    };
 
   return (
         <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
@@ -131,6 +146,7 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
                             <label className='text-md font-bold' htmlFor="">Descrição</label>
                             <input type="textarea" value={formData.describe} name='describe' onChange={handleChange} className='w-[100%] rounded-lg h-36 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
+                        
                         <div className='flex flex-col gap-[2px]'>
                             <label className="text-md font-bold" htmlFor="file_input">Upload file</label>
                             <input name='image' onChange={handleChange} className="flex py-2 w-[100%] appearance-none text-sm font-semi-bold text-lightW rounded-lg h-13 bg-transparent border-[2px] border-lightW/30 px-3" id="file_input" type="file"/>
@@ -154,8 +170,21 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
                         </div>
 
                         <div className='flex flex-col gap-2 '>
-                            <label htmlFor="" className='text-md font-bold'>Indentificador do departamento</label>
-                            <input type="number" value={formData.idSector} name='idSector' onChange={handleChange} placeholder='Id do departamento' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
+                            <label htmlFor="idSector" className='text-md font-bold'>Identificador do Departamento</label>
+                            <select 
+                                name="idDepartment" 
+                                value={formData.idDepartment} 
+                                onChange={handleChange} 
+                                className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' 
+                                required
+                            >
+                                <option value="" className='bg-blackSecondary'>Selecione um Departamento</option>
+                                {sectors.map((sector) => (
+                                <option key={sector.idSector} value={sector.idSector} className='bg-blackSecondary'>
+                                    {sector.name}
+                                </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className='flex'>

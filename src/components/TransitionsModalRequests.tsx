@@ -56,10 +56,15 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
 
   const handleDeleteRequest = async (id: number) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/requests/${id}`);
-      alert('Pedido deletado com sucesso');
-    } catch (error) {
-      console.error('Erro ao deletar pedido:', error);
+      const response = await axios.delete(`http://127.0.0.1:8000/api/requests/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
     }
   };
 
