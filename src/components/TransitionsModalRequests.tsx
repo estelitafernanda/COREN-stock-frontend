@@ -5,7 +5,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import HeaderModal from './HeaderModal';
 import { ImExit } from 'react-icons/im';
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa6';

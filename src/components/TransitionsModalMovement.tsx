@@ -6,10 +6,8 @@ import Fade from '@mui/material/Fade';
 
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
-import { FaEdit, FaLongArrowAltRight, FaPlus } from "react-icons/fa";
+import { FaEdit, FaLongArrowAltRight,} from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import HeaderModal from './HeaderModal';
-import api from '@/app/api/axios';
 import axios from 'axios';
 
 const style = {
@@ -25,15 +23,42 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+interface Movement{
+  idMovement: number;
+  quantity: number;
+  movementDate: string;
+  movementStatus: string;
+  idUserResponse: number | null;
+  idRequest: number;
+  product_name: string;
+  currentQuantity: number;
+  user_name_request: string;
+  sector_name: string;
+  request_describe: string; 
 
-export default function TransitionsModalMovement({id}: {id:number;}) {
+}
+
+export default function TransitionsModalMovements({ infoIdData }: { infoIdData: number }) {
   const [open, setOpen] = React.useState(false);
+  const [movement, setMovement] = React.useState<Movement | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  React.useEffect(() => {
+    if (infoIdData) {
+      axios.get(`http://127.0.0.1:8000/api/movements/${infoIdData}`)
+        .then(response => {
+          setMovement(response.data);
+        })
+        .catch(error => {
+          console.error("Error fetching movement:", error);
+        });
+    }
+  }, [infoIdData]);
+
   const handleDeleteRequest = async (id: number) => {
     try {
-      const response = await api.delete(`http://127.0.0.1:8000/api/movements/${id}`);
+      const response = await axios.delete(`http://127.0.0.1:8000/api/movements/${id}`);
       alert(response.data.message);
       window.location.reload();
     } catch (error: unknown) {
@@ -44,6 +69,15 @@ export default function TransitionsModalMovement({id}: {id:number;}) {
       }
     }
   };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
 
   return (
     <div>
@@ -71,14 +105,14 @@ export default function TransitionsModalMovement({id}: {id:number;}) {
                   <ImExit size={20} />
                 </div>
                 <div className='flex gap-5'>
-                  <a href="forms/movementform">
+                  <a href={`/edit/movements/${movement?.idMovement}`}>
                     <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
                       Editar
                       <FaEdit className='group-hover:text-green transition duration-300' size={20} />
                     </button>
                   </a>
                 <button
-                  onClick={()=>handleDeleteRequest(id)} 
+                  onClick={()=> movement?.idMovement && handleDeleteRequest(movement.idMovement)}  
                   className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red bordeborder-transparent hover:border-red transition duration-300"
                 >
                   <FaTrash size={20} />
@@ -94,60 +128,52 @@ export default function TransitionsModalMovement({id}: {id:number;}) {
             <div className='w-50%'>
                 <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
                     <span className='flex gap-3 items-center'>
-                    <h2 className='text-3xl font-black text-primary'>MO - 000001</h2>
+                    <h2 className='text-3xl font-black text-primary'>MO - 00000{movement?.idRequest}</h2>
                     <div className="w-[2px] h-6 bg-lightW/50"></div>
-                    <h2 className='text-3xl font-black text-lightW'>Lixeira de Aço Acabamento Polido Tramontina</h2> 
+                    <h2 className='text-3xl font-black text-lightW'>{movement?.product_name}</h2> 
                     </span>
 
                     <span className='flex gap-1'>
                         <p className='font-black'>Licitante: </p>
-                        <p className='text-lightW/50'>Fulano de tal</p>
+                        <p className='text-lightW/50'>{movement?.user_name_request}</p>
                     </span>
                     <span className='flex gap-1'>
                         <p className='font-black'>Movimentação: </p>
                         <span className='flex items-center gap-3 '>
-                            <p className='text-lightW font-bold'>DTIC</p>
+                            <p className='text-lightW font-bold'>{movement?.sector_name}</p>
                             <FaLongArrowAltRight className='text-primary'/>
-                            <p className='text-lightW font-bold'>Contabilidade</p>
+                            <p className='text-lightW font-bold'>{movement?.sector_name}</p>
                         </span>
 
                     </span>
                     <span className='flex gap-1'>
                         <p className='font-black'>Data: </p>
-                        <p className='text-lightW/50'>02/01/2025</p>
+                        <p className='text-lightW/50'>{movement?.movementDate ? formatDate(movement.movementDate) : ''}</p>
                     </span>
                 </div>
                 <div className='flex flex-col gap-2 border-b-[2px] py-5 border-lightW/20'>
                     <h2 className='text-3xl font-black text-lightW'>Detalhes do produto em movimento:</h2>
-                    <span className='flex gap-1 items-center'>
-                        <p className='font-black'>Valor Unitário: </p>
-                        <h2 className='text-xl font-bold text-lightW/50'>R$ 380,00</h2>
-                    </span>
-                    <span className='flex gap-1'>
-                        <p className='font-black'>Validade: </p>
-                        <p className='text-lightW/50'>Nenhuma</p>
-                    </span>
                     <span className='flex gap-1'>
                         <p className='font-black'>Quantidade em estoque: </p>
-                        <p className='text-red'>2</p>
+                        <p className='text-red'>{movement?.currentQuantity}</p>
                     </span>
                     <span >
                         <p className='font-black'>Descrição: </p>
-                        <p className='w-[50%] text-lightW/50'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dolor accusantium quisquam quod. Repellendus, unde iste labore recusandae, quas esse earum non blanditiis voluptatibus sed rerum placeat doloremque illum iure.</p>
+                        <p className='w-[50%] text-lightW/50'>{movement?.request_describe}</p>
                     </span>
                 </div>
                 <div className='py-5 flex flex-col gap-3'>
                     <span className='flex gap-2 items-center'>
                         <p className='text-xl font-black text-lightW'>Situação:</p>
-                        <p className='text-yellow text-lg font-bold border-[2px] border-yellow rounded-full px-3 w-fit'>Produto em Movimento</p>
+                        <p className='text-yellow text-lg font-bold border-[2px] border-yellow rounded-full px-3 w-fit'>{movement?.movementStatus}</p>
                     </span>
                     <span className='flex gap-2 items-center'>
                         <p className='text-xl font-black text-lightW'>Status:</p>
-                        <p className='text-green text-lg font-bold border-[2px] border-green rounded-full px-3 w-fit'>Em Aberto</p>
+                        <p className='text-green text-lg font-bold border-[2px] border-green rounded-full px-3 w-fit'>{movement?.movementStatus}</p>
                     </span>
                     <span className='flex gap-2 items-center'>
-                        <p className='text-xl font-black text-lightW'>Quantidade em uso:</p>
-                        <p className='text-primary text-lg font-bold border-[2px] border-primary rounded-full px-3 w-fit'>12</p>
+                        <p className='text-xl font-black text-lightW'>Quantidade pedida:</p>
+                        <p className='text-primary text-lg font-bold border-[2px] border-primary rounded-full px-3 w-fit'>{movement?.quantity}</p>
                     </span>
                 </div>
             </div>

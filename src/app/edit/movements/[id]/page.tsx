@@ -5,13 +5,23 @@ import axios from 'axios';
 import api from '@/app/api/axios';
 
 type FormDataType = {
+  movementDate: string;
+  movementStatus: string;
+  idRequest: string; 
+  idProduct: string;
+  idUserRequest: string; 
+};
+
+interface Request {
+  idRequest: number;
+  idUser: number; 
   describe: string;
   requestDate: string;
-  quantity: string;
-  status: string;
-  idProduct: string;
-  idUser: string;
-};
+  quantity: number;
+  product_name: string;
+  user_name: string;
+  sector_name: string;
+}
 
 interface Product {
   idProduct: number;
@@ -21,56 +31,46 @@ interface Product {
   nameProduct: string;
   category: string;
   currentQuantity: number;
-}  
+} 
 
-interface User{
-  idUser: number;
-  nameUser: number;
-  email:string;
-  role: string;
-  password: string;
-  created_at: string;
-  updated_at: string;
-}
 
-function EditRequestForm() {
+function EditMovementForm() {
   const router = useRouter();
-  const { id } = useParams(); 
+  const { idMovement } = useParams(); 
   const [formData, setFormData] = useState<FormDataType>({
-    describe: '',
-    requestDate: '',
-    quantity: '',
+    movementDate: '',
     idProduct: '',
-    idUser: '',
-    status: '',
+    movementStatus: '', 
+    idRequest: '',
+    idUserRequest: '', 
+
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Carregar os dados do pedido pelo ID
+  // Carregar os dados do Movimento pelo ID
   useEffect(() => {
-    if (id) {
+    if (idMovement) {
       axios
-        .get(`http://127.0.0.1:8000/api/requests/${id}`)
+        .get(`http://127.0.0.1:8000/api/movements/${idMovement}`)
         .then((response) => {
           const data = response.data;
           setFormData({
-            describe: data.describe || '',
-            requestDate: data.requestDate || '',
-            quantity: data.quantity || '',
+            movementDate: data.movementDate || '',
             idProduct: String(data.idProduct) || '',
-            idUser: String(data.idUser) || '',
-            status: data.status || '',
+            idRequest: String(data.idRequest) || '',
+            movementStatus: data.movementStatus || '',
+            idUserRequest: String(data.idUserRequest) || '', 
           });
           setLoading(false);
         })
         .catch((err) => {
-          console.error('Erro ao carregar os dados do pedido:', err);
-          setError('Erro ao carregar os dados do pedido.');
+          console.error('Erro ao carregar os dados do movimento:', err);
+          setError('Erro ao carregar os dados do Movimento.');
           setLoading(false);
         });
     }
-  }, [id]);
+  }, [idMovement]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -85,21 +85,21 @@ function EditRequestForm() {
   
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/requests/${id}/update`,
+        `http://127.0.0.1:8000/api/movements/${idMovement}/update`,
         formData,
       );
   
-      router.push("/requests");
-      alert("Pedido atualizado com sucesso");
+      router.push("/movements");
+      alert("Movimento atualizado com sucesso");
     } catch (error) {
-      console.error("Erro ao atualizar pedido:", error);
-      alert("Erro ao adicionar pedido.");
+      console.error("Erro ao atualizar Movimento:", error);
+      alert("Erro ao adicionar Movimento.");
       console.log(formData);
     }
   };
 
 
-  const [users , setUsers] = useState<User[]>([]);
+  const [requests , setRequests] = useState<Request[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -116,9 +116,9 @@ function EditRequestForm() {
 
   //CARREGAR USUÁRIOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
   useEffect(() => {
-      api.get<User[]>('/users') 
+      api.get<Request[]>('/requests') 
         .then(response => {
-          setUsers(response.data);
+          setRequests(response.data);
           setLoading(false);
         })
         .catch(error => {
@@ -164,11 +164,11 @@ function EditRequestForm() {
           </div> */}
           <div className='flex flex-col gap-2 '>
               <label htmlFor="" className='text-md font-bold'>Usuário</label>
-              <select name="idUser" value={formData.idUser} onChange={handleChange} id="idUser" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
+              <select name="idUser" value={formData.idUserRequest} onChange={handleChange} id="idUser" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
                   <option value="" className='bg-blackSecondary'>Selecione um Usuário</option>
-                  {users.map((user) => (
-                      <option key={user.idUser} className='bg-blackSecondary' value={user.idUser}>
-                          {user.nameUser}
+                  {requests.map((request) => (
+                      <option key={request.idUser} className='bg-blackSecondary' value={request.idUser}>
+                          {request.user_name}
                       </option>
                   ))}
               </select>
@@ -186,31 +186,11 @@ function EditRequestForm() {
               </select>
           </div>   
         <div className="flex flex-col gap-2">
-          <label htmlFor="describe" className="text-md font-bold">Descrição</label>
-          <input
-            type="text"
-            name="describe"
-            value={formData.describe}
-            onChange={handleChange}
-            className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="quantity" className="text-md font-bold">Quantidade</label>
-          <input
-            type="number"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
-            className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
           <label htmlFor="requestDate" className="text-md font-bold">Data</label>
           <input
             type="date"
             name="requestDate"
-            value={formData.requestDate}
+            value={formData.movementDate}
             onChange={handleChange}
             className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3"
           />
@@ -219,7 +199,7 @@ function EditRequestForm() {
           <label htmlFor="status" className="text-md font-bold">Status</label>
           <select 
             name="status" 
-            value={formData.status} 
+            value={formData.movementStatus} 
             onChange={handleChange} 
             className="w-full rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3" 
             required
@@ -241,4 +221,4 @@ function EditRequestForm() {
   );
 }
 
-export default EditRequestForm;
+export default EditMovementForm;

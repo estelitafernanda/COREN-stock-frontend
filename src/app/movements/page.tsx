@@ -110,7 +110,7 @@ export default function Order() {
             movements.map((movement) => (
               <MovementCard
                 key={movement.idMovement}
-                id={movement.idMovement}
+                idMovement={movement.idMovement}
                 idRequest={movement.idRequest}
                 userSector={movement.sector_name}
                 quantity={movement.quantity}

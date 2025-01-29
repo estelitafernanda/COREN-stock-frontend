@@ -1,5 +1,5 @@
 'use client';
-import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar, FaTruckLoading } from "react-icons/fa";
+import { FaHeadset, FaBoxOpen, FaLongArrowAltRight, FaCalendar, FaTruckLoading } from "react-icons/fa";
 import { FaShop } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import ChartPieDash from "@/components/dash/ChartPieDash";

@@ -3,11 +3,11 @@ import React from 'react';
 import { FaReceipt, FaTruckMoving } from 'react-icons/fa6';
 import { GiConfirmed } from 'react-icons/gi';
 import { GrValidate } from 'react-icons/gr';
-import TransitionsModalMovement from './TransitionsModalMovement';
 import { BiArrowFromLeft,} from 'react-icons/bi';
+import TransitionsModalMovements from './TransitionsModalMovement';
 
 interface MovementCardProps {
-  id: number;
+  idMovement: number;
   idRequest: number;
   quantity: number;
   date: string;
@@ -20,7 +20,7 @@ interface MovementCardProps {
 }
 
 const MovementCard: React.FC<MovementCardProps> = ({
-  id,
+  idMovement,
   quantity,
   idRequest,
   date,
@@ -35,11 +35,11 @@ const MovementCard: React.FC<MovementCardProps> = ({
     <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg h-60">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <h3 className="font-bold text-lg">{`MO-${id.toString().padStart(3, '0')}`}</h3>
+          <h3 className="font-bold text-lg">{`MO-${idMovement.toString().padStart(3, '0')}`}</h3>
           <div className="h-5 w-[2px] bg-lightW/30"></div>
           <h3 className="font-bold text-lg">{productName}</h3>
         </div>
-        <TransitionsModalMovement id={id}/>
+        <TransitionsModalMovements infoIdData={idMovement}/>
       </div>
 
       <div className="flex gap-2 items-center">
