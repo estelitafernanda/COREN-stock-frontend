@@ -1,14 +1,12 @@
 'use client';
-import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar  } from "react-icons/fa";
+import { FaHeadset, FaBoxOpen, FaLocationArrow, FaLongArrowAltRight, FaCalendar, FaTruckLoading } from "react-icons/fa";
+import { FaShop } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import ChartPieDash from "@/components/dash/ChartPieDash";
-import Trash from "../../public/lixeira.png";
-import Chair from "../../public/cadeira.png";
-import Cookie from "../../public/biscoito.png";
-import Image from "next/image";
+import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 import ButtonMenu from "@/components/ButtonMenu";
-import ProductCard from "@/components/ProductCard";
 import LineChartDash from "@/components/dash/LineChartDash";
+import TinyCards from "@/components/dash/TinyCards";
 
 
 
@@ -70,81 +68,10 @@ export default function Home() {
 
       <div className="grid grid-cols-4 gap-4 w-full h-40 mt-5">
 
-        <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
-          <div className="flex justify-between px-2">
-            <div className="flex gap-2 items-center">
-              <div className="bg-blackThirdy p-2 rounded-lg">
-                <FaBoxOpen size={25}/>
-              </div>
-              <p className="text-sm uppercase font-black">Produtos Gerais</p>
-            </div>
-            <span className="flex items-center text-sm font-bold gap-1">
-              <div className="rounded-lg size-6 bg-primary flex items-center justify-center"><FaLocationArrow/></div>
-              10,5%
-            </span>
-          </div>
-          <div className="px-3 mt-5 flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-lightW/50 uppercase tracking-wider">Média estimada:</h3>
-            <h1 className="text-4xl font-black">10,226</h1>
-          </div>
-        </div>
-
-        <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
-          <div className="flex justify-between px-2">
-            <div className="flex gap-2 items-center">
-              <div className="bg-blackThirdy p-2 rounded-lg">
-                <FaBoxOpen size={25}/>
-              </div>
-              <p className="text-sm uppercase font-black">Produtos Gerais</p>
-            </div>
-            <span className="flex items-center text-sm font-bold gap-1">
-              <div className="rounded-lg size-6 bg-primary flex items-center justify-center"><FaLocationArrow/></div>
-              10,5%
-            </span>
-          </div>
-          <div className="px-3 mt-5 flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-lightW/50 uppercase tracking-wider">Média estimada:</h3>
-            <h1 className="text-4xl font-black">10,226</h1>
-          </div>
-        </div>
-
-        <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
-          <div className="flex justify-between px-2">
-            <div className="flex gap-2 items-center">
-              <div className="bg-blackThirdy p-2 rounded-lg">
-                <FaBoxOpen size={25}/>
-              </div>
-              <p className="text-sm uppercase font-black">Produtos Gerais</p>
-            </div>
-            <span className="flex items-center text-sm font-bold gap-1">
-              <div className="rounded-lg size-6 bg-primary flex items-center justify-center"><FaLocationArrow/></div>
-              10,5%
-            </span>
-          </div>
-          <div className="px-3 mt-5 flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-lightW/50 uppercase tracking-wider">Média estimada:</h3>
-            <h1 className="text-4xl font-black">10,226</h1>
-          </div>
-        </div>
-
-        <div className="bg-blackSecondary p-5 rounded-lg col-span-1">
-          <div className="flex justify-between px-2">
-            <div className="flex gap-2 items-center">
-              <div className="bg-blackThirdy p-2 rounded-lg">
-                <FaBoxOpen size={25}/>
-              </div>
-              <p className="text-sm uppercase font-black">Produtos Gerais</p>
-            </div>
-            <span className="flex items-center text-sm font-bold gap-1">
-              <div className="rounded-lg size-6 bg-primary flex items-center justify-center"><FaLocationArrow/></div>
-              10,5%
-            </span>
-          </div>
-          <div className="px-3 mt-5 flex flex-col gap-1">
-            <h3 className="text-sm font-semibold text-lightW/50 uppercase tracking-wider">Média estimada:</h3>
-            <h1 className="text-4xl font-black">10,226</h1>
-          </div>
-        </div>
+        <TinyCards title="Produtos" qnt={120} icon={<FaBoxOpen size={25}/>}/>
+        <TinyCards title="Pedidos" qnt={120} icon={<VscGitPullRequestNewChanges size={25}/>}/>
+        <TinyCards title="Movimentações" qnt={120} icon={<FaTruckLoading size={25}/>}/>
+        <TinyCards title="Fornecedores" qnt={120} icon={<FaShop size={25}/>}/>
 
       </div>
 

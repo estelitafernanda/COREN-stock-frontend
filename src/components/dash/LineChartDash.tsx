@@ -17,6 +17,7 @@ const options: ApexOptions = {
   }],
     chart: {
     height: 350,
+    width: '100%',
     type: 'area',
     foreColor: "#fff",
   },
