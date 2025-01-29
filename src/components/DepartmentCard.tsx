@@ -1,15 +1,24 @@
 import React from 'react'
 import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import TransitionsModalSupplier from './TransitionsModalSector';
+import { get } from 'http';
 
 
 function DepartmentCard({name, superUser, func, local, idSector}: {name: string, superUser: string, func: number , local: string, idSector: number}) {
+
+    function getInitials(nameAbrev: string): string {
+        const words = nameAbrev.split(' ');
+        const initials = words.slice(0, 2).map(word => word.charAt(0).toUpperCase()).join('');
+        return initials;
+    }
+      
+
   return (
     <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg max-h-44">
     <div className="flex justify-between items-center">
         
             <div className='flex items-center gap-3'>
-                <div className='size-10 flex rounded-full bg-primary justify-center items-center'></div>
+                <div className='size-10 flex rounded-full bg-primary justify-center items-center font-bold text-lg'>{getInitials(name)}</div>
                 <div>
                     <h3 className="font-bold text-lg">{name}</h3>
                 </div>

@@ -11,6 +11,7 @@ import Loading from '@/components/Loading';
 
 
 interface Request {
+    idRequest: number;
     describe: string;
     requestDate: string;
     quantity: number;
@@ -102,39 +103,14 @@ export default function Order() {
 
           <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] h-full p-5 rounded-lg'>
             <div className='flex flex-col'> 
-                <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Status de movimento</h2>
-                <div className='grid grid-cols-2 gap-3 py-3'>
-                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Validando
-                    <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                    386
-                    </span>                
-                    </button>
-                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Validado
-                    <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                    78
-                    </span>                
-                    </button>
-                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Transição
-                    <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                    94
-                    </span>                
-                    </button>
-                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                        Recebido
-                        <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                        178
-                        </span>                
-                    </button>
-                </div>
                 <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Filtrar por</h2>
                 <div className='grid gap-3 py-3'>
-                    <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                    Local
-                    <MdArrowDropDown size={20}/>
-                    </button>
+                    <select className="hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                      <option>PRODUTO</option>
+                      <option>produto 1</option>
+                      <option>produto 2</option>
+                      <option>produto 3</option>
+                    </select>
                     <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                     Data de Pedido
                     <MdArrowDropDown size={20}/>
@@ -155,7 +131,7 @@ export default function Order() {
               <div className='flex flex-col w-full bg-blackSecondary relative h-full rounded-lg '>
                 <div className='flex flex-col gap-4 px-4 pt-4'>
                   {requests.map((request, index)=>(
-                      <RequestCard key={index} product={request.product_name} department={request.sector_name} userName={request.user_name} desc={request.describe} date={request.requestDate} qnt={request.quantity}/>
+                      <RequestCard idRequest={request.idRequest} key={index} product={request.product_name} department={request.sector_name} userName={request.user_name} desc={request.describe} date={request.requestDate} qnt={request.quantity}/>
                   ))}
                 </div>
 

@@ -9,6 +9,8 @@ import { ImExit } from "react-icons/im";
 import { FaEdit, FaLongArrowAltRight, FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import HeaderModal from './HeaderModal';
+import api from '@/app/api/axios';
+import axios from 'axios';
 
 const style = {
   position: 'absolute',
@@ -29,6 +31,20 @@ export default function TransitionsModalMovement({id}: {id:number;}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleDeleteRequest = async (id: number) => {
+    try {
+      const response = await api.delete(`http://127.0.0.1:8000/api/movements/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
+
   return (
     <div>
       <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
@@ -47,7 +63,28 @@ export default function TransitionsModalMovement({id}: {id:number;}) {
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
-          <HeaderModal handleClose={handleClose} />
+              <div className='flex justify-between w-full max-h-min items-center'>
+                <div
+                  className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
+                  onClick={handleClose}
+                >
+                  <ImExit size={20} />
+                </div>
+                <div className='flex gap-5'>
+                  <a href="forms/movementform">
+                    <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                      Editar
+                      <FaEdit className='group-hover:text-green transition duration-300' size={20} />
+                    </button>
+                  </a>
+                <button
+                  onClick={()=>handleDeleteRequest(id)} 
+                  className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red bordeborder-transparent hover:border-red transition duration-300"
+                >
+                  <FaTrash size={20} />
+                </button>
+                </div>
+              </div>
           <div className='mt-5 flex py-6 gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] 
           rounded-md'>
 

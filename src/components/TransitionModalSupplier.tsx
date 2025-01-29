@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import ProductCard from './ProductCard';
 import axios from 'axios';
+import api from '@/app/api/axios';
 
 const style = {
   position: 'absolute',
@@ -39,6 +40,7 @@ interface Product {
 }
 
 interface Supplier {
+  idSupplier: number;
   corporateReason: string;
   name: string;
   address: string;
@@ -72,6 +74,20 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
     }
   }, [open, idForData]);
 
+  const handleDeleteRequest = async (id: number) => {
+    try {
+      const response = await api.delete(`http://127.0.0.1:8000/api/suppliers/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
+
   return (
     <div>
       <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
@@ -98,9 +114,12 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
                 <a href="forms/movementform">
                   <button className="group font-bold flex gap-2 py-2  border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">Editar<FaEdit className='group-hover:text-green transition duration-300' size={20}/></button>
                 </a>
-                <a href="forms/movementform">
-                  <button className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red transition duration-300"><FaTrash size={20}/></button>
-                </a>
+                <button
+                  onClick={() => supplier?.idSupplier && handleDeleteRequest(idForData)} 
+                  className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red bordeborder-transparent hover:border-red transition duration-300"
+                >
+                  <FaTrash size={20} />
+                </button>
               </div>
             </div>
             <div className='mt-14'>

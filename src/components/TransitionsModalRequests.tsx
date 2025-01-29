@@ -6,6 +6,9 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import HeaderModal from './HeaderModal';
+import { ImExit } from 'react-icons/im';
+import { FaEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa6';
 
 const style = {
   position: 'absolute',
@@ -21,22 +24,20 @@ const style = {
   p: 4,
 };
 
-interface User {
-  nameUser: string;
-  role: string;
-}
-
-interface SectorData {
-  idSector: number;
-  name: string;
-  headSector: string;
-  unity: string | null;
-  users: User[];
+interface Request {
+  idRequest: number;
+  describe: string;
+  requestDate: string;
+  quantity: number;
+  product_name: string;
+  user_name: string;
+  sector_name: string;
+  status: string;
 }
 
 export default function TransitionsModalRequests({ infoIdData }: { infoIdData: number }) {
   const [open, setOpen] = React.useState(false);
-  const [sectorData, setSectorData] = React.useState<SectorData | null>(null);
+  const [request, setRequest] = React.useState<Request | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -44,13 +45,36 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
     if (infoIdData) {
       axios.get(`http://127.0.0.1:8000/api/requests/${infoIdData}`)
         .then(response => {
-          setSectorData(response.data);
+          setRequest(response.data);
         })
         .catch(error => {
-          console.error("Error fetching sector data:", error);
+          console.error("Error fetching request:", error);
         });
     }
   }, [infoIdData]);
+
+
+  const handleDeleteRequest = async (id: number) => {
+    try {
+      const response = await axios.delete(`http://127.0.0.1:8000/api/requests/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
@@ -70,45 +94,65 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
-            <HeaderModal handleClose={handleClose} />
+                <div className='flex justify-between w-full max-h-min items-center'>
+                  <div
+                    className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
+                    onClick={handleClose}
+                  >
+                    <ImExit size={20} />
+                  </div>
+                  <div className='flex gap-5'>
+                  <a href={`/edit/request/${request?.idRequest}`}>
+                    <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                      Editar
+                      <FaEdit className='group-hover:text-green transition duration-300' size={20} />
+                    </button>
+                  </a>
+                    <button
+                      onClick={() => request?.idRequest && handleDeleteRequest(request.idRequest)} 
+                      className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"
+                    >
+                      <FaTrash size={20} />
+                    </button>
+                  </div>
+                </div>
             <div className='mt-8'>
               <div className='flex gap-5'>
-                <div className='max-w-fit rounded-full bg-lightW'>
-                  <div className='size-11 bg-primary rounded-full'></div>
-                </div>
                 <div className='flex items-center'>
-                  <h2 className='text-2xl font-bold'>{sectorData?.name}</h2>
+                  <h2 className='text-2xl font-bold'>REQ-00{request?.idRequest}</h2>
                 </div>
               </div>
             </div>
-            <div className='flex flex-col gap-10 w-full mt-10 space-between'>
+            <div className='flex flex-col gap-10 w-full mt-3 space-between'>
               <div className='flex flex-col gap-4 w-[100%]'>
                 <div className='flex flex-col gap-1'>
-                  <h2 className='text-lg font-bold'>Unidade:</h2>
-                  <div className='bg-blackThirdy w-full h-16 rounded-lg px-3 flex items-center'>
-                    <p className='text-sm font-semibold'>{sectorData?.unity || 'Não Informado'}</p>
-                  </div>
-                </div>
-                <div className='flex flex-col gap-1'>
-                  <h2 className='text-lg font-bold'>Chefe de Departamento:</h2>
+                  <h2 className='text-lg font-bold'>Informações do Pedido:</h2>
                   <div className='bg-blackThirdy w-full rounded-lg flex p-5'>
-                    <div className='flex flex-col w-full gap-3'>
-                      <div className='flex gap-3 w-full justify-between items-center'>
-                        <div className='flex gap-3 items-center'>
-                          <div className='flex bg-primary size-8 rounded-full text-center items-center justify-center'>
-                            <p className='text-sm text-center font-bold'>IV</p>
-                          </div>
-                          <h2 className='text-sm font-bold'>{sectorData?.headSector}</h2>
-                        </div>
-                      </div>
-                      <div className='flex gap-2 items-center mt-1'>
-                        <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Email:</h2>
-                        <p className='text-md font-semibold'>cHx2u@example.com</p>
-                      </div>
-                      <div className='flex items-center w-full justify-between'>
+                    <div className='flex flex-col w-full'>
+                      <div className='flex flex-col  gap-5 w-full'>
                         <div className='flex gap-2 items-center'>
-                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Telefone:</h2>
-                          <p className='text-md font-semibold'>(84) 99999-9999</p>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Usuário:</h2>
+                          <p className='text-md font-semibold'>{request?.user_name}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Setor:</h2>
+                          <p className='text-md font-semibold'>{request?.sector_name}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Produto:</h2>
+                          <p className='text-md font-semibold'>{request?.product_name}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Quantidade:</h2>
+                          <p className='text-md font-semibold'>{request?.quantity}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Data:</h2>
+                          <p className='text-md font-semibold'>{request?.requestDate ? formatDate(request.requestDate) : ''}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Status:</h2>
+                          <p className='text-md font-semibold'>{request?.status}</p>
                         </div>
                       </div>
                     </div>
@@ -116,15 +160,11 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                 </div>
               </div>
               <div className='h-[2px] w-[100%] flex items-center bg-lightW/10 rounded-full'></div>
-              <div className='w-[100%]'>
-                <h2 className='text-lg font-bold mb-1'>Funcionários <span className='text-lightW/50'>(<span className='text-primary'>{sectorData?.users.length}</span>)</span></h2>
-                <div className='flex flex-col gap-2'>
-                  {sectorData?.users.map((user, index) => (
-                    <div key={index} className='bg-blackThirdy w-full gap-4 rounded-lg px-3 flex flex-col p-3'>
-                      <p className='text-sm font-semibold'>{user.nameUser} <span>-</span> <span className='text-primary'>{user.role}</span></p>
-                    </div>
-                  ))}
-                </div>
+              <div>
+                  <h2 className='text-lg font-bold'>Descrição do Pedido:</h2>
+                  <div className='bg-blackThirdy w-full rounded-lg flex p-5'>
+                    <p className='text-md font-semibold'>{request?.describe}</p>
+                  </div>
               </div>
             </div>
           </Box>

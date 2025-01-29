@@ -9,6 +9,10 @@ import { IoIosAdd } from "react-icons/io";
 import Image from 'next/image';
 import HeaderModal from './HeaderModal';
 import axios from 'axios';
+import { ImExit } from 'react-icons/im';
+import { FaEdit } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa6';
+import api from '@/app/api/axios';
 
 const style = {
   position: 'absolute',
@@ -59,6 +63,20 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
     }
   }, [idProduct]);
 
+  const handleDeleteRequest = async (id: number) => {
+    try {
+      const response = await api.delete(`http://127.0.0.1:8000/api/products/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
+
   return (
     <div>
       <Button onClick={handleOpen} className='normal-case text-primary font-black items-center bol border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg'  style={{ color: '#56cbec' , fontWeight: 'bold' }}>mais informações &gt;&gt;</Button>
@@ -77,7 +95,28 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col items-center py-12 font-[family-name:var(--font-geist-sans)]'>
-            <HeaderModal handleClose={handleClose} />
+              <div className='flex justify-between w-full max-h-min items-center'>
+                  <div
+                    className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
+                    onClick={handleClose}
+                  >
+                    <ImExit size={20} />
+                  </div>
+                  <div className='flex gap-5'>
+                    <a href={`edit/product/${idProduct}`}>
+                      <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                        Editar
+                        <FaEdit className='group-hover:text-green transition duration-300' size={20} />
+                      </button>
+                    </a>
+                    <button
+                      onClick={() => product?.idProduct && handleDeleteRequest(idProduct)} 
+                      className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"
+                    >
+                      <FaTrash size={20} />
+                    </button>
+                  </div>
+              </div>
             <div className='flex items-center py-12 font-[family-name:var(--font-geist-sans)]'>
               <div className='bg-lightW h-fit rounded-lg border-[3px] border-primary/50'>
                 <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={800} height={800}/>

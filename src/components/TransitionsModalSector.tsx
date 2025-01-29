@@ -6,6 +6,10 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import HeaderModal from './HeaderModal';
+import api from '@/app/api/axios';
+import { FaTrash } from 'react-icons/fa6';
+import { ImExit } from 'react-icons/im';
+import { FaEdit } from 'react-icons/fa';
 
 const style = {
   position: 'absolute',
@@ -52,6 +56,27 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
     }
   }, [infoIdData]);
 
+  function getInitials(headSector: string): string {
+    const words = headSector.split(' ');
+    const initials = words.slice(0, 2).map(word => word.charAt(0).toUpperCase()).join('');
+    return initials;
+  }
+  
+  const handleDeleteRequest = async (id: number) => {
+    try {
+      const response = await api.delete(`http://127.0.0.1:8000/api/sectors/${id}`);
+      alert(response.data.message);
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
+  
+
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
       <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
@@ -70,7 +95,28 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
-            <HeaderModal handleClose={handleClose} />
+              <div className='flex justify-between w-full max-h-min items-center'>
+                              <div
+                                className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
+                                onClick={handleClose}
+                              >
+                                <ImExit size={20} />
+                              </div>
+                              <div className='flex gap-5'>
+                                <a href={`edit/product/${infoIdData}`}>
+                                  <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                                    Editar
+                                    <FaEdit className='group-hover:text-green transition duration-300' size={20} />
+                                  </button>
+                                </a>
+                                <button
+                                  onClick={() => sectorData?.idSector && handleDeleteRequest(infoIdData)} 
+                                  className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"
+                                >
+                                  <FaTrash size={20} />
+                                </button>
+                              </div>
+              </div>
             <div className='mt-8'>
               <div className='flex gap-5'>
                 <div className='max-w-fit rounded-full bg-lightW'>
@@ -96,7 +142,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
                       <div className='flex gap-3 w-full justify-between items-center'>
                         <div className='flex gap-3 items-center'>
                           <div className='flex bg-primary size-8 rounded-full text-center items-center justify-center'>
-                            <p className='text-sm text-center font-bold'>IV</p>
+                            <p className='text-sm text-center font-bold'>{getInitials(sectorData?.headSector || '')}</p>
                           </div>
                           <h2 className='text-sm font-bold'>{sectorData?.headSector}</h2>
                         </div>
