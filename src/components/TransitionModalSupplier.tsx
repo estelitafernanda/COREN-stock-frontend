@@ -6,9 +6,8 @@ import Fade from '@mui/material/Fade';
 
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaEdit,} from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import Avatar from  "../../public/memoji.png";
 import CorporationImage from "../../public/generic-electric-logo.png";
 import Image from 'next/image';
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
@@ -111,8 +110,11 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
                 <ImExit size={20}/>
               </div>
               <div className='flex gap-5'>
-                <a href="forms/movementform">
-                  <button className="group font-bold flex gap-2 py-2  border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">Editar<FaEdit className='group-hover:text-green transition duration-300' size={20}/></button>
+                <a href={`edit/supplier/${idForData}`}>
+                  <button className="group font-bold flex gap-2 py-2  border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                    Editar
+                    <FaEdit className='group-hover:text-green transition duration-300' size={20}/>
+                  </button>
                 </a>
                 <button
                   onClick={() => supplier?.idSupplier && handleDeleteRequest(idForData)} 

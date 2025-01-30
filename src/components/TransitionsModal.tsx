@@ -4,10 +4,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Trash from '../../public/lixeira.png';
 import { IoIosAdd } from "react-icons/io";
 import Image from 'next/image';
-import HeaderModal from './HeaderModal';
 import axios from 'axios';
 import { ImExit } from 'react-icons/im';
 import { FaEdit } from 'react-icons/fa';
@@ -125,9 +123,8 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
               <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
                       <div className='flex flex-col gap-1'>
                         <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
-                        <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.nameProduct}</p>
+                        <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
                       </div>
-
                       <div className='flex flex-col gap-1'>
                         <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
                         <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>

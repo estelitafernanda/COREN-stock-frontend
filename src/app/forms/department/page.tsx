@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 
 type FormDataType = {
@@ -26,7 +25,7 @@ function DepartmentForm() {
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-      
+        console.log(name, value);
         setFormData({
           ...formData,
           [name]: value,
@@ -42,13 +41,15 @@ function DepartmentForm() {
                 formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
             }
         }
-      
+        
+        console.log('formData to send:', formData);
+    
         try {
           const response = await axios.post("http://127.0.0.1:8000/api/addSector",formDataToSend );
-          router.push("/suppliers");
+          router.push("/departments");
           alert("Departamento criado com sucesso");
         } catch (error) {
-          console.error("Erro ao adicionar fornecedor:", error);
+          console.error("Erro ao adicionar Departamento:", error);
           alert("Erro ao adicionar Departamento.");
           console.log(formData);
         }
@@ -77,7 +78,7 @@ function DepartmentForm() {
                     </div>
 
                     <div className='flex flex-col gap-2 '>
-                        <label htmlFor="" className='text-md font-bold'>Nome da unidade do Setor:</label>
+                        <label htmlFor="unity" className='text-md font-bold'>Nome da unidade do Setor:</label>
                         <select name="unity" value={formData.unity} onChange={handleChange} className='h-9'>
                             <option value="Natal">Natal</option>
                             <option value="Caicó">Caicó</option>
@@ -85,7 +86,7 @@ function DepartmentForm() {
                         </select>
                     </div>
 
-<input type="submit" value="Fazer Pedido" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
+<input type="submit" value="Adicionar Setor" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                 </form>
             </section>
         </div>

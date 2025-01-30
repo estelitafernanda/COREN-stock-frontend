@@ -5,7 +5,6 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import HeaderModal from './HeaderModal';
 import api from '@/app/api/axios';
 import { FaTrash } from 'react-icons/fa6';
 import { ImExit } from 'react-icons/im';
@@ -103,7 +102,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
                                 <ImExit size={20} />
                               </div>
                               <div className='flex gap-5'>
-                                <a href={`edit/product/${infoIdData}`}>
+                                <a href={`edit/department/${infoIdData}`}>
                                   <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
                                     Editar
                                     <FaEdit className='group-hover:text-green transition duration-300' size={20} />

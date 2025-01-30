@@ -25,7 +25,7 @@ export default function Order() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [totalMovements, setTotalMovements] = useState<number>(0);
+  const [/*totalMovements*/, setTotalMovements] = useState<number>(0);
 
   useEffect(() => {
     const fetchMovements = async () => {
@@ -47,18 +47,6 @@ export default function Order() {
 
     fetchMovements();
   }, [currentPage]);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
 
 
   return (

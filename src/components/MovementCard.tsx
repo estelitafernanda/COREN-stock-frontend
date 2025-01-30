@@ -43,7 +43,9 @@ const MovementCard: React.FC<MovementCardProps> = ({
       </div>
 
       <div className="flex gap-2 items-center">
-        <div className="size-10 flex rounded-full bg-primary justify-center items-center"></div>
+        <div className="size-10 flex rounded-full bg-primary font-black justify-center items-center">
+          {id}
+        </div>
         <p className="text-sm text-light/30 text-lightW/50 font-semibold">{userName}</p>
         <div className="rounded-full size-2 bg-lightW/50 group-hover:bg-[#B4FFFF] transition duration-300"></div>
         <p className="font-semibold text-lightW/70 text-sm">
