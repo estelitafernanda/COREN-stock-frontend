@@ -6,10 +6,10 @@ import Fade from '@mui/material/Fade';
 
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
-import { FaLongArrowAltRight,} from "react-icons/fa";
-import { FaTrash } from "react-icons/fa";
-import axios from 'axios';
+import {FaLongArrowAltRight } from "react-icons/fa";
 import api from '@/app/api/axios';
+import axios from 'axios';
+import { GiConfirmed } from 'react-icons/gi';
 
 const style = {
   position: 'absolute',
@@ -39,7 +39,7 @@ interface Movement {
   request_describe: string;
 }
 
-export default function TransitionsModalMovements({ id }: { id: number }) {
+export default function TransitionsModalMovement({ id }: { id: number; }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -57,10 +57,10 @@ export default function TransitionsModalMovements({ id }: { id: number }) {
     }
   }, [id]);
 
-  const handleDeleteRequest = async (id: number) => {
+  const handleUpdateRequest = async () => {
     try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/movements/${id}`);
-      alert(response.data.message);
+      const response = await api.patch(`http://127.0.0.1:8000/api/movements/${id}/update`);
+      alert(response.data.message || 'Movimento atualizado com sucesso!');
       window.location.reload();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -71,13 +71,14 @@ export default function TransitionsModalMovements({ id }: { id: number }) {
     }
   };
 
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    
+
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-  
+
     return `${day}/${month}/${year}`;
   };
 
@@ -99,80 +100,72 @@ export default function TransitionsModalMovements({ id }: { id: number }) {
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
-              <div className='flex justify-between w-full max-h-min items-center'>
-                <div
-                  className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
-                  onClick={handleClose}
-                >
-                  <ImExit size={20} />
-                </div>
-                <div className='flex gap-5'>
-                  {/* <a href="forms/movementform">
-                    <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
-                      Editar
-                      <FaEdit className='group-hover:text-green transition duration-300' size={20} />
-                    </button>
-                  </a> */}
-                <button
-                  onClick={()=>handleDeleteRequest(id)}  
-                  className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red bordeborder-transparent hover:border-red transition duration-300"
-                >
-                  <FaTrash size={20} />
-                </button>
-                </div>
+            <div className='flex justify-between w-full max-h-min items-center'>
+              <div
+                className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
+                onClick={handleClose}
+              >
+                <ImExit size={20} />
               </div>
-          <div className='mt-5 flex py-6 gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] 
-          rounded-md'>
-            <div className='w-50%'>
+              <div className='flex gap-5'>
+                <button 
+                  onClick={handleUpdateRequest}
+                  className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full items-center"
+                >
+                  Entregue
+                  <GiConfirmed  className='group-hover:text-green transition duration-300' size={20} />
+                </button>
+              </div>
+            </div>
+            <div className='mt-5 flex py-6 gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] rounded-md'>
+              <div className='w-50%'>
                 <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
-                    <span className='flex gap-3 items-center'>
+                  <span className='flex gap-3 items-center'>
                     <h2 className='text-3xl font-black text-primary tracking-wider uppercase'>MO - 00{id}</h2>
                     <div className="w-[2px] h-6 bg-lightW/50"></div>
                     <h2 className='text-3xl font-black tracking-wider uppercase text-lightW'>{movement?.product_name}</h2> 
-                    </span>
+                  </span>
 
-                    <span className='flex gap-1'>
-                        <p className='font-bold text-lightW/50'>Licitante: </p>
-                        <p className='font-bold'>{movement?.user_name_request}</p>
+                  <span className='flex gap-1'>
+                    <p className='font-bold text-lightW/50'>Licitante: </p>
+                    <p className='font-bold'>{movement?.user_name_request}</p>
+                  </span>
+                  <span className='flex gap-1'>
+                    <p className='font-bold text-lightW/50'>Movimentação: </p>
+                    <span className='flex items-center gap-3 '>
+                      <p className='text-lightW font-bold'>Almoxarifado</p>
+                      <FaLongArrowAltRight className='text-primary'/>
+                      <p className='text-lightW font-bold'>{movement?.user_sector}</p>
                     </span>
-                    <span className='flex gap-1'>
-                        <p className='font-bold text-lightW/50'>Movimentação: </ p>
-                        <span className='flex items-center gap-3 '>
-                            <p className='text-lightW font-bold'>Almoxarifado</p>
-                            <FaLongArrowAltRight className='text-primary'/>
-                            <p className='text-lightW font-bold'>{movement?.user_sector}</p>
-                        </span>
-
-                    </span>
-                    <span className='flex gap-1'>
-                        <p className='font-bold text-lightW/50'>Data: </p>
-                        <p className='font-bold'>{formatDate(movement?.movementDate ?? '')}</p>
-                    </span>
+                  </span>
+                  <span className='flex gap-1'>
+                    <p className='font-bold text-lightW/50'>Data: </p>
+                    <p className='font-bold'>{formatDate(movement?.movementDate ?? '')}</p>
+                  </span>
                 </div>
                 <div className='flex flex-col gap-2 border-b-[2px] py-5 border-lightW/20'>
-                    <h2 className='text-3xl font-black text-lightW tracking-wider uppercase mb-1'>Detalhes do movimento:</h2>
-                    <span className='flex gap-1 items-center'>
-                        <p className='font-bold text-lightW/50'>Valor do Produto: </p>
-                        <h2 className='text-xl font-bold'>R${movement?.product_price}</h2>
+                  <h2 className='text-3xl font-black text-lightW tracking-wider uppercase mb-1'>Detalhes do movimento:</h2>
+                  <span className='flex gap-1 items-center'>
+                    <p className='font-bold text-lightW/50'>Valor do Produto: </p>
+                    <h2 className='text-xl font-bold'>R${movement?.product_price}</h2>
+                  </span>
+                  <span className='flex gap-1'>
+                    <p className='font-bold text-lightW/50'>Quantidade em estoque: </p>
+                    <p className='font-bold'>{movement?.quantity}</p>
+                  </span>
+                  <span >
+                    <p className='font-bold text-lightW/50'>Descrição: </p>
+                    <p className='w-[50%] font-bold'>{ movement?.request_describe }</p>
+                  </span>
+                  <div className='flex flex-col gap-3'>
+                    <span className='flex gap-2 items-center'>
+                      <p className='text-xl font-bold text-lightW/50'>Status:</p>
+                      <p className={movement?.movementStatus === 'entregue' ? 'text-green text-lg font-bold border-[2px] border-green rounded-full px-3 w-fit' : 'text-red text-lg font-bold border-[2px] border-red rounded-full px-3 w-fit'}>{movement?.movementStatus}</p>
                     </span>
-                    <span className='flex gap-1'>
-                        <p className='font-bold text-lightW/50'>Quantidade em estoque: </p>
-                        <p className='font-bold'>{ movement?.quantity}</p>
-                    </span>
-                    <span >
-                        <p className='font-bold text-lightW/50'>Descrição: </p>
-                        <p className='w-[50%] font-bold'>{ movement?.request_describe }</p>
-                    </span>
-                    <div className='flex flex-col gap-3'>
-                      <span className='flex gap-2 items-center'>
-                          <p className='text-xl font-bold text-lightW/50'>Status:</p>
-                          <p className='text-green text-lg font-bold border-[2px] border-green rounded-full px-3 w-fit'>{movement?.movementStatus}</p>
-                      </span>
-                    </div>
+                  </div>
                 </div>
-
+              </div>
             </div>
-        </div>
           </Box>
         </Fade>
       </Modal>

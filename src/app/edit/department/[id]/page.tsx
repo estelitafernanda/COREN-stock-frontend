@@ -37,7 +37,7 @@ function EditRequestForm() {
   useEffect(() => {
     if (id) {
       axios
-        .get(`http://127.0.0.1:8000/api/requests/${id}`)
+        .get(`http://127.0.0.1:8000/api/sectors/${id}`)
         .then((response) => {
           const data = response.data;
           setFormData({

@@ -9,7 +9,6 @@ import ProductCard from '@/components/ProductCard';
 import Loading from '@/components/Loading';
 import Pagination from '@/components/Pagination';
 
-
 interface Product {
   idProduct: number;
   code: string;
@@ -53,10 +52,12 @@ const Inventory: React.FC = () => {
   const [error, setError] = useState<string | null>(null); 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [category, setCategory] = useState<string>('');
 
-  const fetchProducts = (page: number) => {
+  const fetchProducts = (page: number, category: string) => {
     setLoading(true);
-    axios.get<ApiResponse>(`http://127.0.0.1:8000/products?page=${page}`)
+    const url = category ? `http://127.0.0.1:8000/products?page=${page}&category=${category}` : `http://127.0.0.1:8000/products?page=${page}`;
+    axios.get<ApiResponse>(url)
       .then(response => {
         setProducts(response.data.data);
         setTotalPages(response.data.last_page);
@@ -70,8 +71,13 @@ const Inventory: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProducts(currentPage);
-  }, [currentPage]);
+    fetchProducts(currentPage, category);
+  }, [currentPage, category]);
+
+  const handleCategoryChange = (selectedCategory: string) => {
+    setCategory(selectedCategory);
+    setCurrentPage(1);
+  };
 
   if (loading) {
     return <Loading />;
@@ -80,7 +86,6 @@ const Inventory: React.FC = () => {
   if (error) {
     return <div>{error}</div>;
   }
-
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
@@ -110,19 +115,25 @@ const Inventory: React.FC = () => {
           <div> 
             <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de produto</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+              <button 
+                onClick={() => handleCategoryChange('')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Todos
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                   {products.length}
                 </span>                
               </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+              <button 
+                onClick={() => handleCategoryChange('alimentos')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Alimentos
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                   78
                 </span>                
               </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+              <button 
+                onClick={() => handleCategoryChange('escritorio')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
                 Escritório
                 <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
                   94
