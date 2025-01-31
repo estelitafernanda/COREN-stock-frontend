@@ -9,6 +9,8 @@ import HeaderModal from './HeaderModal';
 import { ImExit } from 'react-icons/im';
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa6';
+import { GiConfirmed } from 'react-icons/gi';
+import api from '@/app/api/axios';
 
 const style = {
   position: 'absolute',
@@ -52,6 +54,21 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
         });
     }
   }, [infoIdData]);
+
+
+  const handleUpdateRequest = async () => {
+    try {
+      const response = await api.patch(`http://127.0.0.1:8000/api/requests/${infoIdData}/update`);
+      alert(response.data.message || 'A requisição foi aceitada com sucesso!');
+      window.location.reload();
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.error || 'Erro desconhecido');
+      } else {
+        console.error('Erro desconhecido:', error);
+      }
+    }
+  };
 
 
   const handleDeleteRequest = async (id: number) => {
@@ -102,12 +119,12 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                     <ImExit size={20} />
                   </div>
                   <div className='flex gap-5'>
-                  <a href={`/edit/request/${request?.idRequest}`}>
-                    <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
-                      Editar
-                      <FaEdit className='group-hover:text-green transition duration-300' size={20} />
+                  
+                    <button onClick={handleUpdateRequest} className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                      Aceitar Pedido
+                      <GiConfirmed className='group-hover:text-green transition duration-300' size={20} />
                     </button>
-                  </a>
+                  
                     <button
                       onClick={() => request?.idRequest && handleDeleteRequest(request.idRequest)} 
                       className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"

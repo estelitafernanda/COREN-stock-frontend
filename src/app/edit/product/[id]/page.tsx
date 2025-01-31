@@ -177,12 +177,6 @@ const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HT
                     </form>
                 </section>
             </div>
-            
-            <div className='fixed w-[100vw] border-t-[1px] p-5 flex justify-end items-center gap-5 border-t-lightW/20 bg-blackSecondary h-32 left-0 bottom-0'>
-                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Voltar</button>
-                <div className='h-[30px] w-[1px] bg-lightW/50'></div>
-                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary mr-36">Próximo</button>
-            </div>
         </div>    
   )
 }

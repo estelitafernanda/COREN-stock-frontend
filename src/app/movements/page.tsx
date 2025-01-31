@@ -79,9 +79,9 @@ export default function Order() {
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW" /> Contato com suporte
           </button>
-          <a href="/forms/movement">
+          <a href="/forms/request">
             <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">
-              Adicionar Movimento <IoIosAdd size={20} />
+              Fazer Requisição <IoIosAdd size={20} />
             </button>
           </a>
         </div>

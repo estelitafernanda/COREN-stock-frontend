@@ -17,9 +17,9 @@ import api from '@/app/api/axios';
 const style = {
   position: 'absolute',
   top: '50%',
-  left: '68%',
+  left: '80%',
   transform: 'translate(-50%, -50%)',
-  width: 1200,
+  width: '40%',
   height: '100vh',
   bgcolor: '#1a262d',
   border: '2px solid #202e36',
@@ -102,7 +102,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                   >
                     <ImExit size={20} />
                   </div>
-                  <div className='flex gap-5'>
+                  {/* <div className='flex gap-5'>
                     <a href={`edit/product/${idProduct}`}>
                       <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
                         Editar
@@ -115,48 +115,48 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                     >
                       <FaTrash size={20} />
                     </button>
-                  </div>
+                  </div> */}
               </div>
-            <div className='flex items-center py-12 font-[family-name:var(--font-geist-sans)]'>
-              <div className='bg-lightW h-fit rounded-lg border-[3px] border-primary/50'>
-                <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={800} height={800}/>
+            <div className='flex py-12 font-[family-name:var(--font-geist-sans)]'>
+              <div className='bg-lightW w-[35%] rounded-lg border-[3px] border-primary/50'>
+                <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
               </div>
-              <div className='w-full ml-7 mt-1'>
-              <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
-                      <div className='flex flex-col gap-1'>
-                        <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
-                        <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
-                      </div>
-                      <div className='flex flex-col gap-1'>
-                        <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
-                        <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
-                      </div>
-                  </div>
-                  <div className='py-3'>
-                      <div className='flex flex-col gap-2'>
+              <div className='w-[35%] ml-5 mt-1'>
+                <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
                         <div className='flex flex-col gap-1'>
-                            <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
-                            <p className='text-xl w-fit font-bold bg-green rounded-md text-blackPrimary px-3'>R${product?.unitPrice}</p>
+                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
+                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
                         </div>
                         <div className='flex flex-col gap-1'>
-                            <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Validade: </h2>
-                            <p className='text-xl w-fit font-bold bg-red rounded-md text-blackPrimary px-3'>{product?.validity}</p>
+                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
+                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                            <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Quantidade em estoque: </h2>
-                            <p className='text-xl w-fit font-bold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
-                        </div>
-                        <div className='flex flex-col gap-1'>
-                            <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>descrição: </h2>
-                            <p className='text-base w-fit font-semibold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.describe}</p>
-                        </div>
-                          <div>
-                            <a href="forms/movement">
-                              <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Fazer Pedido<IoIosAdd size={20}/></button>
-                            </a>
+                    </div>
+                    <div className='py-3'>
+                        <div className='flex flex-col gap-2'>
+                          <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
+                              <p className='text-xl w-fit font-bold bg-green rounded-md text-blackPrimary px-3'>R${product?.unitPrice}</p>
                           </div>
-                      </div>
-                  </div>
+                          <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Validade: </h2>
+                              <p className='text-xl w-fit font-bold bg-red rounded-md text-blackPrimary px-3'>{product?.validity}</p>
+                          </div>
+                          <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Quantidade em estoque: </h2>
+                              <p className='text-xl w-fit font-bold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
+                          </div>
+                          <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>descrição: </h2>
+                              <p className='text-base w-fit font-semibold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.describe}</p>
+                          </div>
+                            <div>
+                              <a href="forms/movement">
+                                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Fazer Pedido<IoIosAdd size={20}/></button>
+                              </a>
+                            </div>
+                        </div>
+                    </div>
               </div>  
             </div>
            

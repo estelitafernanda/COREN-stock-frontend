@@ -55,29 +55,26 @@ const MovementCard: React.FC<MovementCardProps> = ({
         <p className="font-bold flex gap-1 items-center text-lightW/50 text-sm">Almoxarifado <BiArrowFromLeft size={20} className='group-hover:text-[#B4FFFF] transition duration-300'/>{userSector}</p>
       </div>
 
-      <div className="bg-blackSecondary w-full h-full p-3 rounded-lg">
-        <span className="flex items-center gap-2">
-          <p className="text-sm font-bold">{status}</p>
-          <div className="h-5 w-[2px] bg-lightW/30"></div>
-          <p className="text-sm font-bold text-lightW/50">{new Date(date).toLocaleDateString()}</p>
-        </span>
-        <div className="flex flex-col w-full px-5 py-2 h-12 mt-3 items-center">
+      <div className="bg-blackSecondary flex items-center w-full p-1 gap-5 rounded-lg">
+        <div className="flex flex-col w-[50%] px-5 h-12 mt-3 items-center">
           <div className="flex justify-between w-full h-[5px] bg-primary rounded-full group-hover:bg-[#B4FFFF] transition duration-300 mt-3">
-            <div className="-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackSecondary rounded-full">
-              <FaReceipt size={25} />
+            <div className="-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackSecondary rounded-full text-primary">
+              <FaTruckMoving size={25} className={status === 'Em Espera' ? 'text-primary group-hover:text-[#B4FFFF] transition duration-300' : 'text-lightW'}/>
             </div>
             <div className="-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackSecondary rounded-full">
-              <GrValidate size={25} />
-            </div>
-            <div className="-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackSecondary group-hover:text-[#B4FFFF] transition duration-300 rounded-full text-primary">
-              <FaTruckMoving size={25} />
-            </div>
-            <div className="-mt-4 flex items-center justify-center h-[36px] w-[44px] bg-blackSecondary rounded-full">
-              <GiConfirmed size={25} />
+              <GiConfirmed size={25} className={status === 'entregue' ? 'text-primary group-hover:text-[#B4FFFF] transition duration-300' : 'text-lightW'} />
             </div>
           </div>
+          <p className="text-sm mt-2 font-bold">{status}</p>
         </div>
+        <div className="h-5 w-[2px] -ml-6 bg-lightW/30"></div>
+        <span className='flex items-center gap-2'>
+          <p className='font-bold'>Data de criação:</p>
+          <p className="text-sm font-bold text-lightW/50">{new Date(date).toLocaleDateString()}</p>
+        </span>
+
       </div>
+      
     </div>
   );
 };
