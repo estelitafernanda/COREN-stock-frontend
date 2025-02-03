@@ -18,7 +18,7 @@ function RequestCard({product,  userName, desc, date, qnt, department, idRequest
       };
 
   return (
-    <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg max-h-40">
+    <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-2 p-5 rounded-lg max-h-40">
     <div className="flex justify-between items-center">
         
             <div className='flex items-center gap-3'>
@@ -51,9 +51,9 @@ function RequestCard({product,  userName, desc, date, qnt, department, idRequest
             <TransitionsModalRequests infoIdData={idRequest}/>
         </div>
 
-        <div className='flex gap-3 bg-blackPrimary/50 w-full h-24 py-3 px-5 items-center rounded-lg'>
+        <div className='flex gap-1 bg-blackPrimary/50 w-full py-3 px-5 items-center rounded-lg'>
             <div className='size-2 rounded-full bg-lightW/50 group-hover:bg-primary transition duration-300'></div>
-            <div className='flex items-center gap-2'>
+            <div>
                 <p className='text-base text-lightW/70 font-semibold'>{desc}</p>
             </div>
         </div>

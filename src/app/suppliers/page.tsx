@@ -87,10 +87,6 @@ function Suppliers() {
     fetchSuppliers(currentPage);
   }, [currentPage]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -158,7 +154,9 @@ function Suppliers() {
         </div>
 
         <div className="flex flex-col gap-5 w-full bg-blackSecondary p-5 rounded-lg">
-          {suppliers.map((supplier) => (
+          {loading ? (
+            <p className="text-lightW text-center">Carregando Fornecedores...</p>
+          ) : suppliers.map((supplier) => (
             <SupplierCard
               key={supplier.idSupplier}
               name={supplier.name}

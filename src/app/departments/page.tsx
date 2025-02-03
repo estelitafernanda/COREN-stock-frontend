@@ -54,10 +54,6 @@ function Departments() {
     fetchSectors(currentPage);
   }, [currentPage]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -93,7 +89,9 @@ function Departments() {
         </div>
 
         <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">
-          {sectors.map((sector) => (
+          {loading ? (
+            <p className="text-lightW text-center">Carregando Departamentos...</p>
+          ) : sectors.map((sector) => (
             <DepartmentCard
               key={sector.idSector}
               idSector={sector.idSector}

@@ -17,7 +17,7 @@ interface Movement {
   product_name: string;
   currentQuantity: number;
   user_name_request: string;
-  sector_name: string;
+  user_sector: string;
   request_describe: string;
 }
 
@@ -113,7 +113,7 @@ export default function Order() {
                 key={movement.idMovement}
                 id={movement.idMovement}
                 idRequest={movement.idRequest}
-                userSector={movement.sector_name}
+                userSector={movement.user_sector}
                 quantity={movement.quantity}
                 date={movement.movementDate}
                 status={movement.movementStatus}
@@ -126,8 +126,9 @@ export default function Order() {
           ) : (
             <p className="text-lightW text-center">Nenhum movimento encontrado.</p>
           )}
-
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+          <div className='-mt-3'>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+          </div>
         </div>
       </section>
     </div>
