@@ -16,7 +16,7 @@ interface Movement {
   product_name: string;
   currentQuantity: number;
   user_name_request: string;
-  sector_name: string;
+  user_sector: string;
   request_describe: string;
 }
 
@@ -26,6 +26,21 @@ export default function Order() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [/*totalMovements*/, setTotalMovements] = useState<number>(0);
+
+  const [filters, setFilters] = useState({
+    product_name: '',
+    movementStatus: '',
+    user_name_request: '',
+    movementDate: '',  
+  });
+    
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchMovements = async () => {
@@ -100,7 +115,7 @@ export default function Order() {
                 key={movement.idMovement}
                 idMovement={movement.idMovement}
                 idRequest={movement.idRequest}
-                userSector={movement.sector_name}
+                userSector={movement.user_sector}
                 quantity={movement.quantity}
                 date={movement.movementDate}
                 status={movement.movementStatus}
@@ -113,8 +128,9 @@ export default function Order() {
           ) : (
             <p className="text-lightW text-center">Nenhum movimento encontrado.</p>
           )}
-
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+          <div className='-mt-3'>
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+          </div>
         </div>
       </section>
     </div>

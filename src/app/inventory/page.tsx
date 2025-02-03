@@ -79,10 +79,6 @@ const Inventory: React.FC = () => {
     setCurrentPage(1);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -118,39 +114,29 @@ const Inventory: React.FC = () => {
               <button 
                 onClick={() => handleCategoryChange('')} 
                 className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Todos
-                <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  {products.length}
-                </span>                
+                Todos        
               </button>
               <button 
                 onClick={() => handleCategoryChange('alimentos')} 
                 className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Alimentos
-                <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  78
-                </span>                
+                Alimentos       
               </button>
               <button 
                 onClick={() => handleCategoryChange('escritorio')} 
                 className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Escritório
-                <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  94
-                </span>                
+                Escritório            
               </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Limpeza
-                <span className='group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300'>
-                  178
-                </span>                
+              <button onClick={() => handleCategoryChange('limpeza')} className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Limpeza          
               </button>
             </div>
           </div>
         </div>
 
         <div className='flex flex-col gap-5 bg-blackSecondary p-5 rounded-lg w-[75%]'>
-          {products.map(product => (
+          {loading ? (
+            <p className="text-lightW text-center">Carregando Produtos...</p>
+          ) : products.map(product => (
             <ProductCard
               key={product.idProduct}
               idProduct={product.idProduct}

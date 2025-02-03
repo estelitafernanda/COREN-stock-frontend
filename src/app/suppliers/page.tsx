@@ -46,11 +46,7 @@ interface ApiResponse {
   from: number;
   last_page: number;
   last_page_url: string;
-  links: {
-    url: string | null;
-    label: string;
-    active: boolean;
-  }[];
+  links: Array<{ url: string | null; label: string; active: boolean }>;
   next_page_url: string | null;
   path: string;
   per_page: number;
@@ -65,6 +61,23 @@ function Suppliers() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+
+  const [filters, setFilters] = useState({
+    telephone: '',
+    address: '',
+    responsible: '',
+    cnpj: '',
+    email: '',
+  });
+  
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
 
   const fetchSuppliers = async (page: number) => {
     setLoading(true);
@@ -86,10 +99,6 @@ function Suppliers() {
   useEffect(() => {
     fetchSuppliers(currentPage);
   }, [currentPage]);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   if (error) {
     return <div>{error}</div>;
@@ -158,7 +167,9 @@ function Suppliers() {
         </div>
 
         <div className="flex flex-col gap-5 w-full bg-blackSecondary p-5 rounded-lg">
-          {suppliers.map((supplier) => (
+          {loading ? (
+            <p className="text-lightW text-center">Carregando Fornecedores...</p>
+          ) : suppliers.map((supplier) => (
             <SupplierCard
               key={supplier.idSupplier}
               name={supplier.name}

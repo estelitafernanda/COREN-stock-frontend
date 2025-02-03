@@ -32,6 +32,19 @@ function Departments() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
+  const [filters, setFilters] = useState({
+    unity: '',
+    name: '',
+    headSector: '',
+  });
+      
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+    }));
+  };
   const fetchSectors = (page: number) => {
     setLoading(true);
     setError(null);
@@ -53,10 +66,6 @@ function Departments() {
   useEffect(() => {
     fetchSectors(currentPage);
   }, [currentPage]);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   if (error) {
     return <div>{error}</div>;
@@ -93,7 +102,9 @@ function Departments() {
         </div>
 
         <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">
-          {sectors.map((sector) => (
+          {loading ? (
+            <p className="text-lightW text-center">Carregando Departamentos...</p>
+          ) : sectors.map((sector) => (
             <DepartmentCard
               key={sector.idSector}
               idSector={sector.idSector}
