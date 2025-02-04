@@ -64,6 +64,7 @@ function Suppliers() {
 
 
   const [filters, setFilters] = useState({
+    name: '',
     telephone: '',
     address: '',
     responsible: '',

@@ -155,12 +155,11 @@ function ProductForm() {
                         <div className='flex'>
                             <div className='flex flex-col gap-2 w-[50%]'>
                                 <label htmlFor="" className='text-md font-bold'>Categoria</label>
-                                <select value={formData.category} name='category' onChange={handleChange} className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'>
-                                    <option value="">Selecione uma categoria</option>
-                                    <option value="escritorio">Escritório</option>
-                                    <option value="alimentos">Alimentos</option>
-                                    <option value="limpeza">Limpeza</option>
-                                    <option value="copa">Copa</option>
+                                <select value={formData.category} name='category' onChange={handleChange} className='w-[95%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 bg-blackSecondary px-3'>
+                                    <option value="" className='bg-blackSecondary'>Selecione uma categoria</option>
+                                    <option value="escritorio" className='bg-blackSecondary'>Escritório</option>
+                                    <option value="alimentos" className='bg-blackSecondary'>Alimentos</option>
+                                    <option value="limpeza" className='bg-blackSecondary'>Limpeza</option>
                                 </select>
                             </div>
                             <div className='flex flex-col gap-2  w-[50%]'>

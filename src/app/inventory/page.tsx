@@ -54,9 +54,12 @@ const Inventory: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [category, setCategory] = useState<string>('');
 
+
   const fetchProducts = (page: number, category: string) => {
     setLoading(true);
     const url = category ? `http://127.0.0.1:8000/products?page=${page}&category=${category}` : `http://127.0.0.1:8000/products?page=${page}`;
+    
+
     axios.get<ApiResponse>(url)
       .then(response => {
         setProducts(response.data.data);
@@ -71,7 +74,7 @@ const Inventory: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProducts(currentPage, category);
+    fetchProducts(currentPage, category,);
   }, [currentPage, category]);
 
   const handleCategoryChange = (selectedCategory: string) => {
@@ -93,7 +96,11 @@ const Inventory: React.FC = () => {
         </div>
         <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
-          <p className='text-sm font-bold text-lightW/30'>buscar</p>
+          <input
+            type="text"
+            placeholder='Buscar' 
+            className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none'
+          />
         </div>
         <div className="flex gap-4">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">

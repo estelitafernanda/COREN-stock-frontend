@@ -46,7 +46,7 @@ interface User {
 }
 
 export default function Order() {
-  const [requests, setRequests] = useState<Request[]>([]);
+    const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -65,6 +65,13 @@ export default function Order() {
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
 
+  // Função para formatar a data no formato correto (YYYY-MM-DD)
+  const formatDate = (date: string) => {
+    if (!date) return '';
+    const [year, month, day] = date.split('-');
+    return `${year}-${month}-${day}`;
+  };
+
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -75,8 +82,15 @@ export default function Order() {
 
   const fetchRequests = (url: string) => {
     setLoading(true);
+
+    // Formata a data antes de enviar para a API
+    const formattedFilters = {
+      ...filters,
+      date: filters.date ? formatDate(filters.date) : '', // Formata a data
+    };
+
     axios
-      .get<ApiResponse>(url, { params: filters }) // Passando os filtros como parâmetros
+      .get<ApiResponse>(url, { params: formattedFilters })
       .then((response) => {
         const data = response.data;
         setRequests(data.data);
@@ -115,18 +129,15 @@ export default function Order() {
       });
   };
 
-  // Carrega produtos e usuários apenas uma vez
   useEffect(() => {
     fetchProducts();
     fetchUsers();
   }, []);
 
-  // Carrega todos os pedidos na primeira renderização
   useEffect(() => {
-    fetchRequests('http://127.0.0.1:8000/api/showRequests'); // Chamada inicial para mostrar todos os pedidos
+    fetchRequests('http://127.0.0.1:8000/api/showRequests'); 
   }, []);
 
-  // Só carrega os pedidos quando o usuário clicar em "Filtrar"
   const handleFilterSubmit = () => {
     fetchRequests('http://127.0.0.1:8000/api/showRequests');
   };
@@ -134,7 +145,6 @@ export default function Order() {
   if (error) {
     return <div>{error}</div>;
   }
-
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col gap-5 justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
       <div className="flex justify-between w-full">
@@ -228,7 +238,7 @@ export default function Order() {
               <div className='flex gap-2'>
                 <button
                   className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
-                  onClick={handleFilterSubmit} // Chama a função para filtrar quando o botão for clicado
+                  onClick={handleFilterSubmit} 
                 >
                   Filtrar
                 </button>
@@ -241,7 +251,7 @@ export default function Order() {
                       user_id: '',
                       date: '',
                     });
-                    fetchRequests('http://127.0.0.1:8000/api/showRequests'); // Reseta os filtros ao limpar
+                    fetchRequests('http://127.0.0.1:8000/api/showRequests');
                   }}
                 >
                   Limpar Filtros
@@ -272,7 +282,7 @@ export default function Order() {
               )}
             </div>
             <div className='mt-2 ml-4'>
-              <Pagination currentPage={currentPage} totalPages={total} onPageChange={setCurrentPage} />
+              <Pagination currentPage={currentPage} totalPages={lastPage} onPageChange={setCurrentPage} />
             </div>
           </div>
         </div>

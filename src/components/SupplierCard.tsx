@@ -4,12 +4,20 @@ import { FaBoxOpen } from 'react-icons/fa6'
 import TransitionModalSupplier from './TransitionModalSupplier'
 
 function SupplierCard({name, responsible, email, telephone, adress, idSupplier}: {name: string, responsible: string, email: string, telephone: string, adress: string, idSupplier: number}) {
+
+    function getInitials(nameAbrev: string): string {
+        const words = nameAbrev.split(' ');
+        const initials = words.slice(0, 2).map(word => word.charAt(0).toUpperCase()).join('');
+        return initials;
+    }
+
   return (
     <div className='flex flex-col gap-4 w-full'>
                 <div className="border group border-transparent hover:border-primary transition duration-300 flex flex-col bg-blackThirdy gap-3 p-5 rounded-lg h-48">
                 <div className="flex justify-between items-center">
                     
                         <div className='flex items-center gap-3'>
+                            <div className='size-12 flex rounded-full bg-primary justify-center items-center font-bold text-lg'>{getInitials(name)}</div>
                             <div>
                                 <h3 className="font-bold text-lg">{name}</h3>
                                 <p className="font-semibold text-lightW/70 text-sm">{responsible}</p>
