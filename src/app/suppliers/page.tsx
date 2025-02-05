@@ -61,6 +61,7 @@ function Suppliers() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>('');
 
 
   const [filters, setFilters] = useState({
@@ -79,27 +80,33 @@ function Suppliers() {
       [name]: value,
     }));
   };
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value); 
+  };
 
-  const fetchSuppliers = async (page: number) => {
+  const fetchSuppliers = async (page: number, search: string) => {
     setLoading(true);
-    try {
-      const response = await axios.get<ApiResponse>(
-        `http://127.0.0.1:8000/api/showSuppliers?page=${page}`
-      );
-      const responseData = response.data;
-      setSuppliers(responseData.data);
-      setCurrentPage(responseData.current_page);
-      setTotalPages(responseData.last_page);
-      setLoading(false);
-    } catch (err) {
-      setError("Erro ao carregar os dados da API");
-      setLoading(false);
+    let url = `http://127.0.0.1:8000/api/showSuppliers?page=${page}`;
+
+    if (search) {
+      url += `&search=${search}`;
     }
+    axios.get<ApiResponse>(url)
+      .then(response => {
+        setSuppliers(response.data.data);
+        setTotalPages(response.data.last_page);
+        setCurrentPage(response.data.current_page);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError('Erro ao carregar os dados da API');
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    fetchSuppliers(currentPage);
-  }, [currentPage]);
+    fetchSuppliers(currentPage, search);
+  }, [currentPage, search]);
 
   if (error) {
     return <div>{error}</div>;
@@ -115,9 +122,15 @@ function Suppliers() {
             <span className="text-lightW">{suppliers.length}</span>
           </p>
         </div>
-        <div className=" flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2">
-          <FaSearch size={20} className="text-lightW/30" />
-          <p className="text-sm font-bold text-lightW/30">buscar</p>
+        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+          <FaSearch size={20} className='text-lightW/30'/>
+            <input
+              type="text"
+              placeholder='Buscar' 
+              value={search}
+              onChange={handleSearchChange}
+              className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none w-[100%]'
+            />
         </div>
         <div className="flex gap-4">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">

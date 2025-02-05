@@ -26,6 +26,7 @@ export default function Movements() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalMovements, setTotalMovements] = useState<number>(0);
+  const [search, setSearch] = useState<string>('');
   
   const [filters, setFilters] = useState({
     product_name: '',
@@ -34,10 +35,25 @@ export default function Movements() {
     movementDate: '',
   });
 
+  const [tempFilters, setTempFilters] = useState({ ...filters }); 
+
+  const handleTempFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTempFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const applyFilters = () => {
+    setFilters(tempFilters);
+    setCurrentPage(1); 
+  };
+
   const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [statuses, setStatuses] = useState([
-    'pendente',
+    'em espera',
     'aceito',
     'entregue',
     'negado',
@@ -54,6 +70,7 @@ export default function Movements() {
             movementStatus: filters.movementStatus,
             user_name_request: filters.user_name_request,
             movementDate: filters.movementDate,
+            search, 
           },
         });
 
@@ -64,14 +81,14 @@ export default function Movements() {
         setTotalPages(last_page);
         setTotalMovements(total);
         setIsLoading(false);
-      } catch (error) {
-        console.error('Erro ao buscar movimentos:', error);
+      } catch (error: any) {
+        console.error('Erro ao buscar movimentos:', error.response ? error.response.data : error.message);
         setIsLoading(false);
-      }
+      }      
     };
 
     fetchMovements();
-  }, [currentPage, filters]);
+  }, [currentPage, filters, search]);
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -100,6 +117,9 @@ export default function Movements() {
       setCurrentPage(currentPage - 1);
     }
   };
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value); 
+  };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -118,9 +138,15 @@ export default function Movements() {
             Total de movimentos: <span className="text-lightW">{movements.length}</span>
           </p>
         </div>
-        <div className="flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2">
-          <FaSearch size={20} className="text-lightW/30" />
-          <p className="text-sm font-bold text-lightW/30">buscar</p>
+        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+          <FaSearch size={20} className='text-lightW/30'/>
+            <input
+              type="text"
+              placeholder='Buscar' 
+              value={search}
+              onChange={handleSearchChange}
+              className='text-sm font-bold text-lightW/30 w-[100%] bg-blackSecondary outline-none'
+            />
         </div>
         <div className="flex gap-4">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
@@ -135,13 +161,12 @@ export default function Movements() {
       </div>
 
       <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
-          <div>
+        <div className="flex flex-col gap-4 bg-blackSecondary w-[30%] p-5 rounded-lg">
+          <div className='flex flex-col gap-2 font-bold'>
             <label htmlFor="movementStatus">Status:</label>
             <select
               name="movementStatus"
-              value={filters.movementStatus}
-              onChange={handleFilterChange}
+              value={tempFilters.movementStatus} onChange={handleTempFilterChange}
               className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
             >
               <option value="">Escolha um status</option>
@@ -150,12 +175,11 @@ export default function Movements() {
               ))}
             </select>
           </div>
-          <div>
+          <div className='flex flex-col gap-2 font-bold'>
             <label htmlFor="product_name">Produto:</label>
             <select
               name="product_name"
-              value={filters.product_name}
-              onChange={handleFilterChange}
+              value={tempFilters.product_name} onChange={handleTempFilterChange}
               className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
             >
               <option value="">Escolha um produto</option>
@@ -166,12 +190,11 @@ export default function Movements() {
               ))}
             </select>
           </div>
-          <div>
+          <div className='flex flex-col gap-2 font-bold'>
             <label htmlFor="user_name_request">Usuário:</label>
             <select
               name="user_name_request"
-              value={filters.user_name_request}
-              onChange={handleFilterChange}
+              value={tempFilters.user_name_request} onChange={handleTempFilterChange}
               className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
             >
               <option value="">Escolha um usuário</option>
@@ -182,17 +205,30 @@ export default function Movements() {
               ))}
             </select>
           </div>
-          <div>
+          <div className='flex flex-col gap-2 font-bold'>
             <label htmlFor="movementDate">Data:</label>
             <input
+              className='w-[100%] rounded-lg font-medium h-10 bg-transparent border-[2px] border-lightW/30 px-3'
               type="date"
               name="movementDate"
-              value={filters.movementDate}
-              onChange={handleFilterChange}
+              value={tempFilters.movementDate} onChange={handleTempFilterChange}
             />
           </div>
-          <button onClick={() => setCurrentPage(1)}>Filtrar</button>
-          <button onClick={() => setFilters({ product_name: '', movementStatus: '', user_name_request: '', movementDate: '' })}>Limpar filtro</button>
+
+          <div className='flex gap-3'>
+                <button
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  onClick={applyFilters}
+                >
+                  Filtrar
+                </button>
+                <button
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  onClick={() => setFilters({ product_name: '', movementStatus: '', user_name_request: '', movementDate: '' })}
+                >
+                  Limpar Filtros
+                </button>
+            </div>
         </div>
 
         <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">
@@ -214,6 +250,7 @@ export default function Movements() {
                 requestDescription={movement.request_describe}
               />
             ))
+
           ) : (
             <p className="text-lightW text-center">Nenhum movimento encontrado.</p>
           )}

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaSearch } from "react-icons/fa";
-import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import RequestCard from '@/components/RequestCard';
 import Loading from '@/components/Loading';
 import Pagination from '@/components/Pagination';
@@ -50,10 +49,9 @@ export default function Order() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [lastPage, setLastPage] = useState<number>(1);
-  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
-  const [prevPageUrl, setPrevPageUrl] = useState<string | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  const [search, setSearch] = useState<string>(''); 
 
   const [filters, setFilters] = useState({
     product_id: '',
@@ -61,51 +59,59 @@ export default function Order() {
     user_id: '',
     date: '',
   });
-
+  const [tempFilters, setTempFilters] = useState({ ...filters }); 
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
 
-  // Função para formatar a data no formato correto (YYYY-MM-DD)
-  const formatDate = (date: string) => {
-    if (!date) return '';
-    const [year, month, day] = date.split('-');
-    return `${year}-${month}-${day}`;
-  };
-
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleTempFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    setTempFilters((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
+  
+  const applyFilters = () => {
+    setFilters(tempFilters);
+    setCurrentPage(1); 
+  };
 
-  const fetchRequests = (url: string) => {
-    setLoading(true);
+  useEffect(() => {
+    const fetchRequests = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/showRequests`, {
+          params: {
+            page: currentPage,
+            product_id: filters.product_id,
+            status: filters.status,
+            user_id: filters.user_id,
+            date: filters.date,
+            search, 
+          },
+        });
 
-    // Formata a data antes de enviar para a API
-    const formattedFilters = {
-      ...filters,
-      date: filters.date ? formatDate(filters.date) : '', // Formata a data
+        const { data, current_page, last_page, total } = response.data;
+
+        setRequests(data);
+        setCurrentPage(current_page);
+        setTotalPages(last_page);
+        setTotal(total);
+        setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        if (axios.isAxiosError(error)) {
+          console.error('Erro ao buscar pedidos:', error.response ? error.response.data : error.message);
+          setError(error.response ? error.response.data : 'Erro desconhecido');
+        } else {
+          console.error('Erro inesperado:', error);
+          setError('Erro inesperado');
+        }
+      } 
     };
 
-    axios
-      .get<ApiResponse>(url, { params: formattedFilters })
-      .then((response) => {
-        const data = response.data;
-        setRequests(data.data);
-        setTotal(data.total);
-        setCurrentPage(data.current_page);
-        setLastPage(data.last_page);
-        setNextPageUrl(data.next_page_url);
-        setPrevPageUrl(data.prev_page_url);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Erro ao carregar os dados da API');
-        setLoading(false);
-      });
-  };
+    fetchRequests();
+  }, [currentPage, filters, search]);
 
   const fetchProducts = () => {
     axios
@@ -128,19 +134,15 @@ export default function Order() {
         setError('Erro ao carregar os usuários');
       });
   };
-
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value); 
+  };
   useEffect(() => {
     fetchProducts();
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    fetchRequests('http://127.0.0.1:8000/api/showRequests'); 
-  }, []);
 
-  const handleFilterSubmit = () => {
-    fetchRequests('http://127.0.0.1:8000/api/showRequests');
-  };
 
   if (error) {
     return <div>{error}</div>;
@@ -154,9 +156,15 @@ export default function Order() {
             Total de pedidos: <span className='text-lightW'>{total}</span>
           </p>
         </div>
-        <div className='flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
-          <FaSearch size={20} className='text-lightW/30' />
-          <p className='text-sm font-bold text-lightW/30'>buscar</p>
+        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+          <FaSearch size={20} className='text-lightW/30'/>
+            <input
+              type="text"
+              placeholder='Buscar' 
+              value={search}
+              onChange={handleSearchChange}
+              className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none w-[100%]'
+            />
         </div>
         <div className="flex gap-4">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
@@ -181,7 +189,7 @@ export default function Order() {
                 <select
                   name="product_id"
                   value={filters.product_id}
-                  onChange={handleFilterChange}
+                  onChange={handleTempFilterChange}
                   className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
                   <option value="">Escolha um produto</option>
@@ -198,7 +206,7 @@ export default function Order() {
                 <select
                   name="status"
                   value={filters.status}
-                  onChange={handleFilterChange}
+                  onChange={handleTempFilterChange}
                   className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
                   <option value="">Escolha um status</option>
@@ -212,7 +220,7 @@ export default function Order() {
               <select
                   name="user_id"
                   value={filters.user_id}
-                  onChange={handleFilterChange}
+                  onChange={handleTempFilterChange}
                   className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
                   <option value="">Escolha um usuário</option>
@@ -231,14 +239,14 @@ export default function Order() {
                   type="date"
                   name="date"
                   value={filters.date}
-                  onChange={handleFilterChange}
+                  onChange={handleTempFilterChange}
                 />
               </div>
 
               <div className='flex gap-2'>
                 <button
                   className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
-                  onClick={handleFilterSubmit} 
+                  onClick={applyFilters} 
                 >
                   Filtrar
                 </button>
@@ -251,7 +259,6 @@ export default function Order() {
                       user_id: '',
                       date: '',
                     });
-                    fetchRequests('http://127.0.0.1:8000/api/showRequests');
                   }}
                 >
                   Limpar Filtros
@@ -282,7 +289,7 @@ export default function Order() {
               )}
             </div>
             <div className='mt-2 ml-4'>
-              <Pagination currentPage={currentPage} totalPages={lastPage} onPageChange={setCurrentPage} />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </div>
           </div>
         </div>

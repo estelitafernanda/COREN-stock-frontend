@@ -53,13 +53,18 @@ const Inventory: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [category, setCategory] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
 
-
-  const fetchProducts = (page: number, category: string) => {
+  const fetchProducts = (page: number, category: string, search: string) => {
     setLoading(true);
-    const url = category ? `http://127.0.0.1:8000/products?page=${page}&category=${category}` : `http://127.0.0.1:8000/products?page=${page}`;
-    
-
+    let url = `http://127.0.0.1:8000/products?page=${page}`;
+  
+    if (category) {
+        url += `&category=${category}`;
+    }
+    if (search) {
+        url += `&search=${search}`;
+    }
     axios.get<ApiResponse>(url)
       .then(response => {
         setProducts(response.data.data);
@@ -74,8 +79,12 @@ const Inventory: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProducts(currentPage, category,);
-  }, [currentPage, category]);
+    fetchProducts(currentPage, category, search );
+  }, [currentPage, category, search]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
   const handleCategoryChange = (selectedCategory: string) => {
     setCategory(selectedCategory);
@@ -99,7 +108,9 @@ const Inventory: React.FC = () => {
           <input
             type="text"
             placeholder='Buscar' 
-            className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none'
+            value={search}
+            onChange={handleSearchChange}
+            className='text-sm font-bold text-lightW/30 w-[100%] bg-blackSecondary outline-none'
           />
         </div>
         <div className="flex gap-4">

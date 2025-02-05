@@ -74,7 +74,6 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
       }
     }
   };
-  
 
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
@@ -102,12 +101,6 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
                                 <ImExit size={20} />
                               </div>
                               <div className='flex gap-5'>
-                                <a href={`edit/department/${infoIdData}`}>
-                                  <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
-                                    Editar
-                                    <FaEdit className='group-hover:text-green transition duration-300' size={20} />
-                                  </button>
-                                </a>
                                 <button
                                   onClick={() => sectorData?.idSector && handleDeleteRequest(infoIdData)} 
                                   className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"
@@ -119,7 +112,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
             <div className='mt-8'>
               <div className='flex gap-5'>
                 <div className='max-w-fit rounded-full bg-lightW'>
-                  <div className='size-11 bg-primary rounded-full'></div>
+                  <div className='flex size-11 font-black text-lg bg-primary rounded-full items-center justify-center'>{getInitials(sectorData?.name || '')}</div>
                 </div>
                 <div className='flex items-center'>
                   <h2 className='text-2xl font-bold'>{sectorData?.name}</h2>
