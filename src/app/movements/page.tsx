@@ -47,7 +47,7 @@ export default function Movements() {
 
   const applyFilters = () => {
     setFilters(tempFilters);
-    setCurrentPage(1); // Resetando para a primeira página (debug)
+    setCurrentPage(1); // Resetando para a primeira página (debug com o fetch)
   };
 
   const [products, setProducts] = useState([]);
