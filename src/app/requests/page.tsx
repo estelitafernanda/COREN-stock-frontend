@@ -41,7 +41,7 @@ interface Product {
 
 interface User {
   idUser: number;
-  nameUser: string;
+  nameUser: string; 
 }
 
 export default function Order() {

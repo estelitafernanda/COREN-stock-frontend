@@ -112,6 +112,7 @@ function SupplierForm() {
         } catch (error) {
             console.error("Erro ao adicionar fornecedor:", error);
             alert("Erro ao adicionar fornecedor.");
+            console.log(formData);
         }
     };
 
@@ -145,33 +146,33 @@ function SupplierForm() {
                         </div>
                         
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>Razão Social</label>
+                            <label htmlFor="corporateReason" className='text-md font-bold'>Razão Social</label>
                             <input type="text" value={formData.corporateReason} name="corporateReason" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>Endereço</label>
+                            <label htmlFor="address" className='text-md font-bold'>Endereço</label>
                             <input type="text" value={formData.address} name="address" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>Email</label>
+                            <label htmlFor="email" className='text-md font-bold'>Email</label>
                             <input type="text" value={formData.email} name="email" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>Telefone</label>
+                            <label htmlFor="telephone" className='text-md font-bold'>Telefone</label>
                             <input type="text" value={formData.telephone} name="telephone" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>Responsavel</label>
+                            <label htmlFor="responsible" className='text-md font-bold'>Responsavel</label>
                             <input type="text" value={formData.responsible} name="responsible" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
 
 
                         <div className='flex flex-col gap-2'>
-                            <label htmlFor="name" className='text-md font-bold'>CNPJ</label>
+                            <label htmlFor="cnpj" className='text-md font-bold'>CNPJ</label>
                             <input type="text" value={formData.cnpj} name="cnpj" onChange={handleChange} placeholder="Nome do fornecedor" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
                         

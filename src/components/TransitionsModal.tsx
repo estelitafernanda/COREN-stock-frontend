@@ -126,6 +126,10 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                           <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
                         </div>
                         <div className='flex flex-col gap-1'>
+                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Código:</h2>
+                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.code}</p>
+                        </div>
+                        <div className='flex flex-col gap-1'>
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
                           <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
                         </div>

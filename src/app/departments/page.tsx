@@ -21,6 +21,7 @@ interface ApiResponse {
   data: Sector[];
   total: number;
   per_page: number;
+  last_page: number;
   next_page_url: string | null;
   prev_page_url: string | null;
 }
@@ -31,6 +32,7 @@ function Departments() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [search, setSearch] = useState<string>('');
 
   const [filters, setFilters] = useState({
     unity: '',
@@ -45,27 +47,34 @@ function Departments() {
         [name]: value,
     }));
   };
-  const fetchSectors = (page: number) => {
+  const fetchSectors = (page: number,  search: string) => {
     setLoading(true);
-    setError(null);
-
-    axios.get<ApiResponse>(`http://127.0.0.1:8000/api/showDepartments?page=${page}`)
+    let url = `http://127.0.0.1:8000/api/showDepartments?page=${page}`;
+  
+    if (search) {
+        url += `&search=${search}`;
+    }
+    axios.get<ApiResponse>(url)
       .then(response => {
-        const { data, current_page, total, per_page } = response.data;
-        setSectors(data);
-        setCurrentPage(current_page);
-        setTotalPages(Math.ceil(total / per_page));
+        setSectors(response.data.data);
+        setTotalPages(response.data.last_page);
+        setCurrentPage(response.data.current_page);
         setLoading(false);
       })
-      .catch(() => {
+      .catch(error => {
         setError('Erro ao carregar os dados da API');
         setLoading(false);
       });
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+
   useEffect(() => {
-    fetchSectors(currentPage);
-  }, [currentPage]);
+    fetchSectors(currentPage, search);
+  }, [currentPage, search]);
 
   if (error) {
     return <div>{error}</div>;
@@ -80,9 +89,15 @@ function Departments() {
             Total de departamentos: <span className="text-lightW">{sectors.length}</span>
           </p>
         </div>
-        <div className="flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2">
-          <FaSearch size={20} className="text-lightW/30" />
-          <p className="text-sm font-bold text-lightW/30">buscar</p>
+         <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+            <FaSearch size={20} className='text-lightW/30'/>
+              <input
+                type="text"
+                placeholder='Buscar' 
+                value={search}
+                onChange={handleSearchChange}
+                className='text-sm font-bold text-lightW/30 w-[100%] bg-blackSecondary outline-none'
+              />
         </div>
         <div className="flex gap-4">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
