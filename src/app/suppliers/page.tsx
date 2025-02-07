@@ -59,6 +59,7 @@ function Suppliers() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState<string>('');
@@ -66,47 +67,79 @@ function Suppliers() {
 
   const [filters, setFilters] = useState({
     name: '',
+    product_id: '', 
     telephone: '',
     address: '',
     responsible: '',
     cnpj: '',
     email: '',
   });
-  
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
-  };
+  const [products, setProducts] = useState<Product[]>([]);
+  const [tempFilters, setTempFilters] = useState({ ...filters }); 
+
+  const handleTempFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setTempFilters((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+    
+    const applyFilters = () => {
+      setFilters(tempFilters);
+      setCurrentPage(1); 
+    };
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value); 
   };
 
-  const fetchSuppliers = async (page: number, search: string) => {
-    setLoading(true);
-    let url = `http://127.0.0.1:8000/api/showSuppliers?page=${page}`;
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/showSuppliers`, {
+          params: {
+            page: currentPage,
+            product_id: filters.product_id,
+            search, 
+          },
+        });
 
-    if (search) {
-      url += `&search=${search}`;
-    }
-    axios.get<ApiResponse>(url)
-      .then(response => {
-        setSuppliers(response.data.data);
-        setTotalPages(response.data.last_page);
-        setCurrentPage(response.data.current_page);
+        const { data, current_page, last_page, total } = response.data;
+
+        setSuppliers(data);
+        setCurrentPage(current_page);
+        setTotalPages(last_page);
+        setTotal(total);
         setLoading(false);
+      } catch (error: any) {
+        setLoading(false);
+        if (axios.isAxiosError(error)) {
+          console.error('Erro ao buscar fornecedores:', error.response ? error.response.data : error.message);
+          setError(error.response ? error.response.data : 'Erro desconhecido');
+        } else {
+          console.error('Erro inesperado:', error);
+          setError('Erro inesperado');
+        }
+      } 
+    };
+
+    fetchSuppliers();
+  }, [currentPage, filters, search]);
+  const fetchProducts = () => {
+    axios
+      .get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
+      .then((response) => {
+        setProducts(response.data);
       })
-      .catch(error => {
-        setError('Erro ao carregar os dados da API');
-        setLoading(false);
+      .catch(() => {
+        setError('Erro ao carregar os produtos');
       });
   };
 
   useEffect(() => {
-    fetchSuppliers(currentPage, search);
-  }, [currentPage, search]);
+      fetchProducts();
+  }, []);
 
   if (error) {
     return <div>{error}</div>;
@@ -119,7 +152,7 @@ function Suppliers() {
           <h1 className="text-3xl font-bold text-lightW">Fornecedores:</h1>
           <p className="text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30">
             Total de fornecedores:{" "}
-            <span className="text-lightW">{suppliers.length}</span>
+            <span className="text-lightW">{total}</span>
           </p>
         </div>
         <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
@@ -147,37 +180,47 @@ function Suppliers() {
 
       <section className="h-[80vh] flex gap-5 mt-5">
         <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
-          <div>
-            <h2 className="text-sm uppercase tracking-widest font-bold text-lightW/50">
-              Tipo de Fornecedor
-            </h2>
-            <div className="grid gap-3 py-3">
-            <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Todos
-                <span className="group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300">
-                  386
-                </span>
-              </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Alimentos
-                <span className="group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300">
-                  78
-                </span>
-              </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Escritório
-                <span className="group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300">
-                  94
-                </span>
-              </button>
-              <button className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
-                Limpeza
-                <span className="group-hover:bg-primary text-sm bg-primary/50 text-lightW px-2 rounded-full transition duration-300">
-                  178
-                </span>
-              </button>
-            </div>
-          </div>
+              <div>
+                <label htmlFor="">Produtos</label>
+                <select
+                  name="product_id"
+                  value={tempFilters.product_id}
+                  onChange={handleTempFilterChange}
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                >
+                  <option value="">Produtos</option>
+                  {products.map((product) => (
+                    <option key={product.idProduct} value={product.idProduct}>
+                      {product.nameProduct}
+                    </option>
+                  ))}
+                </select>
+              </div>
+        
+              <div className='flex gap-2'>
+                <button
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  onClick={applyFilters} 
+                >
+                  Filtrar
+                </button>
+                <button
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  onClick={() => {
+                    setFilters({
+                      name: '',
+                      product_id: '',
+                      telephone: '',
+                      address: '',
+                      responsible: '',
+                      cnpj: '',
+                      email: '',
+                    });
+                  }}
+                >
+                  Limpar Filtros
+                </button>
+              </div>
         </div>
 
         <div className="flex flex-col gap-5 w-full bg-blackSecondary p-5 rounded-lg">

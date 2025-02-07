@@ -61,7 +61,7 @@ export default function Home() {
            <a href="/inventory" className="text-lg font-bold text-primary pr-3 hover:text-[#B4FFFF] flex gap-1 items-center transition duration-300"><span>Ver Produtos</span><IoIosArrowForward/></a>
           </div>
           <div className="flex flex-col gap-3 mt-3">
-
+            
           </div>
         </div>
       </div>

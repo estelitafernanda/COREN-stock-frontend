@@ -25,7 +25,7 @@ export default function Movements() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [totalMovements, setTotalMovements] = useState<number>(0);
+  const [total, setTotalMovements] = useState<number>(0);
   const [search, setSearch] = useState<string>('');
   
   const [filters, setFilters] = useState({
@@ -106,17 +106,6 @@ export default function Movements() {
     fetchOptions();
   }, []);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value); 
   };
@@ -135,7 +124,7 @@ export default function Movements() {
         <div className="flex items-center gap-5">
           <h1 className="text-3xl font-bold text-lightW">Movimentação:</h1>
           <p className="text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30">
-            Total de movimentos: <span className="text-lightW">{movements.length}</span>
+            Total de movimentos: <span className="text-lightW">{total}</span>
           </p>
         </div>
         <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
@@ -166,7 +155,8 @@ export default function Movements() {
             <label htmlFor="movementStatus">Status:</label>
             <select
               name="movementStatus"
-              value={tempFilters.movementStatus} onChange={handleTempFilterChange}
+              value={tempFilters.movementStatus} 
+              onChange={handleTempFilterChange}
               className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
             >
               <option value="">Escolha um status</option>
@@ -179,7 +169,8 @@ export default function Movements() {
             <label htmlFor="product_name">Produto:</label>
             <select
               name="product_name"
-              value={tempFilters.product_name} onChange={handleTempFilterChange}
+              value={tempFilters.product_name} 
+              onChange={handleTempFilterChange}
               className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
             >
               <option value="">Escolha um produto</option>

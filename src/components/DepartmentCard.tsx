@@ -18,7 +18,7 @@ function DepartmentCard({name, superUser, func, local, idSector}: {name: string,
     <div className="flex justify-between items-center">
         
             <div className='flex items-center gap-3'>
-                <div className='size-10 flex rounded-full bg-primary justify-center items-center font-bold text-lg'>{getInitials(name)}</div>
+                <div className='size-10 flex rounded-full bg-blackSecondary justify-center items-center font-bold text-lg'>{getInitials(name)}</div>
                 <div>
                     <h3 className="font-bold text-lg">{name}</h3>
                 </div>

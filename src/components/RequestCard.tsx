@@ -19,7 +19,7 @@ function RequestCard({product,  userName, desc, date, qnt, department, idRequest
     <div className="flex justify-between items-center">
         
             <div className='flex items-center gap-3'>
-                <div className='size-10 flex rounded-full font-black bg-primary justify-center items-center'>
+                <div className='size-10 flex rounded-full font-black bg-blackSecondary justify-center items-center'>
                     {idRequest}
                 </div>
                 <div>

@@ -188,7 +188,7 @@ export default function Order() {
                 <label htmlFor="">Produto</label>
                 <select
                   name="product_id"
-                  value={filters.product_id}
+                  value={tempFilters.product_id}
                   onChange={handleTempFilterChange}
                   className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
@@ -205,7 +205,7 @@ export default function Order() {
                 <label htmlFor="">Status:</label>
                 <select
                   name="status"
-                  value={filters.status}
+                  value={tempFilters.status}
                   onChange={handleTempFilterChange}
                   className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
@@ -216,10 +216,10 @@ export default function Order() {
               </div>
 
               <div>
-                <label htmlFor="">Usuário:</label>
+                <label htmlFor="user_id">Usuário:</label>
               <select
                   name="user_id"
-                  value={filters.user_id}
+                  value={tempFilters.user_id}
                   onChange={handleTempFilterChange}
                   className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
                 >
@@ -238,7 +238,7 @@ export default function Order() {
                   className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'
                   type="date"
                   name="date"
-                  value={filters.date}
+                  value={tempFilters.date}
                   onChange={handleTempFilterChange}
                 />
               </div>

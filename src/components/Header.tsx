@@ -51,11 +51,11 @@ const headerLinks = [
 
 function Header() {
   return (
-    <div className="container mx-auto mt-7 z-50 flex min-w-[95vw] justify-between">
+    <div className="container mx-auto mt-7 z-50 flex min-w-[95vw] justify-between ">
         <Link href="/">
             <h1 className="font-black text-2xl tracking-wider text-primary">CorenStock</h1>
         </Link>
-        <ul className='flex gap-6'>
+        <ul className='flex gap-6 md:bg-none'>
             {headerLinks.map((link) => (
                 <li key={link.id} className="group cursor-pointer max-h-min py-2 px-5 border border-white/15 rounded-full bg-white/5 backdrop-blur"><a href={link.link} className='text-sm font-semibold flex items-center gap-1 transition duration-300 group-hover:text-primary'>{link.icon}{link.title}</a></li>
             ))}
