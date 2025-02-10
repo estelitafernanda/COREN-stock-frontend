@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Keycloak, { KeycloakConfig } from "keycloak-js";
+import Loading from "@/components/Loading";  // Assumindo que você tem um componente Loading
 
 interface AuthContextType {
   keycloak: Keycloak | null;
@@ -33,11 +34,11 @@ export const KeycloakProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
         setKeycloak(kc);
         setIsAuthenticated(auth);
-        setLoading(false);
+        setLoading(false);  // Autenticação concluída
       })
       .catch(() => {
         console.error("Falha na autenticação");
-        setLoading(false);
+        setLoading(false);  // Mesmo em caso de erro, podemos parar o loading
       });
   }, []);
 
@@ -46,6 +47,10 @@ export const KeycloakProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       keycloak.logout({ redirectUri: "http://localhost:3000/" });
     }
   };
+
+  if (loading) {
+    return (<Loading />);
+  }
 
   return (
     <AuthContext.Provider value={{ keycloak, isAuthenticated, loading, logout }}>

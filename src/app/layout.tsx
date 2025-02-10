@@ -33,12 +33,11 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Header />
-
-            {children}
-
+          {children}
           <div className=" bottom-0 mt-36">
             <Footer/>
           </div>
+          
         </body>
       </html>
     </KeycloakProvider>
