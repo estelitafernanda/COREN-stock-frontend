@@ -117,11 +117,22 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                     <ImExit size={20} />
                   </div>
                   <div className='flex gap-5'>
-                  
-                    <button onClick={handleUpdateRequest} className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
-                      Aceitar Pedido
-                      <GiConfirmed className='group-hover:text-green transition duration-300' size={20} />
-                    </button>
+                    
+                  <button
+                    onClick={handleUpdateRequest}
+                    disabled={request?.status === 'aceito'}
+                    className={`group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 w-full ${
+                      request?.status === 'aceito' ? 'opacity-50 cursor-not-allowed' : 'hover:text-green hover:border-green'
+                    }`}
+                  >
+                    Aceitar Pedido
+                    <GiConfirmed 
+                      className={`transition duration-300 ${
+                        request?.status === 'aceito' ? 'text-gray-500' : 'group-hover:text-green'
+                      }`} 
+                      size={20} 
+                    />
+                  </button>
                   
                     <button
                       onClick={() => request?.idRequest && handleDeleteRequest(request.idRequest)} 

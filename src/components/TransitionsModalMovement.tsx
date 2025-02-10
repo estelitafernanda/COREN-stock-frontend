@@ -108,13 +108,45 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
                 <ImExit size={20} />
               </div>
               <div className='flex gap-5'>
-                <button 
-                  onClick={handleUpdateRequest}
-                  className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full items-center"
-                >
-                  Entregue
-                  <GiConfirmed  className='group-hover:text-green transition duration-300' size={20} />
-                </button>
+                {movement?.movementStatus === 'entregue' ? (
+                  <button 
+                    disabled
+                    className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 w-full items-center opacity-50 cursor-not-allowed"
+                  >
+                    Entregue
+                    <GiConfirmed  
+                      className="text-gray-500" 
+                      size={20} 
+                    />
+                  </button>
+                ) : (
+                  (movement?.quantity ?? 0) > (movement?.currentQuantity ?? 0) ? (
+                    <>
+                      <button 
+                        disabled
+                         className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 max-w-max items-center opacity-50 cursor-not-allowed ml-5"
+                      >
+                        Entregue
+                        <GiConfirmed  
+                          className="text-gray-500" 
+                          size={20} 
+                        />
+                      </button>
+                      <p className="text-red font-bold mt-2 text-sm">Quantidade solicitada excede o estoque disponível!</p> 
+                    </>
+                  ) : (
+                    <button 
+                      onClick={handleUpdateRequest}
+                      className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 w-full items-center hover:text-green hover:border-green"
+                    >
+                      Entregue
+                      <GiConfirmed  
+                        className="transition duration-300 group-hover:text-green" 
+                        size={20} 
+                      />
+                    </button>
+                  )
+                )}
               </div>
             </div>
             <div className='mt-5 flex py-6 gap-5 bg-blackSecondary font-[family-name:var(--font-geist-sans)] rounded-md'>

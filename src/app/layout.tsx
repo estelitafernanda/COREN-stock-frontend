@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { KeycloakProvider } from "./contexts/KeycloakProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,18 +27,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header />
-
+    <KeycloakProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <Header />
           {children}
-
-        <div className=" bottom-0 mt-36">
-          <Footer/>
-        </div>
-      </body>
-    </html>
+          <div className=" bottom-0 mt-36">
+            <Footer/>
+          </div>
+          
+        </body>
+      </html>
+    </KeycloakProvider>
   );
 }
