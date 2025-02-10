@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Keycloak, { KeycloakConfig } from "keycloak-js";
-import Loading from "@/components/Loading";  // Assumindo que você tem um componente Loading
+import Loading from "@/components/Loading"; 
 
 interface AuthContextType {
   keycloak: Keycloak | null;
@@ -34,11 +34,11 @@ export const KeycloakProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
         setKeycloak(kc);
         setIsAuthenticated(auth);
-        setLoading(false);  // Autenticação concluída
+        setLoading(false); 
       })
       .catch(() => {
         console.error("Falha na autenticação");
-        setLoading(false);  // Mesmo em caso de erro, podemos parar o loading
+        setLoading(false);
       });
   }, []);
 
