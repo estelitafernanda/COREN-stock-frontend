@@ -2,8 +2,8 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { BiSolidErrorAlt } from "react-icons/bi";
 import Fade from '@mui/material/Fade';
-
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
 import {FaLongArrowAltRight } from "react-icons/fa";
@@ -124,15 +124,11 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
                     <>
                       <button 
                         disabled
-                         className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 max-w-max items-center opacity-50 cursor-not-allowed ml-5"
+                         className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-red bg-white/10 px-8 rounded-lg transition duration-300 max-w-max items-center opacity-80 cursor-not-allowed ml-5"
                       >
-                        Entregue
-                        <GiConfirmed  
-                          className="text-gray-500" 
-                          size={20} 
-                        />
+                        Quantidade Indisponível
+                        <BiSolidErrorAlt className='size-5'/>
                       </button>
-                      <p className="text-red font-bold mt-2 text-sm">Quantidade solicitada excede o estoque disponível!</p> 
                     </>
                   ) : (
                     <button 

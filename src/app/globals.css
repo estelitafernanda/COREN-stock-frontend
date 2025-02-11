@@ -26,6 +26,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #56cbec;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #B4FFFF;
+}
+
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-10%);

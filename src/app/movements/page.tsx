@@ -3,8 +3,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaHeadset, FaSearch } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
+import { Autocomplete, TextField } from '@mui/material';
+
 import MovementCard from '@/components/MovementCard';
 import Pagination from '@/components/Pagination';
+
+interface Product {
+  idProduct: number;
+  nameProduct: string;
+}
 
 interface Movement {
   idMovement: number;
@@ -50,7 +57,7 @@ export default function Movements() {
     setCurrentPage(1); 
   };
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState([]);
   const [statuses, setStatuses] = useState([
     'em espera',
@@ -165,46 +172,37 @@ export default function Movements() {
               ))}
             </select>
           </div>
-          <div className='flex flex-col gap-2 font-bold'>
-            <label htmlFor="product_name">Produto:</label>
-            <select
-              name="product_name"
-              value={tempFilters.product_name} 
-              onChange={handleTempFilterChange}
-              className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
-            >
-              <option value="">Escolha um produto</option>
-              {products.map((product: any) => (
-                <option key={product.idProduct} value={product.nameProduct}>
-                  {product.nameProduct}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='flex flex-col gap-2 font-bold'>
-            <label htmlFor="user_name_request">Usuário:</label>
-            <select
-              name="user_name_request"
-              value={tempFilters.user_name_request} onChange={handleTempFilterChange}
-              className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
-            >
-              <option value="">Escolha um usuário</option>
-              {users.map((user: any) => (
-                <option key={user.idUser} value={user.nameUser}>
-                  {user.nameUser}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='flex flex-col gap-2 font-bold'>
-            <label htmlFor="movementDate">Data:</label>
-            <input
-              className='w-[100%] rounded-lg font-medium h-10 bg-transparent border-[2px] border-lightW/30 px-3'
-              type="date"
-              name="movementDate"
-              value={tempFilters.movementDate} onChange={handleTempFilterChange}
-            />
-          </div>
+
+
+          <Autocomplete
+            options={products}
+            getOptionLabel={(option) => option.nameProduct}
+            value={products.find((product) => product.nameProduct === tempFilters.product_name) || null}
+            onChange={(event, newValue) => {
+              setTempFilters((prev) => ({
+                ...prev,
+                product_name: newValue?.nameProduct || '',
+              }));
+            }}
+            renderInput={(params) => <TextField {...params} label="Escolha um produto" />}
+            sx={{ width: '100%' }}
+          />
+
+
+          <Autocomplete
+            options={users}
+            getOptionLabel={(option) => option.nameUser} 
+            value={tempFilters.user_name_request ? { nameUser: tempFilters.user_name_request } : null}
+            onChange={(event, newValue) => {
+              setTempFilters((prev) => ({
+                ...prev,
+                user_name_request: newValue?.nameUser || '',  
+              }));
+            }}
+            renderInput={(params) => <TextField {...params} label="Escolha um usuário" />}
+            sx={{ width: '100%',  }}
+          />
+
 
           <div className='flex gap-3'>
                 <button

@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import { useAuth } from "@/app/contexts/KeycloakProvider";
 import { ImExit } from "react-icons/im";
+import NotificationModal from "./NotificationModal";
 
 const headerLinks = [
     {
@@ -77,10 +78,8 @@ function Header() {
           ))}
         </ul>
         <div className="flex gap-5 items-center">
-          <div className="cursor-pointer relative flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
-            <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-red"></div>
-            <IoIosNotifications size={25} />
-          </div>
+          
+          <NotificationModal />
   
           <div className="cursor-pointer flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
             <FaSun size={20} />

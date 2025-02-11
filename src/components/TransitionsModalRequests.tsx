@@ -33,6 +33,7 @@ interface Request {
   user_name: string;
   sector_name: string;
   status: string;
+  type: string; 
 }
 
 export default function TransitionsModalRequests({ infoIdData }: { infoIdData: number }) {
@@ -57,7 +58,7 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
   const handleUpdateRequest = async () => {
     try {
       const response = await api.patch(`http://127.0.0.1:8000/api/requests/${infoIdData}/update`);
-      alert(response.data.message || 'A requisição foi aceitada com sucesso!');
+      alert(response.data.message || 'A requisição foi aceita com sucesso!');
       window.location.reload();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -179,6 +180,10 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                         <div className='flex gap-2 items-center'>
                           <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Status:</h2>
                           <p className='text-md font-semibold'>{request?.status}</p>
+                        </div>
+                        <div className='flex gap-2 items-center'>
+                          <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Tipo:</h2>
+                          <p className='text-md font-semibold'>{request?.type}</p>
                         </div>
                       </div>
                     </div>

@@ -11,6 +11,7 @@ import { IoIosAdd } from 'react-icons/io';
 interface Request {
   idRequest: number;
   describe: string;
+  type: string; 
   requestDate: string;
   quantity: number;
   product_name: string;
@@ -58,6 +59,7 @@ export default function Order() {
     status: '',
     user_id: '',
     date: '',
+    type: '',
   });
   const [tempFilters, setTempFilters] = useState({ ...filters }); 
   const [products, setProducts] = useState<Product[]>([]);
@@ -258,6 +260,7 @@ export default function Order() {
                       status: '',
                       user_id: '',
                       date: '',
+                      type: '', 
                     });
                   }}
                 >
@@ -284,6 +287,7 @@ export default function Order() {
                     desc={request.describe}
                     date={request.requestDate}
                     qnt={request.quantity}
+                    type={request.type}
                   />
                 ))
               )}

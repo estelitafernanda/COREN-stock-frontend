@@ -64,19 +64,19 @@ export default function ButtonMenu() {
 
   return (
     <div>
-      <Button
+      <button
         id="demo-customized-button"
         aria-controls={open ? 'demo-customized-menu' : undefined}
         aria-haspopup="true"
-        className='border normal-case items-center border-red bg-primary transition duration-300 hover:bg-blackThirdy hover:text-primary flex py-2 px-5 rounded-lg text-base font-semibold text-blackPrimary'
+        className='normal-case items-center bg-primary transition duration-300 hover:bg-blackThirdy hover:text-primary flex py-2 px-5 rounded-lg text-base font-semibold text-blackPrimary'
         aria-expanded={open ? 'true' : undefined}
-        variant="contained"
-        disableElevation
+
+
         onClick={handleClick}
         // endIcon={<KeyboardArrowDownIcon />}
       >
         Ação Rápida
-      </Button>
+      </button>
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{

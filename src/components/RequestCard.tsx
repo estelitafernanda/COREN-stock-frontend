@@ -2,7 +2,7 @@ import React from 'react'
 import TransitionsModalRequests from './TransitionsModalRequests';
 
 
-function RequestCard({product,  userName, desc, date, qnt, department, idRequest}: {product: string, department: string, userName: string , desc: string, date: string, qnt: number, idRequest: number}) {
+function RequestCard({product,  userName, desc, date, qnt, department, idRequest, type}: {product: string, department: string, userName: string , desc: string, date: string, qnt: number, idRequest: number, type: string}) {
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -42,6 +42,10 @@ function RequestCard({product,  userName, desc, date, qnt, department, idRequest
                     <div className='flex flex-col gap-1'>
                         <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Data</h3>
                         <p className=" font-semibold text-lightW text-sm">{date ? formatDate(date) : ''}</p>
+                    </div>
+                    <div className='flex flex-col gap-1'>
+                        <h3 className="font-semibold text-lightW/70 text-sm uppercase tracking-wider">Tipo</h3>
+                        <p className=" font-semibold text-lightW text-sm">{type}</p>
                     </div>
                 </div>
             </div>

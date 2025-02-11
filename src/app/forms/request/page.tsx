@@ -8,8 +8,8 @@ import axios from 'axios';
 
 type FormDataType = {
     describe: string;
-    requestDate: string;
     quantity: string;
+    type: string;
     idProduct: string;
     idUser: string;
 };
@@ -61,10 +61,10 @@ function MovementForm() {
 
     const [formData, setFormData] = useState<FormDataType>({
         describe: '',
-        requestDate: '',
         quantity: '',
         idProduct: '',
         idUser: '',
+        type: '', 
     });
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -210,9 +210,14 @@ function MovementForm() {
                     </div>
 
                     <div className='flex flex-col gap-2 '>
-                        <label htmlFor="" className='text-md font-bold'>Data</label>
-                        <input type="date" name='requestDate' onChange={handleChange} value={formData.requestDate} placeholder='data do pedido' className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
-                    </div>
+                            <label htmlFor="" className='text-md font-bold'>Tipo de pedido</label>
+                            <select name="type" value={formData.type} onChange={handleChange} id="type" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
+                                <option value="" className='bg-blackSecondary'>Selecione tipo de pedido</option>
+                                <option value='entrada'>Entrada</option>
+                                <option value='saida'>Saída</option>
+                            </select>
+                        </div>
+
                     <input type="submit" value="Fazer Pedido" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>
                 </form>
             </section>
