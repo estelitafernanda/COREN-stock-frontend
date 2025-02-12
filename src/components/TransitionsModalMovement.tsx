@@ -37,6 +37,7 @@ interface Movement {
   user_name_request: string;
   user_sector: string;
   request_describe: string;
+  type: string;
 }
 
 export default function TransitionsModalMovement({ id }: { id: number; }) {
@@ -120,7 +121,7 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
                     />
                   </button>
                 ) : (
-                  (movement?.quantity ?? 0) > (movement?.currentQuantity ?? 0) ? (
+                  (movement?.quantity ?? 0) > (movement?.currentQuantity ?? 0) && (movement?.type === 'Saida') ? (
                     <>
                       <button 
                         disabled
@@ -160,11 +161,30 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
                   </span>
                   <span className='flex gap-1'>
                     <p className='font-bold text-lightW/50'>Movimentação: </p>
-                    <span className='flex items-center gap-3 '>
+                    {movement?.type === 'Saida' ? (
+                      <>
+                        <span className='flex items-center gap-3 '>
                       <p className='text-lightW font-bold'>Almoxarifado</p>
                       <FaLongArrowAltRight className='text-primary'/>
                       <p className='text-lightW font-bold'>{movement?.user_sector}</p>
                     </span>
+                      </>
+                    ) : movement?.type === 'Entrada' ? (
+                      <>
+                      <span className='flex items-center gap-3 '>
+                      <p className='text-lightW font-bold'>{movement?.user_sector}</p>
+                        <FaLongArrowAltRight className='text-primary'/>
+                      <p className='text-lightW font-bold'>Almoxarifado</p>
+                      </span>
+                     </>
+
+                    ): (
+                      <span>Tipo inválido</span> 
+                    )}
+                  </span>
+                  <span className='flex gap-1'>
+                  <p className='font-bold text-lightW/50'>Tipo: </p>
+                  <p className='font-bold'>{movement?.type}</p>
                   </span>
                   <span className='flex gap-1'>
                     <p className='font-bold text-lightW/50'>Data: </p>

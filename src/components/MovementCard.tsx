@@ -3,7 +3,7 @@ import React from 'react';
 import { FaReceipt, FaTruckMoving } from 'react-icons/fa6';
 import { GiConfirmed } from 'react-icons/gi';
 import { GrValidate } from 'react-icons/gr';
-import { BiArrowFromLeft,} from 'react-icons/bi';
+import { BiArrowFromLeft, BiArrowFromRight,} from 'react-icons/bi';
 import TransitionsModalMovements from './TransitionsModalMovement';
 import { get } from 'http';
 
@@ -12,6 +12,7 @@ interface MovementCardProps {
   idRequest: number;
   quantity: number;
   date: string;
+  type: string;
   status: string;
   productName: string;
   currentQuantity: number;
@@ -31,6 +32,7 @@ const MovementCard: React.FC<MovementCardProps> = ({
   currentQuantity,
   userName,
   requestDescription,
+  type,
 }) => {
 
     function getInitials(nameAbrev: string): string {
@@ -60,7 +62,23 @@ const MovementCard: React.FC<MovementCardProps> = ({
           Quantidade Atual: <span className="text-lightW/70">{quantity}</span>
         </p>
         <div className={status === "Em Espera" ? "rounded-full size-2 bg-lightW/50 group-hover:bg-yellow transition duration-300" : "rounded-full size-2 bg-lightW/50 group-hover:bg-green transition duration-300"}></div>
-        <p className="font-bold flex gap-1 items-center text-lightW/50 text-sm">Almoxarifado <BiArrowFromLeft size={20} className={status === "Em Espera" ? 'group-hover:text-yellow transition duration-300' : 'group-hover:text-[#7bfdb1] transition duration-300'}/>{userSector}</p>
+        <p className="font-bold flex gap-1 items-center text-lightW/50 text-sm">
+          {type === 'Saida' ? (
+            <>
+              Almoxarifado <BiArrowFromLeft size={20} className={status === "Em Espera" ? 'group-hover:text-yellow transition duration-300' : 'group-hover:text-[#7bfdb1] transition duration-300'} /> {userSector}
+            </>
+          ) : type === 'Entrada' ? (
+            <>
+              {userSector} <BiArrowFromLeft size={20} className={status === 'Em Espera' ? 'group-hover:text-blue transition duration-300' : 'group-hover:text-purple transition duration-300'} /> Almoxarifado
+            </>
+          ) : (
+            <span>Tipo inválido</span> 
+          )}
+        </p>
+        <div className={status === "Em Espera" ? "rounded-full size-2 bg-lightW/50 group-hover:bg-yellow transition duration-300" : "rounded-full size-2 bg-lightW/50 group-hover:bg-green transition duration-300"}></div>
+        <p className="font-semibold text-lightW/70 text-sm">
+          Tipo: <span className="text-lightW/70">{type}</span>
+        </p>
       </div>
 
       <div className="bg-blackSecondary flex items-center w-full p-1 gap-5 rounded-lg">

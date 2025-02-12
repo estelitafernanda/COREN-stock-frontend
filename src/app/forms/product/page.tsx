@@ -10,7 +10,7 @@ import { IoMdArrowDropleft } from "react-icons/io";
 type FormDataType = {
     nameProduct: string;
     image: File | null;
-    idSector: string;
+    idDepartment: string;
     code: string;
     describe: string;
     category: string;
@@ -30,7 +30,7 @@ function ProductForm() {
     const [formData, setFormData] = useState<FormDataType>({
         nameProduct: "",
         image: null,
-        idSector: "",
+        idDepartment: "",
         code: "",
         describe: "",
         category: "",
@@ -169,10 +169,10 @@ function ProductForm() {
                         </div>
 
                         <div className='flex flex-col gap-2 '>
-                            <label htmlFor="idSector" className='text-md font-bold'>Identificador do Departamento</label>
+                            <label htmlFor="idDepartment" className='text-md font-bold'>Identificador do Departamento</label>
                             <select 
-                                name="idSector" 
-                                value={formData.idSector} 
+                                name="idDepartment" 
+                                value={formData.idDepartment} 
                                 onChange={handleChange} 
                                 className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' 
                                 required

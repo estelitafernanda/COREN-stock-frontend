@@ -211,10 +211,10 @@ function MovementForm() {
 
                     <div className='flex flex-col gap-2 '>
                             <label htmlFor="" className='text-md font-bold'>Tipo de pedido</label>
-                            <select name="type" value={formData.type} onChange={handleChange} id="type" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' required>
+                            <select name="type" value={formData.type} onChange={handleChange} id="type" className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3 text-lightW/80' required>
                                 <option value="" className='bg-blackSecondary'>Selecione tipo de pedido</option>
-                                <option value='entrada'>Entrada</option>
-                                <option value='saida'>Saída</option>
+                                <option value='Entrada' className='bg-blackSecondary'>Entrada</option>
+                                <option value='Saida' className='bg-blackSecondary'>Saída</option>
                             </select>
                         </div>
 

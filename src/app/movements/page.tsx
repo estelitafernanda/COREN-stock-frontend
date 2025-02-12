@@ -25,6 +25,7 @@ interface Movement {
   user_name_request: string;
   user_sector: string;
   request_describe: string;
+  type: string;
 }
 
 export default function Movements() {
@@ -40,6 +41,7 @@ export default function Movements() {
     movementStatus: '',
     user_name_request: '',
     movementDate: '',
+    type: '',
   });
 
   const [tempFilters, setTempFilters] = useState({ ...filters }); 
@@ -77,6 +79,7 @@ export default function Movements() {
             movementStatus: filters.movementStatus,
             user_name_request: filters.user_name_request,
             movementDate: filters.movementDate,
+            type: filters.type,
             search, 
           },
         });
@@ -172,6 +175,19 @@ export default function Movements() {
               ))}
             </select>
           </div>
+          <div>
+            <label htmlFor="">Tipo</label>
+            <select
+            name="type"
+            value={tempFilters.type}
+                  onChange={handleTempFilterChange}
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                >
+                  <option value="">Escolha um tipo</option>
+                  <option value="Entrada">Entrada</option>
+                  <option value="Saida">Saida</option>
+                </select>
+            </div>
 
 
           <Autocomplete
@@ -237,6 +253,7 @@ export default function Movements() {
                 currentQuantity={movement.currentQuantity}
                 userName={movement.user_name_request}
                 requestDescription={movement.request_describe}
+                type={movement.type}
               />
             ))
 

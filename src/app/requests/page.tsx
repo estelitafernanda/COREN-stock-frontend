@@ -89,6 +89,7 @@ export default function Order() {
             status: filters.status,
             user_id: filters.user_id,
             date: filters.date,
+            type: filters.type,
             search, 
           },
         });
@@ -200,6 +201,19 @@ export default function Order() {
                       {product.nameProduct}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="">Tipo</label>
+                <select
+                  name="type"
+                  value={tempFilters.type}
+                  onChange={handleTempFilterChange}
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                >
+                  <option value="">Escolha um tipo</option>
+                  <option value="Entrada">Entrada</option>
+                  <option value="Saida">Saida</option>
                 </select>
               </div>
 
