@@ -1,16 +1,16 @@
 'use client';
 
 import api from '@/app/api/axios';
+import { Alert } from '@mui/material';
 import axios from 'axios';
 import {useRouter} from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
-import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 
 type FormDataType = {
     nameProduct: string;
     image: File | null;
-    idDepartment: string;
+    idSector: string;
     code: string;
     describe: string;
     category: string;
@@ -30,7 +30,7 @@ function ProductForm() {
     const [formData, setFormData] = useState<FormDataType>({
         nameProduct: "",
         image: null,
-        idDepartment: "",
+        idSector: "",
         code: "",
         describe: "",
         category: "",
@@ -41,6 +41,8 @@ function ProductForm() {
         unitPrice: "",
     });
 
+     const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
+
     useEffect(() => {
         api
           .get('http://127.0.0.1:8000/api/showDepartments') 
@@ -49,7 +51,7 @@ function ProductForm() {
           })
           .catch((error) => {
               console.error('Erro ao carregar setores:', error);
-              alert('Erro ao carregar setores');
+              setAlert({ severity: 'error', message: 'Erro ao carregar Departamentos' });
           });
       }, []);
 
@@ -74,7 +76,7 @@ function ProductForm() {
           });
         }
       };
-    
+
       const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formDataToSend = new FormData();
@@ -95,37 +97,27 @@ function ProductForm() {
               },
             }
           );
-          router.push("/inventory");
-          alert("Produto adicionado com sucesso!");
+          setAlert({ severity: 'success', message: 'Produto adicionado com sucesso' });
+          setTimeout(() => router.push("/inventory"), 2500);
         } catch (error) {
           console.error("Erro ao adicionar produto:", error);
-          alert("Erro ao adicionar produto.");
+          setAlert({ severity: 'error', message: 'Erro ao adicionar Produto' });
           console.log(formData);
         }
     };
 
   return (
         <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
+            {alert && (
+                <Alert severity={alert.severity}>{alert.message}</Alert>
+            )}
             <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
-                <aside className=' w-[18%] flex flex-col gap-5'>
+                <aside className='w-[18%] flex flex-col gap-5'>
                     <h2 className='text-3xl font-bold'>Adicionar Produto</h2>
-                    <a href="" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de produtos</a>
-                    <div className='flex flex-col gap-[38px]'>
-                        <div className='group relative items-center bg-blackSecondary p-4 rounded-lg'>
-                            <div className='absolute w-[6px] h-[40px] rounded-full bg-primary  group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
-                            <div className='absolute bg-primary w-[6px] h-[40px] rounded-full group-hover:blur-md group-hover:bg-[#B4FFFF] transition duration-300 -left-[2px] top-[15px]'></div>
-                            <div className='flex items-center cursor-pointer'>
-                                <FaWpforms size={30} className='text-primary group-hover:text-[#B4FFFF] transition duration-300'/>
-                                <div className='flex flex-col ml-4 '>
-                                    <h3 className='uppercase font-bold text-base text-lightW tracking-widest'>step 1</h3>
-                                    <p className='text-sm font-bold text-primary group-hover:text-[#B4FFFF] transition duration-300'>Informações Gerais</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="/inventory" className='flex items-center gap-1 text-md font-semibold'><IoMdArrowDropleft />Voltar para a lista de produtos</a>
                 </aside>
                 <section className='w-[85%] flex flex-col gap-4'>
-                    <h2 className='text-center text-2xl font-bold'>Informações Gerais</h2>
+                <h2 className='text-center text-2xl font-bold tracking-wide uppercase text-lightW/30'>Cadastrar produto</h2>
                     <form onSubmit={handleSubmit} className='p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]'>
                     
                         <div className='flex flex-col gap-2 '>
@@ -169,10 +161,10 @@ function ProductForm() {
                         </div>
 
                         <div className='flex flex-col gap-2 '>
-                            <label htmlFor="idDepartment" className='text-md font-bold'>Identificador do Departamento</label>
+                            <label htmlFor="idSector" className='text-md font-bold'>Identificador do Departamento</label>
                             <select 
-                                name="idDepartment" 
-                                value={formData.idDepartment} 
+                                name="idSector" 
+                                value={formData.idSector} 
                                 onChange={handleChange} 
                                 className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3' 
                                 required

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {  useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -8,8 +8,8 @@ import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
 import {FaLongArrowAltRight } from "react-icons/fa";
 import api from '@/app/api/axios';
-import axios from 'axios';
 import { GiConfirmed } from 'react-icons/gi';
+import { Alert } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -58,17 +58,15 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
     }
   }, [id]);
 
+  const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
+
   const handleUpdateRequest = async () => {
     try {
       const response = await api.patch(`http://127.0.0.1:8000/api/movements/${id}/update`);
-      alert(response.data.message || 'Movimento atualizado com sucesso!');
-      window.location.reload();
+      setAlert({ severity: 'success', message: 'Movimentação entregue com sucesso' });
+      setTimeout(() =>  window.location.reload(), 2500);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error || 'Erro desconhecido');
-      } else {
         console.error('Erro desconhecido:', error);
-      }
     }
   };
 
@@ -101,6 +99,9 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
+            {alert && (
+              <Alert severity={alert.severity}>{alert.message}</Alert>
+            )}
             <div className='flex justify-between w-full max-h-min items-center'>
               <div
                 className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
@@ -198,7 +199,7 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
                     <h2 className='text-xl font-bold'>R${movement?.product_price}</h2>
                   </span>
                   <span className='flex gap-1'>
-                    <p className='font-bold text-lightW/50'>Quantidade em estoque: </p>
+                    <p className='font-bold text-lightW/50'>Quantidade do Pedido: </p>
                     <p className='font-bold'>{movement?.quantity}</p>
                   </span>
                   <span >

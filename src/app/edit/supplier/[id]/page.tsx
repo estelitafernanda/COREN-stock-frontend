@@ -2,6 +2,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import axios from 'axios';
+import { Alert } from '@mui/material';
 
 
 type FormDataType = {
@@ -63,6 +64,8 @@ function EditSupplierForm() {
     });
   };
 
+      const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   
@@ -72,8 +75,8 @@ function EditSupplierForm() {
         formData,
       );
   
-      router.push("/suppliers");
-      alert("fornecedor atualizado com sucesso");
+      setAlert({ severity: 'success', message: 'Fornecedor editado com sucesso' });
+      setTimeout(() => router.push("/suppliers"), 2500);
     } catch (error) {
       console.error("Erro ao atualizar fornecedor:", error);
       console.log(formData);
@@ -92,7 +95,10 @@ function EditSupplierForm() {
 
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full">
-      <h2 className="text-center text-2xl font-bold">Editar Pedido</h2>
+      {alert && (
+        <Alert severity={alert.severity}>{alert.message}</Alert>
+      )}
+      <h2 className="text-center text-2xl font-bold">Editar Fornecedor</h2>
       <form onSubmit={handleSubmit} method='put' className="p-5 mx-auto flex flex-col gap-4 bg-blackSecondary rounded-lg w-[75%]">
         {/* <div className="flex flex-col gap-2">
           <label htmlFor="idUser" className="text-md font-bold">Usuário</label>

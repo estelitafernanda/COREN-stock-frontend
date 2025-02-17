@@ -1,9 +1,8 @@
-import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-
+import React, {  useState } from 'react';
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
 import { FaEdit,} from "react-icons/fa";
@@ -14,6 +13,7 @@ import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import ProductCard from './ProductCard';
 import axios from 'axios';
 import api from '@/app/api/axios';
+import { Alert } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -72,15 +72,18 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
         });
     }
   }, [open, idForData]);
-
+  
+  const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
+  
   const handleDeleteRequest = async (id: number) => {
     try {
       const response = await api.delete(`http://127.0.0.1:8000/api/suppliers/${id}`);
-      alert(response.data.message);
-      window.location.reload();
+      
+      setAlert({ severity: 'success', message: 'Fornecedor deletado com sucesso' });
+      setTimeout(() =>  window.location.reload(), 2500);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error || 'Erro desconhecido');
+        setAlert({ severity: 'error', message: 'Erro ao deletar Fornecedor' });
       } else {
         console.error('Erro desconhecido:', error);
       }
@@ -105,6 +108,9 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
+            {alert && (
+                <Alert severity={alert.severity}>{alert.message}</Alert>
+              )}
             <div className='flex justify-between w-full max-h-min items-center'>
               <div className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-yellow transition duration-300' onClick={handleClose}>
                 <ImExit size={20}/>

@@ -5,6 +5,7 @@ import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
 import api from '@/app/api/axios';
 import axios from 'axios';
+import { Alert } from '@mui/material';
 
 type FormDataType = {
     describe: string;
@@ -66,7 +67,9 @@ function MovementForm() {
         idUser: '',
         type: '', 
     });
-    
+
+    const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
+
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
       
@@ -96,12 +99,11 @@ function MovementForm() {
               },
             }
           );
-          
-          router.push("/requests");
-          alert("Pedido criado com sucesso");
+          setAlert({ severity: 'success', message: 'Pedido adicionado com sucesso' });
+          setTimeout(() => router.push("/requests"), 2500);
         } catch (error) {
           console.error("Erro ao adicionar pedido:", error);
-          alert("Erro ao adicionar pedido.");
+          setAlert({ severity: 'error', message: 'Erro ao adicionar Pedido' });
           console.log(formData);
         }
     };
@@ -151,7 +153,9 @@ function MovementForm() {
 
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)] mb-52">
-        {error && <div style={{ color: 'red' }}>{error}</div>}
+        {alert && (
+          <Alert severity={alert.severity}>{alert.message}</Alert>
+        )}
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[18%] flex flex-col gap-5'>
                 <h2 className='text-3xl font-bold'>Solicitar Pedido</h2>

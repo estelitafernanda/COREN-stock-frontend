@@ -1,5 +1,6 @@
 'use client';
 
+import { Alert } from '@mui/material';
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
@@ -38,7 +39,7 @@ function ProductForm() {
 });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-      
+  const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
     useEffect(() => {
         if (id) {
         axios
@@ -100,11 +101,11 @@ function ProductForm() {
         formData,
       );
   
-      router.push("/inventory");
-      alert("Produto atualizado com sucesso");
+      setAlert({ severity: 'success', message: 'Produto editado com sucesso' });
+      setTimeout(() => router.push("/inventory"), 2500);
     } catch (error) {
       console.error("Erro ao atualizar produto:", error);
-      alert("Erro ao atualizar produto.");
+      setAlert({ severity: 'error', message: 'Erro ao editar Produto' });
       console.log(formData);
     }
   };
@@ -118,6 +119,9 @@ function ProductForm() {
 
   return (
         <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)]">
+            {alert && (
+                    <Alert severity={alert.severity}>{alert.message}</Alert>
+            )}
             <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
                 <aside className=' w-[18%] flex flex-col gap-5'>
                     <h2 className='text-3xl font-bold'>Editar Produto</h2>

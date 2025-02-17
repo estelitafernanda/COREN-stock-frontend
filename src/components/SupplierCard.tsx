@@ -3,7 +3,7 @@ import { FaMapMarkedAlt } from 'react-icons/fa'
 import { FaBoxOpen } from 'react-icons/fa6'
 import TransitionModalSupplier from './TransitionModalSupplier'
 
-function SupplierCard({name, responsible, email, telephone, adress, idSupplier}: {name: string, responsible: string, email: string, telephone: string, adress: string, idSupplier: number}) {
+function SupplierCard({name, responsible, email, telephone, adress, idSupplier, produtos}: {name: string, responsible: string, email: string, telephone: string, adress: string, idSupplier: number, produtos: []}) {
 
     function getInitials(nameAbrev: string): string {
         const words = nameAbrev.split(' ');
@@ -47,7 +47,7 @@ function SupplierCard({name, responsible, email, telephone, adress, idSupplier}:
                         <div className='size-2 rounded-full bg-lightW/50 group-hover:bg-primary transition duration-300'></div>
                         <div className='flex items-center gap-2'>
                             <FaBoxOpen size={25}/>
-                            <p className='text-base text-lightW/70 font-semibold'>12 Produtos</p>
+                            <p className='text-base text-lightW/70 font-semibold'>{produtos.length} Produtos</p>
                         </div>
                     </div>
 

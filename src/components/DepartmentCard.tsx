@@ -1,7 +1,6 @@
 import React from 'react'
 import { FaMapMarkedAlt, FaBoxOpen } from "react-icons/fa";
 import TransitionsModalSupplier from './TransitionsModalSector';
-import { get } from 'http';
 
 
 function DepartmentCard({name, superUser, func, local, idSector}: {name: string, superUser: string, func: number , local: string, idSector: number}) {
