@@ -160,14 +160,15 @@ export default function Movements() {
       </div>
 
       <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col gap-4 bg-blackSecondary w-[30%] p-5 rounded-lg">
-          <div className='flex flex-col gap-2 font-bold'>
-            <label htmlFor="movementStatus">Status:</label>
+        <div className="flex flex-col max-h-fit gap-4 bg-blackSecondary w-[30%] p-5 rounded-lg">
+          <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
+          <div className='flex flex-col gap-2'>
+            <label htmlFor="" className='font-bold text-lg'>Status:</label>
             <select
               name="movementStatus"
               value={tempFilters.movementStatus} 
               onChange={handleTempFilterChange}
-              className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+              className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-lg text-light-w text-md font-light transition duration-300"
             >
               <option value="">Escolha um status</option>
               {statuses.map((status, index) => (
@@ -176,12 +177,12 @@ export default function Movements() {
             </select>
           </div>
           <div>
-            <label htmlFor="">Tipo</label>
+            <label htmlFor="" className='font-bold text-lg'>Tipo</label>
             <select
             name="type"
             value={tempFilters.type}
                   onChange={handleTempFilterChange}
-                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-[8px] text-light-w text-md font-light transition duration-300"
                 >
                   <option value="">Escolha um tipo</option>
                   <option value="Entrada">Entrada</option>
@@ -189,35 +190,96 @@ export default function Movements() {
                 </select>
             </div>
 
-
-          <Autocomplete
-            options={products}
-            getOptionLabel={(option) => option.nameProduct}
-            value={products.find((product) => product.nameProduct === tempFilters.product_name) || null}
-            onChange={(event, newValue) => {
-              setTempFilters((prev) => ({
-                ...prev,
-                product_name: newValue?.nameProduct || '',
-              }));
-            }}
-            renderInput={(params) => <TextField {...params} label="Escolha um produto" />}
-            sx={{ width: '100%' }}
-          />
-
-
-          <Autocomplete
-            options={users}
-            getOptionLabel={(option) => option.nameUser} 
-            value={tempFilters.user_name_request ? { nameUser: tempFilters.user_name_request } : null}
-            onChange={(event, newValue) => {
-              setTempFilters((prev) => ({
-                ...prev,
-                user_name_request: newValue?.nameUser || '',  
-              }));
-            }}
-            renderInput={(params) => <TextField {...params} label="Escolha um usuário" />}
-            sx={{ width: '100%',  }}
-          />
+              <div className='flex flex-col gap-2'>
+                <label htmlFor="" className='font-bold text-lg'>Produtos</label>
+                <Autocomplete
+                options={products}
+                getOptionLabel={(option) => option.nameProduct}
+                value={products.find((product) => product.nameProduct === tempFilters.product_name) || null}
+                onChange={(event, newValue) => {
+                  setTempFilters((prev) => ({
+                    ...prev,
+                    product_name: newValue?.nameProduct || '',
+                  }));
+                }}
+                renderInput={(params) => <TextField {...params} label="Escolha um produto" />}
+                sx={{
+                  width: '100%',
+                  backgroundColor: '#1a262d',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: '0.3s',
+                  '&:hover': {
+                    borderColor: '#00bcd4',
+                    backgroundColor: '#202e36',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: '#eceef0',
+                    '& fieldset': {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#eceef0',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00bcd4',
+                  },
+                }}
+              />
+              </div>
+            
+              <div className='flex flex-col gap-2'>
+                <label htmlFor="" className='font-bold text-lg'>Usuários</label>
+                <Autocomplete
+                options={users}
+                getOptionLabel={(option) => option.nameUser} 
+                value={tempFilters.user_name_request ? { nameUser: tempFilters.user_name_request } : null}
+                onChange={(event, newValue) => {
+                  setTempFilters((prev) => ({
+                    ...prev,
+                    user_name_request: newValue?.nameUser || '',  
+                  }));
+                }}
+                renderInput={(params) => <TextField {...params} label="Escolha um usuário" />}
+                sx={{
+                  width: '100%',
+                  backgroundColor: '#1a262d',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: '0.3s',
+                  '&:hover': {
+                    borderColor: '#00bcd4',
+                    backgroundColor: '#202e36',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: '#fff',
+                    '& fieldset': {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#eceef0',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00bcd4',
+                  },
+                }}
+              />
+              </div>
+          
 
 
           <div className='flex gap-3'>
@@ -229,7 +291,22 @@ export default function Movements() {
                 </button>
                 <button
                   className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
-                  onClick={() => setFilters({ product_name: '', movementStatus: '', user_name_request: '', movementDate: '' })}
+                  onClick={() => {
+                    setFilters({
+                      product_name: '',
+                      movementStatus: '',
+                      user_name_request: '',
+                      movementDate: '',
+                      type: '', 
+                    });
+                    setTempFilters({
+                      product_name: '', 
+                      movementStatus: '',
+                      user_name_request: '', 
+                      movementDate: '',
+                      type: '', 
+                    });
+                  }}
                 >
                   Limpar Filtros
                 </button>

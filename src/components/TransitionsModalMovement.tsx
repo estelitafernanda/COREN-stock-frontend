@@ -61,14 +61,10 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
   const handleUpdateRequest = async () => {
     try {
       const response = await api.patch(`http://127.0.0.1:8000/api/movements/${id}/update`);
-      alert(response.data.message || 'Movimento atualizado com sucesso!');
+      alert(response.data.message);
       window.location.reload();
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error || 'Erro desconhecido');
-      } else {
         console.error('Erro desconhecido:', error);
-      }
     }
   };
 

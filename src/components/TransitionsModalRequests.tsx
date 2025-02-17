@@ -61,11 +61,7 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
       alert(response.data.message || 'A requisição foi aceita com sucesso!');
       window.location.reload();
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data.error || 'Erro desconhecido');
-      } else {
         console.error('Erro desconhecido:', error);
-      }
     }
   };
 

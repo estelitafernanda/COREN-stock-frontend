@@ -4,9 +4,9 @@ import { FaHeadset } from "react-icons/fa6";
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
-import Loading from "@/components/Loading";
 import SupplierCard from "@/components/SupplierCard";
 import Pagination from "@/components/Pagination";
+import { Autocomplete, TextField } from "@mui/material";
 
 interface Product {
   idProduct: number;
@@ -39,22 +39,6 @@ interface Supplier {
   products: Product[];
 }
 
-interface ApiResponse {
-  current_page: number;
-  data: Supplier[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: Array<{ url: string | null; label: string; active: boolean }>;
-  next_page_url: string | null;
-  path: string;
-  per_page: number;
-  prev_page_url: string | null;
-  to: number;
-  total: number;
-}
-
 function Suppliers() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -64,33 +48,51 @@ function Suppliers() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState<string>('');
 
-
   const [filters, setFilters] = useState({
     name: '',
-    product_id: '', 
+    product_id: '',
+    product_name: '',
     telephone: '',
     address: '',
     responsible: '',
     cnpj: '',
     email: '',
   });
-  const [products, setProducts] = useState<Product[]>([]);
-  const [tempFilters, setTempFilters] = useState({ ...filters }); 
 
-  const handleTempFilterChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setTempFilters((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    };
-    
-    const applyFilters = () => {
-      setFilters(tempFilters);
-      setCurrentPage(1); 
-    };
+  const [tempFilters, setTempFilters] = useState({ ...filters }); // Filtros temporários
+  const [products, setProducts] = useState<Product[]>([]);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value); 
+    setSearch(e.target.value);
+  };
+
+  const handleProductChange = (e: React.ChangeEvent<{}>, value: Product | null) => {
+    setTempFilters(prev => ({
+      ...prev,
+      product_name: value?.nameProduct || '',
+      product_id: value?.idProduct.toString() || ''
+    }));
+  };
+
+  const applyFilters = () => {
+    setFilters(tempFilters); // Aplica os filtros temporários aos filtros principais
+    setCurrentPage(1); // Resetar a página para 1
+  };
+
+  const clearFilters = () => {
+    const initialFilters = {
+      name: '',
+      product_id: '',
+      product_name: '',
+      telephone: '',
+      address: '',
+      responsible: '',
+      cnpj: '',
+      email: '',
+    };
+    setFilters(initialFilters); // Limpa os filtros principais
+    setTempFilters(initialFilters); // Limpa os filtros temporários
+    setCurrentPage(1); // Resetar a página para 1
   };
 
   useEffect(() => {
@@ -101,12 +103,11 @@ function Suppliers() {
           params: {
             page: currentPage,
             product_id: filters.product_id,
-            search, 
+            search,
           },
         });
 
         const { data, current_page, last_page, total } = response.data;
-
         setSuppliers(data);
         setCurrentPage(current_page);
         setTotalPages(last_page);
@@ -114,36 +115,20 @@ function Suppliers() {
         setLoading(false);
       } catch (error: any) {
         setLoading(false);
-        if (axios.isAxiosError(error)) {
-          console.error('Erro ao buscar fornecedores:', error.response ? error.response.data : error.message);
-          setError(error.response ? error.response.data : 'Erro desconhecido');
-        } else {
-          console.error('Erro inesperado:', error);
-          setError('Erro inesperado');
-        }
-      } 
+        setError('Erro ao buscar fornecedores');
+      }
     };
 
     fetchSuppliers();
   }, [currentPage, filters, search]);
-  const fetchProducts = () => {
-    axios
-      .get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch(() => {
-        setError('Erro ao carregar os produtos');
-      });
-  };
 
   useEffect(() => {
-      fetchProducts();
+    axios.get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
+      .then((response) => setProducts(response.data))
+      .catch(() => setError('Erro ao carregar os produtos'));
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
@@ -151,24 +136,22 @@ function Suppliers() {
         <div className="flex items-center gap-5">
           <h1 className="text-3xl font-bold text-lightW">Fornecedores:</h1>
           <p className="text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30">
-            Total de fornecedores:{" "}
-            <span className="text-lightW">{total}</span>
+            Total de fornecedores: <span className="text-lightW">{total}</span>
           </p>
         </div>
-        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
-          <FaSearch size={20} className='text-lightW/30'/>
-            <input
-              type="text"
-              placeholder='Buscar' 
-              value={search}
-              onChange={handleSearchChange}
-              className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none w-[100%]'
-            />
+        <div className="flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg h-4 w-[30%] gap-2">
+          <FaSearch size={20} className="text-lightW/30" />
+          <input
+            type="text"
+            placeholder="Buscar"
+            value={search}
+            onChange={handleSearchChange}
+            className="text-sm font-bold text-lightW/30 bg-blackSecondary outline-none w-full"
+          />
         </div>
         <div className="flex gap-4">
-          <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
-            <FaHeadset size={20} className="hover:text-lightW" /> Contato com
-            suporte
+          <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold">
+            <FaHeadset size={20} className="hover:text-lightW" /> Contato com Suporte
           </button>
           <a href="/forms/supplier">
             <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">
@@ -179,69 +162,85 @@ function Suppliers() {
       </div>
 
       <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
-              <div>
-                <label htmlFor="">Produtos</label>
-                <select
-                  name="product_id"
-                  value={tempFilters.product_id}
-                  onChange={handleTempFilterChange}
-                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
-                >
-                  <option value="">Produtos</option>
-                  {products.map((product) => (
-                    <option key={product.idProduct} value={product.idProduct}>
-                      {product.nameProduct}
-                    </option>
-                  ))}
-                </select>
-              </div>
-        
-              <div className='flex gap-2'>
-                <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
-                  onClick={applyFilters} 
-                >
-                  Filtrar
-                </button>
-                <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
-                  onClick={() => {
-                    setFilters({
-                      name: '',
-                      product_id: '',
-                      telephone: '',
-                      address: '',
-                      responsible: '',
-                      cnpj: '',
-                      email: '',
-                    });
-                  }}
-                >
-                  Limpar Filtros
-                </button>
-              </div>
+        <div className="flex flex-col gap-3 bg-blackSecondary w-[30%] max-h-fit p-5 rounded-lg">
+          <h2 className="text-lg uppercase tracking-widest font-black text-lightW/50">Filtros:</h2>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="" className="text-lg font-bold">Produtos</label>
+            <Autocomplete
+              options={products}
+              getOptionLabel={(option) => option.nameProduct}
+              value={products.find((product) => product.nameProduct === tempFilters.product_name) || null}
+              onChange={handleProductChange}
+              renderInput={(params) => <TextField {...params} label="Escolha um produto" />}
+              sx={{
+                  width: '100%',
+                  backgroundColor: '#1a262d',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: '0.3s',
+                  '&:hover': {
+                    borderColor: '#00bcd4',
+                    backgroundColor: '#202e36',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: '#eceef0',
+                    '& fieldset': {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#eceef0',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00bcd4',
+                  },
+              }}
+            />
+          </div>
+
+          <div className="flex gap-2 mt-2">
+            <button
+              className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary"
+              onClick={applyFilters} // Aplica os filtros ao clicar
+            >
+              Filtrar
+            </button>
+            <button
+              className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary"
+              onClick={clearFilters} // Reseta os filtros
+            >
+              Limpar Filtros
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-5 w-full bg-blackSecondary p-5 rounded-lg">
           {loading ? (
             <p className="text-lightW text-center">Carregando Fornecedores...</p>
-          ) : suppliers.map((supplier) => (
-            <SupplierCard
-              key={supplier.idSupplier}
-              name={supplier.name}
-              responsible={supplier.responsible}
-              email={supplier.email}
-              telephone={supplier.telephone}
-              adress={supplier.address}
-              idSupplier={supplier.idSupplier}
-            />
-          ))}
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
+          ) : (
+            suppliers.map((supplier) => (
+              <SupplierCard
+                key={supplier.idSupplier}
+                name={supplier.name}
+                responsible={supplier.responsible}
+                email={supplier.email}
+                telephone={supplier.telephone}
+                adress={supplier.address}
+                idSupplier={supplier.idSupplier}
+              />
+            ))
+          )}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </section>
     </div>

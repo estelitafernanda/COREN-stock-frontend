@@ -116,11 +116,13 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                   </div> }
               </div>
             <div className='flex py-12 font-[family-name:var(--font-geist-sans)]'>
-              <div className='bg-lightW w-[35%] rounded-lg border-[3px] border-primary/50'>
-                <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
-              </div>
-              <div className='w-[35%] ml-5 mt-1'>
-                <div className='flex flex-col gap-2 border-b-[2px] pb-3 border-lightW/20'>
+
+              <div className='w-[100%] ml-5 mt-1'>
+                    <div className='flex gap-5 border-b-[2px] w-full pb-5 border-lightW/20'>
+                      <div className='bg-lightW w-[50%] max-h-[50%] rounded-lg border-[3px] border-primary/50'>
+                        <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
+                      </div>  
+                      <div className='flex flex-col gap-4'>
                         <div className='flex flex-col gap-1'>
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
                           <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
@@ -133,30 +135,35 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
                           <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
                         </div>
+                      </div>
                     </div>
                     <div className='py-3'>
-                        <div className='flex flex-col gap-2'>
-                          <div className='flex flex-col gap-1'>
-                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
-                              <p className='text-xl w-fit font-bold bg-green rounded-md text-blackPrimary px-3'>R${product?.unitPrice}</p>
-                          </div>
-                          <div className='flex flex-col gap-1'>
-                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Validade: </h2>
-                              <p className='text-xl w-fit font-bold bg-red rounded-md text-blackPrimary px-3'>{product?.validity}</p>
-                          </div>
-                          <div className='flex flex-col gap-1'>
-                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Quantidade em estoque: </h2>
-                              <p className='text-xl w-fit font-bold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
-                          </div>
-                          <div className='flex flex-col gap-1'>
-                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>descrição: </h2>
-                              <p className='text-base w-fit font-semibold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.describe}</p>
-                          </div>
-                            <div>
-                              <a href="forms/movement">
-                                <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Fazer Pedido<IoIosAdd size={20}/></button>
-                              </a>
+                        <div className='flex flex-col gap-4'>
+                          <h2 className='font-bold text-2xl text-lightW'>Informações Gerais:</h2>
+                          <div className='flex flex-col gap-3'>
+                            <div className='flex gap-2 items-center'>
+                                <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
+                                <p className='text-xl w-fit font-bold bg-green rounded-md text-blackPrimary px-3'>R${product?.unitPrice}</p>
                             </div>
+                            <div className='flex gap-2 items-center'>
+                                <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Validade: </h2>
+                                <p className='text-xl w-fit font-bold bg-red rounded-md text-blackPrimary px-3'>{product?.validity}</p>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Quantidade em estoque: </h2>
+                                <p className='text-xl w-fit font-bold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>descrição: </h2>
+                                <p className='text-base w-fit font-semibold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.describe}</p>
+                            </div>
+                              <div>
+                                <a href="forms/movement">
+                                  <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Fazer Pedido<IoIosAdd size={20}/></button>
+                                </a>
+                              </div>
+                          </div>
+                          
                         </div>
                     </div>
               </div>  

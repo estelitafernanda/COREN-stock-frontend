@@ -125,9 +125,9 @@ const Inventory: React.FC = () => {
       </div>
 
       <section className='h-[80vh] flex gap-5 mt-5'>
-      <div className='flex flex-col gap-8 bg-blackSecondary w-[25%] p-5 rounded-lg'>
+        <div className='flex flex-col gap-8 bg-blackSecondary w-[25%] p-5 rounded-lg max-h-fit'>
           <div> 
-            <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Tipo de produto</h2>
+            <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button 
                 onClick={() => handleCategoryChange('')} 

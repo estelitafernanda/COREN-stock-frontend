@@ -7,6 +7,7 @@ import Loading from '@/components/Loading';
 import Pagination from '@/components/Pagination';
 import { FaHeadset } from 'react-icons/fa6';
 import { IoIosAdd } from 'react-icons/io';
+import { Autocomplete, TextField } from '@mui/material';
 
 interface Request {
   idRequest: number;
@@ -60,6 +61,8 @@ export default function Order() {
     user_id: '',
     date: '',
     type: '',
+    product_name: '', 
+    user_name_request: '',
   });
   const [tempFilters, setTempFilters] = useState({ ...filters }); 
   const [products, setProducts] = useState<Product[]>([]);
@@ -182,34 +185,18 @@ export default function Order() {
       </div>
 
       <section className='h-[80vh] w-full flex gap-5 mt-5'>
-        <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] h-full p-5 rounded-lg'>
+        <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] max-h-fit p-5 rounded-lg'>
           <div className='flex flex-col'>
-            <h2 className='text-sm uppercase tracking-widest font-bold text-lightW/50'>Filtrar por</h2>
+            <h2 className='text-lg uppercase tracking-widest font-bold text-lightW/50'>Filtros:</h2>
             <div className='grid gap-3 py-3'>
 
-              <div>
-                <label htmlFor="">Produto</label>
-                <select
-                  name="product_id"
-                  value={tempFilters.product_id}
-                  onChange={handleTempFilterChange}
-                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
-                >
-                  <option value="">Escolha um produto</option>
-                  {products.map((product) => (
-                    <option key={product.idProduct} value={product.idProduct}>
-                      {product.nameProduct}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="">Tipo</label>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="" className='font-bold text-lg'>Tipo</label>
                 <select
                   name="type"
                   value={tempFilters.type}
                   onChange={handleTempFilterChange}
-                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-lg text-light-w text-md font-light transition duration-300"
                 >
                   <option value="">Escolha um tipo</option>
                   <option value="Entrada">Entrada</option>
@@ -217,13 +204,13 @@ export default function Order() {
                 </select>
               </div>
 
-              <div>
-                <label htmlFor="">Status:</label>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="" className='font-bold text-lg'>Status:</label>
                 <select
                   name="status"
                   value={tempFilters.status}
                   onChange={handleTempFilterChange}
-                  className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
+                  className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-lg text-light-w text-md font-light transition duration-300"
                 >
                   <option value="">Escolha um status</option>
                   <option value="aceito">aceito</option>
@@ -231,25 +218,113 @@ export default function Order() {
                 </select>
               </div>
 
-              <div>
-                <label htmlFor="user_id">Usuário:</label>
-              <select
-                  name="user_id"
-                  value={tempFilters.user_id}
-                  onChange={handleTempFilterChange}
-                  className="hover:border-primary w-[100%] bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300"
-                >
-                  <option value="">Escolha um usuário</option>
-                  {users.map((user) => (
-                    <option key={user.idUser} value={user.idUser} className='text-lightW'>
-                      {user.nameUser}
-                    </option>
-                  ))}
-                </select>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="user_id" className='font-bold text-lg'>Usuário:</label>
+                <Autocomplete
+                options={users}
+                getOptionLabel={(option) => option.nameUser}
+                value={users.find(user => user.idUser === Number(tempFilters.user_id)) || null}
+                onChange={(event, newValue) => {
+                  setTempFilters((prev) => ({
+                    ...prev,
+                    user_id: newValue ? String(newValue.idUser) : '',  
+                  }));
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Escolha um usuário"
+                    InputLabelProps={{ shrink: params.inputProps.value ? true : false }}
+                  />
+                )}
+                sx={{
+                  width: '100%',
+                  backgroundColor: '#1a262d',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: '0.3s',
+                  '&:hover': {
+                    borderColor: '#00bcd4',
+                    backgroundColor: '#202e36',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    '& fieldset': {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#eceef0',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00bcd4',
+                  },
+                }}
+              />
+
               </div>
 
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="" className='font-bold text-lg'>Produto</label>
+                <Autocomplete
+                options={products}
+                getOptionLabel={(option) => option.nameProduct}
+                value={products.find(product => product.idProduct === Number(tempFilters.product_id)) || null}
+                onChange={(event, newValue) => {
+                  setTempFilters((prev) => ({
+                    ...prev,
+                    product_id: newValue ? String(newValue.idProduct) : '',  
+                  }));
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Escolha um produto"
+                    InputLabelProps={{ shrink: params.inputProps.value ? true : false }}
+                  />
+                )}
+                sx={{
+                  width: '100%',
+                  backgroundColor: '#1a262d',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: '0.3s',
+                  '&:hover': {
+                    borderColor: '#00bcd4',
+                    backgroundColor: '#202e36',
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    color: '#eceef0',
+                    '& fieldset': {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#00bcd4',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#eceef0',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#00bcd4',
+                  },
+                }}
+              />
+
+              </div>
+{/* 
               <div>
-                <label htmlFor="date">Data:</label>
+                <label htmlFor="date" className='font-bold text-lg'>Data:</label>
                 <input
                   className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'
                   type="date"
@@ -257,7 +332,7 @@ export default function Order() {
                   value={tempFilters.date}
                   onChange={handleTempFilterChange}
                 />
-              </div>
+              </div> */}
 
               <div className='flex gap-2'>
                 <button
@@ -274,11 +349,23 @@ export default function Order() {
                       status: '',
                       user_id: '',
                       date: '',
-                      type: '', 
+                      type: '',
+                      product_name: '', 
+                      user_name_request: '',
+                    });
+
+                    setTempFilters({
+                      product_id: '',
+                      status: '',
+                      user_id: '',
+                      date: '',
+                      type: '',
+                      product_name: '',
+                      user_name_request: '',
                     });
                   }}
                 >
-                  Limpar Filtros
+                Limpar Filtros
                 </button>
               </div>
             </div>
