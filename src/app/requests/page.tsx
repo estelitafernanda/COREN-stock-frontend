@@ -12,7 +12,7 @@ interface Request {
   idRequest: number;
   describe: string;
   type: string; 
-  requestDate: string;
+  created_at: string;
   quantity: number;
   product_name: string;
   user_name: string;
@@ -385,7 +385,7 @@ export default function Order() {
                     department={request.sector_name}
                     userName={request.user_name}
                     desc={request.describe}
-                    date={request.requestDate}
+                    date={request.created_at}
                     qnt={request.quantity}
                     type={request.type}
                   />

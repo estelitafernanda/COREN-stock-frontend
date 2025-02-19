@@ -81,9 +81,9 @@ function Header() {
           
           <NotificationModal />
   
-          <div className="cursor-pointer flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
+          {/* <div className="cursor-pointer flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur">
             <FaSun size={20} />
-          </div>
+          </div> */}
   
           {isAuthenticated && (
             <div

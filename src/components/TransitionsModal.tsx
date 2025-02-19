@@ -69,7 +69,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
       const response = await api.delete(`http://127.0.0.1:8000/api/products/${id}`);
       
       setAlert({ severity: 'success', message: 'Produto deletado com sucesso' });
-      setTimeout(() =>  window.location.reload(), 2500);
+      setTimeout(() =>  window.location.reload(), 1000);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setAlert({ severity: 'error', message: 'Erro ao deletar Produto' });
@@ -78,6 +78,10 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
       }
     }
   };
+
+  if (product?.validity === null) {
+    product.validity = 'Não Perecivel';
+  }
 
   return (
     <div>
@@ -97,9 +101,6 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col items-center py-12 font-[family-name:var(--font-geist-sans)]'>
-              {alert && (
-                  <Alert severity={alert.severity}>{alert.message}</Alert>
-              )}
               <div className='flex justify-between w-full max-h-min items-center'>
                   <div
                     className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
@@ -125,6 +126,9 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
             <div className='flex py-12 font-[family-name:var(--font-geist-sans)]'>
 
               <div className='w-[100%] ml-5 mt-1'>
+                {alert && (
+                    <Alert severity={alert.severity} className='absolute top-7 w-full right-[70%]'>{alert.message}</Alert>
+                )}
                     <div className='flex gap-5 border-b-[2px] w-full pb-5 border-lightW/20'>
                       <div className='bg-lightW w-[50%] max-h-[50%] rounded-lg border-[3px] border-primary/50'>
                         <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
@@ -132,11 +136,11 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                       <div className='flex flex-col gap-4'>
                         <div className='flex flex-col gap-1'>
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
-                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
+                          <p className='text-xl font-bold text-lightW py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
                         </div>
                         <div className='flex flex-col gap-1'>
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Código:</h2>
-                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.code}</p>
+                          <p className='text-xl font-bold text-lightW  py-[2px] items-center rounded-md w-fit '>{product?.code}</p>
                         </div>
                         <div className='flex flex-col gap-1'>
                           <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
@@ -150,15 +154,15 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                           <div className='flex flex-col gap-3'>
                             <div className='flex gap-2 items-center'>
                                 <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
-                                <p className='text-xl w-fit font-bold bg-green rounded-md text-blackPrimary px-3'>R${product?.unitPrice}</p>
+                                <p className='text-xl w-fit font-bold text-green rounded-md bg-blackThirdy px-3'>R${product?.unitPrice}</p>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Validade: </h2>
-                                <p className='text-xl w-fit font-bold bg-red rounded-md text-blackPrimary px-3'>{product?.validity}</p>
+                                <p className='text-xl w-fit font-bold rounded-md text-red px-3'>{product?.validity}</p>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Quantidade em estoque: </h2>
-                                <p className='text-xl w-fit font-bold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
+                                <p className='text-xl w-fit font-bold rounded-md text-lightW px-3'>{product?.currentQuantity}</p>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>descrição: </h2>
@@ -173,7 +177,9 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                           
                         </div>
                     </div>
+                    
               </div>  
+
             </div>
            
           </Box>

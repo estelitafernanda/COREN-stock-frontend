@@ -28,7 +28,7 @@ const style = {
 interface Request {
   idRequest: number;
   describe: string;
-  requestDate: string;
+  created_at: string;
   quantity: number;
   product_name: string;
   user_name: string;
@@ -109,9 +109,6 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
       >
         <Fade in={open}>
           <Box sx={style} className='flex flex-col px-16 py-12 font-[family-name:var(--font-geist-sans)]'>
-                 {alert && (
-                      <Alert severity={alert.severity}>{alert.message}</Alert>
-                  )}
                 <div className='flex justify-between w-full max-h-min items-center'>
                   <div
                     className='cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 border-[2px] border-transparent hover:border-yellow hover:text-yellow transition duration-300'
@@ -177,7 +174,7 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                         </div>
                         <div className='flex gap-2 items-center'>
                           <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Data:</h2>
-                          <p className='text-md font-semibold'>{request?.requestDate ? formatDate(request.requestDate) : ''}</p>
+                          <p className='text-md font-semibold'>{request?.created_at ? formatDate(request.created_at) : ''}</p>
                         </div>
                         <div className='flex gap-2 items-center'>
                           <h2 className='text-sm font-bold text-lightW/50 uppercase tracking-wider'>Status:</h2>
@@ -200,6 +197,9 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                   </div>
               </div>
             </div>
+            {alert && (
+                      <Alert severity={alert.severity}>{alert.message}</Alert>
+                  )}
           </Box>
         </Fade>
       </Modal>

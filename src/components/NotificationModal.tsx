@@ -60,7 +60,6 @@ export default function NotificationModal() {
     fetchNotifications();
   }, []);
 
-
   return (
     <div className='rounded-md'>
           <div className="cursor-pointer relative flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur hover:bg-[#26475a] transition duration-300 " onClick={handleOpen}>
@@ -85,7 +84,7 @@ export default function NotificationModal() {
               <div className='flex justify-between w-full max-h-min items-center'>
                 <span className='flex items-center gap-3'>
                  <h1 className='font-black text-2xl tracking-wider text-white'>Notificações:</h1>
-                 <p className='font-semibold text-red text-sm bg-white/10 py-1 px-2 rounded-full'>{notifications.length}</p>
+                 <p className='font-semibold text-primary text-sm bg-white/10 py-1 px-2 rounded-full'>{notifications.length}</p>
                 </span>
 
                 <div
@@ -102,6 +101,7 @@ export default function NotificationModal() {
                   message={notification.message} 
                   date={new Date(notification.created_at).toLocaleDateString()} 
                   id={notification.id} 
+                  status={notification.status}
                 />
               ))}
             </div>
