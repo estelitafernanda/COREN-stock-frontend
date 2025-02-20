@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuth } from "@/app/contexts/KeycloakProvider";
 import { useEffect } from "react";
 
-// Criamos a instância da API sem o token inicialmente
+// instância do axios
 const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api",
   headers: {
