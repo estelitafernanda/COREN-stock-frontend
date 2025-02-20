@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import DepartmentCard from "@/components/DepartmentCard";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
-import { useApiWithAuth } from "@/app/api/axios"; // Importando API com autenticação
+import { useApiWithAuth } from "@/app/api/axios"; // import do hook
 import { IoIosAdd } from "react-icons/io";
 import { FaHeadset } from "react-icons/fa6";
 
@@ -27,7 +27,7 @@ interface ApiResponse {
 }
 
 function Departments() {
-  const api = useApiWithAuth(); // Usa a API com autenticação
+  const api = useApiWithAuth(); // instância do hook
   const [sectors, setSectors] = useState<Sector[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
