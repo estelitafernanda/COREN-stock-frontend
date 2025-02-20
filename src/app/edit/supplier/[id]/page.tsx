@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import axios from 'axios';
 import { Alert } from '@mui/material';
+import { useApiWithAuth } from '@/app/api/axios';
 
 
 type FormDataType = {
@@ -18,6 +18,7 @@ type FormDataType = {
 function EditSupplierForm() {
   const router = useRouter();
   const { id } = useParams(); 
+  const api = useApiWithAuth(); // instância do hook
   const [formData, setFormData] = useState<FormDataType>({
     corporateReason: '',
     name: '',
@@ -33,7 +34,7 @@ function EditSupplierForm() {
   // Carregar os dados do fornecedor pelo ID
   useEffect(() => {
     if (id) {
-      axios
+      api
         .get(`http://127.0.0.1:8000/api/suppliers/${id}`)
         .then((response) => {
           const data = response.data;
@@ -54,7 +55,7 @@ function EditSupplierForm() {
           setLoading(false);
         });
     }
-  }, [id]);
+  }, [id, api]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -70,7 +71,7 @@ function EditSupplierForm() {
     e.preventDefault();
   
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `http://127.0.0.1:8000/api/suppliers/${id}/update`,
         formData,
       );

@@ -7,6 +7,7 @@ import axios from "axios";
 import SupplierCard from "@/components/SupplierCard";
 import Pagination from "@/components/Pagination";
 import { Autocomplete, TextField } from "@mui/material";
+import { useApiWithAuth } from "@/app/api/axios";
 
 interface Product {
   idProduct: number;
@@ -40,6 +41,7 @@ interface Supplier {
 }
 
 function Suppliers() {
+  const api = useApiWithAuth(); // instância do hook
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -99,7 +101,7 @@ function Suppliers() {
     const fetchSuppliers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/showSuppliers`, {
+        const response = await api.get(`http://127.0.0.1:8000/api/showSuppliers`, {
           params: {
             page: currentPage,
             product_id: filters.product_id,
@@ -120,13 +122,13 @@ function Suppliers() {
     };
 
     fetchSuppliers();
-  }, [currentPage, filters, search]);
+  }, [api, currentPage, filters, search]);
 
   useEffect(() => {
-    axios.get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
+    api.get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
       .then((response) => setProducts(response.data))
       .catch(() => setError('Erro ao carregar os produtos'));
-  }, []);
+  }, [api]);
 
   if (error) return <div>{error}</div>;
 

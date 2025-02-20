@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaHeadset, FaSearch } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { Autocomplete, TextField } from '@mui/material';
-
+import { useApiWithAuth } from "@/app/api/axios";
 import MovementCard from '@/components/MovementCard';
 import Pagination from '@/components/Pagination';
 
@@ -29,6 +29,7 @@ interface Movement {
 }
 
 export default function Movements() {
+  const api = useApiWithAuth(); // instância do hook
   const [movements, setMovements] = useState<Movement[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -72,7 +73,7 @@ export default function Movements() {
     const fetchMovements = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/showMovement`, {
+        const response = await api.get(`http://127.0.0.1:8000/api/showMovement`, {
           params: {
             page: currentPage,
             product_name: filters.product_name,
@@ -98,7 +99,7 @@ export default function Movements() {
     };
 
     fetchMovements();
-  }, [currentPage, filters, search]);
+  }, [api, currentPage, filters, search]);
 
   useEffect(() => {
     const fetchOptions = async () => {

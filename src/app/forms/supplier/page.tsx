@@ -1,5 +1,5 @@
 'use client';
-import axios from 'axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -20,7 +20,7 @@ type FormDataType = {
 
 function SupplierForm() {
     const router = useRouter();
-
+    const api = useApiWithAuth();
     const [formData, setFormData] = useState<FormDataType>({
         corporateReason: '',
         name: '',
@@ -38,7 +38,7 @@ function SupplierForm() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/show');
+                const response = await api.get('http://127.0.0.1:8000/api/show');
                 const productsData = response.data.data.map((product: any) => ({
                     idProduct: product.idProduct,
                     nameProduct: product.nameProduct
@@ -50,7 +50,7 @@ function SupplierForm() {
         };
 
         fetchProducts();
-    }, []);
+    }, [api]);
 
     const isValidCNPJ = (cnpj: string) => {
         const cnpjRegex = /^(?!000\.000\.000\-00)(?!111\.111\.111\-11)(?!222\.222\.222\-22)(?!333\.333\.333\-33)(?!444\.444\.444\-44)(?!555\.555\.555\-55)(?!666\.666\.666\-66)(?!777\.777\.777\-77)(?!888\.888\.888\-88)(?!999\.999\.999\-99)\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/;
@@ -164,7 +164,7 @@ function SupplierForm() {
         }
 
         try {
-            const response = await axios.post(
+            const response = await api.post(
                 "http://127.0.0.1:8000/api/addSupplier",
                 formDataToSend,
                 {

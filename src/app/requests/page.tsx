@@ -7,6 +7,7 @@ import Pagination from '@/components/Pagination';
 import { FaHeadset } from 'react-icons/fa6';
 import { IoIosAdd } from 'react-icons/io';
 import { Autocomplete, TextField } from '@mui/material';
+import { useApiWithAuth } from "@/app/api/axios";
 
 interface Request {
   idRequest: number;
@@ -46,7 +47,8 @@ interface User {
 }
 
 export default function Order() {
-    const [requests, setRequests] = useState<Request[]>([]);
+  const api = useApiWithAuth(); // instância do hook
+  const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -84,7 +86,7 @@ export default function Order() {
     const fetchRequests = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/showRequests`, {
+        const response = await api.get(`http://127.0.0.1:8000/api/showRequests`, {
           params: {
             page: currentPage,
             product_id: filters.product_id,
@@ -116,10 +118,10 @@ export default function Order() {
     };
 
     fetchRequests();
-  }, [currentPage, filters, search]);
+  }, [api, currentPage, filters, search]);
 
   const fetchProducts = () => {
-    axios
+    api
       .get<Product[]>('http://127.0.0.1:8000/api/productFiltered')
       .then((response) => {
         setProducts(response.data);
@@ -130,7 +132,7 @@ export default function Order() {
   };
 
   const fetchUsers = () => {
-    axios
+    api
       .get<User[]>('http://127.0.0.1:8000/api/users') 
       .then((response) => {
         setUsers(response.data);
@@ -145,7 +147,7 @@ export default function Order() {
   useEffect(() => {
     fetchProducts();
     fetchUsers();
-  }, []);
+  }, [api]);
 
 
 

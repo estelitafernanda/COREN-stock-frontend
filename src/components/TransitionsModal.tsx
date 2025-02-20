@@ -6,12 +6,11 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import { IoIosAdd } from "react-icons/io";
 import Image from 'next/image';
-import axios from 'axios';
 import { ImExit } from 'react-icons/im';
 import { FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/fa6';
-import api from '@/app/api/axios';
 import { Alert } from '@mui/material';
+import { useApiWithAuth } from '@/app/api/axios';
 
 const style = {
   position: 'absolute',
@@ -46,13 +45,14 @@ interface Product {
 
 export default function TransitionsModal({idProduct}: {idProduct: number}) {
   const [open, setOpen] = React.useState(false);
+  const api = useApiWithAuth(); // instância do hook
   const [product, setProduct] = React.useState<Product | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     if (idProduct) {
-      axios.get(`http://127.0.0.1:8000/api/products/${idProduct}`)
+      api.get(`http://127.0.0.1:8000/api/products/${idProduct}`)
         .then(response => {
           setProduct(response.data);
         })
@@ -60,7 +60,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
           console.error("Error fetching sector data:", error);
         });
     }
-  }, [idProduct]);
+  }, [idProduct, api]);
 
    const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
 
@@ -71,7 +71,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
       setAlert({ severity: 'success', message: 'Produto deletado com sucesso' });
       setTimeout(() =>  window.location.reload(), 1000);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if ((error)) {
         setAlert({ severity: 'error', message: 'Erro ao deletar Produto' });
       } else {
         console.error('Erro desconhecido:', error);
@@ -169,7 +169,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                                 <p className='text-base w-fit font-semibold bg-[#2f3d46] rounded-md text-lightW px-3'>{product?.describe}</p>
                             </div>
                               <div>
-                                <a href="forms/movement">
+                                <a href="forms/request">
                                   <button className="border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex mt-2 py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary">Fazer Pedido<IoIosAdd size={20}/></button>
                                 </a>
                               </div>

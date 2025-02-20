@@ -21,7 +21,7 @@ interface User{
   updated_at: string;
 }
 
-function EditRequestForm() {
+function EditDepartmentForm() {
   const router = useRouter();
   const { id } = useParams(); 
   const [formData, setFormData] = useState<FormDataType>({
@@ -186,4 +186,4 @@ function EditRequestForm() {
   );
 }
 
-export default EditRequestForm;
+export default EditDepartmentForm;

@@ -1,8 +1,6 @@
 'use client';
-
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
-import axios from 'axios';
 import {useRouter} from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { IoMdArrowDropleft } from "react-icons/io";
@@ -24,7 +22,7 @@ type FormDataType = {
 function ProductForm() {
 
     const [sectors, setSectors] = useState<{ idSector: string; name: string }[]>([]);
-
+    const api = useApiWithAuth();
     const router = useRouter();
         
     const [formData, setFormData] = useState<FormDataType>({
@@ -53,7 +51,7 @@ function ProductForm() {
               console.error('Erro ao carregar setores:', error);
               setAlert({ severity: 'error', message: 'Erro ao carregar Departamentos' });
           });
-      }, []);
+      }, [api]);
 
       const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 
@@ -88,7 +86,7 @@ function ProductForm() {
         }
       
         try {
-          const response = await axios.post(
+          const response = await api.post(
             "http://127.0.0.1:8000/api/addProduct",
             formDataToSend,
             {

@@ -3,8 +3,7 @@ import React, { useState,useEffect , ChangeEvent, FormEvent } from 'react'
 import { useRouter } from "next/navigation";
 import { FaWpforms } from "react-icons/fa";
 import { IoMdArrowDropleft } from "react-icons/io";
-import api from '@/app/api/axios';
-import axios from 'axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
 
 type FormDataType = {
@@ -57,7 +56,7 @@ interface User{
 
 function MovementForm() {
     const router = useRouter()
-
+    const api = useApiWithAuth();
     //AXIOS POST SECTION
 
     const [formData, setFormData] = useState<FormDataType>({
@@ -90,7 +89,7 @@ function MovementForm() {
         }
       
         try {
-          const response = await axios.post(
+          const response = await api.post(
             "http://127.0.0.1:8000/api/addRequest",
             formDataToSend,
             {
@@ -126,7 +125,7 @@ function MovementForm() {
           setError('Erro ao carregar os dados da API');
           setLoading(false);
         });
-    }, []);
+    }, [api]);
 
     //CARREGAR USUÁRIOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
     useEffect(() => {
@@ -140,7 +139,7 @@ function MovementForm() {
             setLoading(false);
           });
           
-      }, []);
+      }, [api]);
   
       if (loading) {
         return <div>Carregando dados...</div>;
@@ -154,7 +153,7 @@ function MovementForm() {
   return (
     <div className="mx-auto w-[95vw] mt-10 flex flex-col min-h-full font-[family-name:var(--font-geist-sans)] mb-52">
         {alert && (
-            <Alert severity={alert.severity} className='absolute top-7 w-full right-[70%]'>{alert.message}</Alert>
+            <Alert severity={alert.severity}>{alert.message}</Alert>
         )}
         <div className="mx-auto w-[95vw] mt-10  flex min-h-full font-[family-name:var(--font-geist-sans)]">
             <aside className=' w-[18%] flex flex-col gap-5'>

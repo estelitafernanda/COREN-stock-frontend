@@ -7,7 +7,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import { ImExit } from "react-icons/im";
 import {FaLongArrowAltRight } from "react-icons/fa";
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { GiConfirmed } from 'react-icons/gi';
 import { Alert } from '@mui/material';
 
@@ -44,7 +44,7 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const api = useApiWithAuth(); // instância do hook
   const [movement, setMovement] = React.useState<Movement | null>(null);
   React.useEffect(() => {
     if (id) {
@@ -56,7 +56,7 @@ export default function TransitionsModalMovement({ id }: { id: number; }) {
           console.error("Error fetching sector data:", error);
         });
     }
-  }, [id]);
+  }, [id, api]);
 
   const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
 

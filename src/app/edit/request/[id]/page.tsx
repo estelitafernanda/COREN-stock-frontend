@@ -1,8 +1,7 @@
 'use client';
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import axios from 'axios';
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 
 type FormDataType = {
   describe: string;
@@ -46,11 +45,12 @@ function EditRequestForm() {
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const api = useApiWithAuth(); // instância do hook
 
   // Carregar os dados do pedido pelo ID
   useEffect(() => {
     if (id) {
-      axios
+      api
         .get(`http://127.0.0.1:8000/api/requests/${id}`)
         .then((response) => {
           const data = response.data;
@@ -70,7 +70,7 @@ function EditRequestForm() {
           setLoading(false);
         });
     }
-  }, [id]);
+  }, [id, api]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -84,7 +84,7 @@ function EditRequestForm() {
     e.preventDefault();
   
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `http://127.0.0.1:8000/api/requests/${id}/update`,
         formData,
       );
@@ -112,7 +112,7 @@ function EditRequestForm() {
         setError('Erro ao carregar os dados da API');
         setLoading(false);
       });
-  }, []);
+  }, [api]);
 
   //CARREGAR USUÁRIOS TODA VEZ QUE OS COMPONENTES FOREM MONTADOS E CARREGADOS
   useEffect(() => {
@@ -126,7 +126,7 @@ function EditRequestForm() {
           setLoading(false);
         });
         
-    }, []);
+    }, [api]);
 
     if (loading) {
       return <div>Carregando dados...</div>;

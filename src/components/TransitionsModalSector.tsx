@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import axios from 'axios';
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { FaTrash } from 'react-icons/fa6';
 import { ImExit } from 'react-icons/im';
 import { Alert } from '@mui/material';
@@ -43,10 +42,11 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
   const [sectorData, setSectorData] = React.useState<SectorData | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const api = useApiWithAuth(); // instância do hook
 
   React.useEffect(() => {
     if (infoIdData) {
-      axios.get(`http://127.0.0.1:8000/api/sectors/${infoIdData}`)
+      api.get(`http://127.0.0.1:8000/api/sectors/${infoIdData}`)
         .then(response => {
           setSectorData(response.data);
         })
@@ -54,7 +54,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
           console.error("Error fetching sector data:", error);
         });
     }
-  }, [infoIdData]);
+  }, [infoIdData, api]);
 
   function getInitials(headSector: string): string {
     const words = headSector.split(' ');
@@ -71,7 +71,7 @@ export default function TransitionsModalSector({ infoIdData }: { infoIdData: num
       setAlert({ severity: 'success', message: 'Departamento deletado com sucesso' });
       setTimeout(() =>  window.location.reload(), 2500);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if ((error)) {
         setAlert({ severity: 'error', message: 'Erro ao deletar Departamento' });
       } else {
         console.error('Erro desconhecido:', error);

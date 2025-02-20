@@ -4,11 +4,10 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import axios from 'axios';
 import { ImExit } from 'react-icons/im';
 import { FaTrash } from 'react-icons/fa6';
 import { GiConfirmed } from 'react-icons/gi';
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
 
 const style = {
@@ -40,12 +39,13 @@ interface Request {
 export default function TransitionsModalRequests({ infoIdData }: { infoIdData: number }) {
   const [open, setOpen] = React.useState(false);
   const [request, setRequest] = React.useState<Request | null>(null);
+  const api = useApiWithAuth(); // instância do hook
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     if (infoIdData) {
-      axios.get(`http://127.0.0.1:8000/api/requests/${infoIdData}`)
+      api.get(`http://127.0.0.1:8000/api/requests/${infoIdData}`)
         .then(response => {
           setRequest(response.data);
         })
@@ -53,7 +53,7 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
           console.error("Error fetching request:", error);
         });
     }
-  }, [infoIdData]);
+  }, [infoIdData, api]);
 
 
   const handleUpdateRequest = async () => {
@@ -71,11 +71,11 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
 
   const handleDeleteRequest = async (id: number) => {
     try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/requests/${id}`);
+      const response = await api.delete(`http://127.0.0.1:8000/api/requests/${id}`);
       setAlert({ severity: 'success', message: 'Pedido deletado com sucesso' });
       setTimeout(() =>  window.location.reload(), 2500);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if ((error)) {
         setAlert({ severity: 'error', message: 'Erro ao deletar Pedido' });
       } else {
         console.error('Erro desconhecido:', error);

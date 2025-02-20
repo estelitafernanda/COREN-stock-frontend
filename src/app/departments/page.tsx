@@ -1,12 +1,12 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { FaHeadset } from 'react-icons/fa6';
-import { IoIosAdd } from "react-icons/io";
+"use client";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import DepartmentCard from '@/components/DepartmentCard';
-import axios from 'axios';
-import Loading from '@/components/Loading';
-import Pagination from '@/components/Pagination';
+import DepartmentCard from "@/components/DepartmentCard";
+import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
+import { useApiWithAuth } from "@/app/api/axios"; // import do hook
+import { IoIosAdd } from "react-icons/io";
+import { FaHeadset } from "react-icons/fa6";
 
 interface Sector {
   idSector: number;
@@ -27,58 +27,49 @@ interface ApiResponse {
 }
 
 function Departments() {
+  const api = useApiWithAuth(); // instância do hook
   const [sectors, setSectors] = useState<Sector[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [search, setSearch] = useState<string>('');
+  const [unity, setUnity] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
 
-  const [filters, setFilters] = useState({
-    unity: '',
-    name: '',
-    headSector: '',
-  });
-      
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        [name]: value,
-    }));
-  };
-  const fetchSectors = (page: number,  search: string) => {
+  const fetchSectors = async (page: number, search: string, unity: string) => {
     setLoading(true);
-    let url = `http://127.0.0.1:8000/api/showDepartments?page=${page}`;
-  
-    if (search) {
-        url += `&search=${search}`;
-    }
-    axios.get<ApiResponse>(url)
-      .then(response => {
-        setSectors(response.data.data);
-        setTotalPages(response.data.last_page);
-        setCurrentPage(response.data.current_page);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError('Erro ao carregar os dados da API');
-        setLoading(false);
+    try {
+      const response = await api.get<ApiResponse>("/showDepartments", {
+        params: { page, search, unity },
       });
+
+      setSectors(response.data.data);
+      setTotalPages(response.data.last_page);
+      setCurrentPage(response.data.current_page);
+    } catch (error) {
+      console.error("Erro ao carregar os setores:", error);
+      setError("Erro ao carregar os dados da API");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchSectors(currentPage, search, unity);
+  }, [api, currentPage, search, unity]);
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
-
-
-  useEffect(() => {
-    fetchSectors(currentPage, search);
-  }, [currentPage, search]);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const handleUnityChange = (selectedUnity: string) => {
+    setUnity(selectedUnity);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
@@ -113,7 +104,30 @@ function Departments() {
 
       <section className="h-[80vh] flex gap-5 mt-5">
         <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
-          <h2 className="text-sm uppercase tracking-widest font-bold text-lightW/50">Tipo de Departamento</h2>
+        <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
+            <div className='grid grid-cols-2 gap-3 py-3'>
+              <button 
+                onClick={() => handleUnityChange('')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Todos        
+              </button>
+              <button 
+                onClick={() => handleUnityChange('Natal')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Natal       
+              </button>
+              <button 
+                onClick={() => handleUnityChange('Mossoró')} 
+                className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Mossoró            
+              </button>
+              <button onClick={() => handleUnityChange('Pau dos Ferros')} className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Pau dos Ferros          
+              </button>
+              <button onClick={() => handleUnityChange('Caicó')} className="hover:border-primary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[1px] border-primary/10 py-2 px-5 rounded-lg text-light-w text-md font-medium transition duration-300">
+                Caicó          
+              </button>
+            </div>
         </div>
 
         <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">

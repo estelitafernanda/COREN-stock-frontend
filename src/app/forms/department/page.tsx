@@ -1,9 +1,10 @@
 'use client';
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { IoMdArrowDropleft } from "react-icons/io";
+
 
 type FormDataType = {
     name: string;
@@ -13,6 +14,7 @@ type FormDataType = {
 
 function DepartmentForm() {
     const router = useRouter();
+    const api = useApiWithAuth();
 
     const [formData, setFormData] = useState<FormDataType>({
         name: '',
@@ -40,7 +42,7 @@ function DepartmentForm() {
         }
         
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/addSector", formDataToSend);
+            const response = await api.post("http://127.0.0.1:8000/api/addSector", formDataToSend);
             setAlert({ severity: 'success', message: 'Departamento adicionado com sucesso' });
             setTimeout(() => router.push("/departments"), 2500);
         } catch (error) {
@@ -76,6 +78,7 @@ function DepartmentForm() {
                                 <option value="Natal">Natal</option>
                                 <option value="Caicó">Caicó</option>
                                 <option value="Pau dos Ferros">Pau dos Ferros</option>
+                                <option value="Mossoró">Mossoró</option>
                             </select>
                         </div>
                         <input type="submit" value="Adicionar Setor" className='border-[2px] border-transparent font-semibold text-blackThirdy hover:text-lightW bg-primary p-2 rounded-lg hover:bg-blackSecondary mt-2 hover:border-primary transition duration-300 w-full'/>

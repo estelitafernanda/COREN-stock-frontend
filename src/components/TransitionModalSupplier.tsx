@@ -11,8 +11,7 @@ import CorporationImage from "../../public/generic-electric-logo.png";
 import Image from 'next/image';
 import { MdOutlineConnectWithoutContact } from "react-icons/md";
 import ProductCard from './ProductCard';
-import axios from 'axios';
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
 
 const style = {
@@ -55,6 +54,7 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
   const [open, setOpen] = React.useState(false);
   const [supplier, setSupplier] = React.useState<Supplier | null>(null);
   const products = supplier?.products || [];
+  const api = useApiWithAuth(); // instância do hook
   console.log(products);
 
   const handleOpen = () => setOpen(true);
@@ -62,7 +62,7 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
 
   React.useEffect(() => {
     if (open) {
-      axios
+      api
         .get(`http://127.0.0.1:8000/api/suppliers/${idForData}`)
         .then((response) => {
           setSupplier(response.data);
@@ -71,7 +71,7 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
           console.error("Failed to fetch supplier data:", error);
         });
     }
-  }, [open, idForData]);
+  }, [open, idForData, api]);
   
   const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
   
@@ -82,7 +82,7 @@ export default function TransitionModalSupplier({idForData}: {idForData: number}
       setAlert({ severity: 'success', message: 'Fornecedor deletado com sucesso' });
       setTimeout(() =>  window.location.reload(), 2500);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if ((error)) {
         setAlert({ severity: 'error', message: 'Erro ao deletar Fornecedor' });
       } else {
         console.error('Erro desconhecido:', error);

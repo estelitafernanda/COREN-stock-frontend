@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { FaHeadset } from 'react-icons/fa6';
 import { IoIosAdd } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
-import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Pagination from '@/components/Pagination';
+import { useApiWithAuth } from "@/app/api/axios";
 
 interface Product {
   idProduct: number;
@@ -46,6 +46,7 @@ interface ApiResponse {
 }
 
 const Inventory: React.FC = () => {
+  const api = useApiWithAuth(); // instância do hook
   const [products, setProducts] = useState<Product[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); 
@@ -64,7 +65,7 @@ const Inventory: React.FC = () => {
     if (search) {
         url += `&search=${search}`;
     }
-    axios.get<ApiResponse>(url)
+    api.get<ApiResponse>(url)
       .then(response => {
         setProducts(response.data.data);
         setTotalPages(response.data.last_page);
@@ -79,7 +80,7 @@ const Inventory: React.FC = () => {
 
   useEffect(() => {
     fetchProducts(currentPage, category, search );
-  }, [currentPage, category, search]);
+  }, [api, currentPage, category, search]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -124,8 +125,7 @@ const Inventory: React.FC = () => {
       </div>
 
       <section className='h-[80vh] flex gap-5 mt-5'>
-        <div className='flex flex-col gap-8 bg-blackSecondary w-[25%] p-5 rounded-lg max-h-fit'>
-          <div> 
+      <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
             <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button 
@@ -147,10 +147,9 @@ const Inventory: React.FC = () => {
                 Limpeza          
               </button>
             </div>
-          </div>
         </div>
 
-        <div className='flex flex-col gap-5 bg-blackSecondary p-5 rounded-lg w-[75%]'>
+        <div className="flex flex-col gap-4 w-full bg-blackSecondary p-5 rounded-lg">
           {loading ? (
             <p className="text-lightW text-center">Carregando Produtos...</p>
           ) : products.map(product => (

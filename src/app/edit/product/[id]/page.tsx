@@ -1,7 +1,7 @@
 'use client';
 
+import { useApiWithAuth } from '@/app/api/axios';
 import { Alert } from '@mui/material';
-import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { FaWpforms } from "react-icons/fa";
@@ -21,9 +21,10 @@ type FormDataType = {
     unitPrice: string;
 };
 
-function ProductForm() {
+function EditProductForm() {
   const router = useRouter();
   const { id } = useParams(); 
+  const api = useApiWithAuth();
   const [formData, setFormData] = useState<FormDataType>({
     nameProduct: "",
     image: null,
@@ -42,7 +43,7 @@ function ProductForm() {
   const [alert, setAlert] = useState<{ severity: 'success' | 'error'; message: string } | null>(null);
     useEffect(() => {
         if (id) {
-        axios
+        api
             .get(`http://127.0.0.1:8000/api/products/${id}`)
             .then((response) => {
             const data = response.data;
@@ -67,7 +68,7 @@ function ProductForm() {
               setLoading(false);
             });
         }
-  }, [id]);
+  }, [id, api]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 
@@ -94,11 +95,18 @@ function ProductForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formDataToSend = new FormData(); 
+
+    for (let key in formData) {
+      if (Object.prototype.hasOwnProperty.call(formData, key)) {
+          formDataToSend.append(key, formData[key as keyof FormDataType] as string | Blob);
+      }
+  }
   
     try {
-      const response = await axios.put(
+      const response = await api.put(
         `http://127.0.0.1:8000/api/products/${id}/update`,
-        formData,
+        formDataToSend,
       );
   
       setAlert({ severity: 'success', message: 'Produto editado com sucesso' });
@@ -219,7 +227,7 @@ function ProductForm() {
                             <input 
                             type="number" 
                             value={formData.idSector} 
-                            name='idDepartment' 
+                            name='idSector' 
                             onChange={handleChange} 
                             className='w-[100%] rounded-lg h-10 bg-transparent border-[2px] border-lightW/30 px-3'/>
                         </div>
@@ -263,4 +271,4 @@ function ProductForm() {
   )
 }
 
-export default ProductForm
+export default EditProductForm
