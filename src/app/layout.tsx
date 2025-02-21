@@ -30,7 +30,7 @@ export default function RootLayout({
     <KeycloakProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar`}
         >
           <Header />
           {children}

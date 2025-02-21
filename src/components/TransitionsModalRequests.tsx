@@ -93,7 +93,8 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
 
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
-      <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
+      <Button onClick={handleOpen} style={{ color: '#56cbec'}}>
+        <p  className='items-center bg-transparent transition duration-300 hover:text-[#B4FFFF] flex rounded-lg text-xs md:text-sm xl:text-base font-semibold text-primary'>Ver Mais &gt;&gt;</p></Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

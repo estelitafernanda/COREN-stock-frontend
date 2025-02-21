@@ -156,14 +156,14 @@ export default function Order() {
   }
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col gap-5 justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
-      <div className="flex justify-between w-full">
-        <div className='flex items-center gap-5'>
+      <div className="flex xl:justify-between w-full">
+        <div className='flex items-center gap-2 xl:gap-5 min-w-max'>
           <h1 className="text-3xl font-bold text-lightW">Pedidos:</h1>
-          <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>
+          <p className='hidden md:flex text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>
             Total de pedidos: <span className='text-lightW'>{total}</span>
           </p>
         </div>
-        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+        <div className=' flex items-center w-full ml-10 md:ml-24 bg-blackSecondary border border-lightW/30 p-5 rounded-lg xl:w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
             <input
               type="text"
@@ -173,7 +173,7 @@ export default function Order() {
               className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none w-[100%]'
             />
         </div>
-        <div className="flex gap-4">
+        <div className="gap-4 hidden xl:flex">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW" /> Contato com suporte
           </button>
@@ -185,19 +185,19 @@ export default function Order() {
         </div>
       </div>
 
-      <section className='h-[80vh] w-full flex gap-5 mt-5'>
-        <div className='flex flex-col gap-8 bg-blackSecondary w-[30%] max-h-fit p-5 rounded-lg'>
+      <section className=' w-full flex flex-col xl:flex-row gap-5 mt-5'>
+        <div className='flex flex-col gap-8 bg-blackSecondary w-full xl:w-[30%] max-h-fit p-5 rounded-lg'>
           <div className='flex flex-col'>
             <h2 className='text-lg uppercase tracking-widest font-bold text-lightW/50'>Filtros:</h2>
             <div className='grid gap-3 py-3'>
 
               <div className='flex flex-col gap-1'>
-                <label htmlFor="" className='font-bold text-lg'>Tipo</label>
+                <label htmlFor="" className='font-bold text-base xl:text-lg'>Tipo</label>
                 <select
                   name="type"
                   value={tempFilters.type}
                   onChange={handleTempFilterChange}
-                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-lg text-light-w text-md font-light transition duration-300"
+                  className="w-[100%] hover:border-primary bg-blackSecondary hover:bg-blackThirdy group hover:text-lightW flex justify-between items-center border-[2px] border-primary/10 py-4 px-5 rounded-lg text-light-w text-base xl:text-md font-light transition duration-300"
                 >
                   <option value="">Escolha um tipo</option>
                   <option value="Entrada">Entrada</option>
@@ -206,7 +206,7 @@ export default function Order() {
               </div>
 
               <div className='flex flex-col gap-1'>
-                <label htmlFor="" className='font-bold text-lg'>Status:</label>
+                <label htmlFor="" className='font-bold text-base xl:text-lg'>Status:</label>
                 <select
                   name="status"
                   value={tempFilters.status}
@@ -220,7 +220,7 @@ export default function Order() {
               </div>
 
               <div className='flex flex-col gap-1'>
-                <label htmlFor="user_id" className='font-bold text-lg'>Usuário:</label>
+                <label htmlFor="user_id" className='font-bold text-base xl:text-lg'>Usuário:</label>
                 <Autocomplete
                 options={users}
                 getOptionLabel={(option) => option.nameUser}
@@ -273,7 +273,7 @@ export default function Order() {
               </div>
 
               <div className='flex flex-col gap-1'>
-                <label htmlFor="" className='font-bold text-lg'>Produto</label>
+                <label htmlFor="" className='font-bold text-base xl:text-lg'>Produto</label>
                 <Autocomplete
                 options={products}
                 getOptionLabel={(option) => option.nameProduct}
@@ -323,7 +323,7 @@ export default function Order() {
               />
 
               </div>
-{/* 
+              {/* 
               <div>
                 <label htmlFor="date" className='font-bold text-lg'>Data:</label>
                 <input
@@ -335,15 +335,15 @@ export default function Order() {
                 />
               </div> */}
 
-              <div className='flex gap-2'>
+              <div className='flex gap-2 mt-2'>
                 <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-sm xl:text-base font-semibold text-blackPrimary'
                   onClick={applyFilters} 
                 >
                   Filtrar
                 </button>
                 <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-sm xl:text-base font-semibold text-blackPrimary'
                   onClick={() => {
                     setFilters({
                       product_id: '',
@@ -373,7 +373,7 @@ export default function Order() {
           </div>
         </div>
 
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col h-[80vh] w-full'>
           <div className='flex flex-col w-full bg-blackSecondary relative h-full rounded-lg'>
             <div className='flex flex-col gap-4 px-4 pt-4'>
               {loading ? (
@@ -394,7 +394,7 @@ export default function Order() {
                 ))
               )}
             </div>
-            <div className='mt-2 ml-4'>
+            <div className='mt-2 mb-4 ml-4'>
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </div>
           </div>

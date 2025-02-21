@@ -125,7 +125,7 @@ const Inventory: React.FC = () => {
       </div>
 
       <section className='h-[80vh] flex gap-5 mt-5'>
-      <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
+      <div className="flex flex-col bg-blackSecondary w-[30%] max-h-fit p-5 rounded-lg">
             <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button 
@@ -155,17 +155,17 @@ const Inventory: React.FC = () => {
           ) : products.map(product => (
             <ProductCard
               key={product.idProduct}
-              idProduct={product.idProduct}
-              name={product.nameProduct}
-              category={product.category}
-              image={product.image}
-              stock={product.currentQuantity}
+              idProduct={product.idProduct} 
+              name={product.nameProduct} 
+              category={product.category} 
+              image={product.image} 
+              stock={product.currentQuantity} 
             />
           ))}
                 <Pagination
                   currentPage={currentPage} 
                   totalPages={totalPages} 
-                  onPageChange={setCurrentPage}
+                  onPageChange={setCurrentPage} 
                 />
         </div>
       </section>

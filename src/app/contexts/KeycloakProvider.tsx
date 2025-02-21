@@ -31,6 +31,7 @@ export const KeycloakProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       .then((auth) => {
         console.log("Keycloak autenticado?", auth);
         console.log("Token:", kc.token);
+        console.log('info', kc);
 
         setKeycloak(kc);
         setIsAuthenticated(auth);

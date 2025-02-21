@@ -20,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         >
           <FaLongArrowAltLeft size={20} className='text-light'/>
         </button>
-        <span className="text-lightW">
+        <span className="text-lightW text-sm xl:text-base">
           Página {currentPage} de {totalPages}
         </span>
         <button

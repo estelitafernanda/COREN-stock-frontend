@@ -103,7 +103,7 @@ function Departments() {
       </div>
 
       <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
+        <div className="flex flex-col bg-blackSecondary w-[30%] max-h-fit p-5 rounded-lg">
         <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button 

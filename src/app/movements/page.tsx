@@ -160,8 +160,8 @@ export default function Movements() {
         </div>
       </div>
 
-      <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col max-h-fit gap-4 bg-blackSecondary w-[30%] p-5 rounded-lg">
+      <section className="w-full xl:h-[80vh] flex flex-col xl:flex-row gap-5 mt-5">
+        <div className="flex flex-col max-h-fit gap-4 bg-blackSecondary w-full xl:w-[30%] p-5 rounded-lg">
           <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
           <div className='flex flex-col gap-2'>
             <label htmlFor="" className='font-bold text-lg'>Status:</label>
