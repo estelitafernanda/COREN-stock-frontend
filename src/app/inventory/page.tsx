@@ -98,12 +98,12 @@ const Inventory: React.FC = () => {
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
       
-      <div className="flex justify-between w-full">
-        <div className='flex items-center gap-5'>
-          <h1 className="text-3xl font-bold text-lightW">Inventario</h1>
-          <p className='text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de produtos: <span className='text-lightW'>{products.length}</span></p>
+      <div className="flex gap-1 flex-col md:flex-row xl:justify-between w-full">
+        <div className='flex items-center gap-2 xl:gap-5 min-w-max'>
+          <h1 className="text-2xl md:text-3xl font-bold text-lightW">Inventario:</h1>
+          <p className='hidden md:flex text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>Total de produtos: <span className='text-lightW'>{products.length}</span></p>
         </div>
-        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+        <div className='flex items-center w-full md:ml-24 bg-blackSecondary border border-lightW/30 p-5 rounded-lg xl:w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
           <input
             type="text"
@@ -113,7 +113,7 @@ const Inventory: React.FC = () => {
             className='text-sm font-bold text-lightW/30 w-[100%] bg-blackSecondary outline-none'
           />
         </div>
-        <div className="flex gap-4">
+        <div className="gap-4 hidden xl:flex">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW"/> Contato com suporte
           </button>
@@ -124,8 +124,8 @@ const Inventory: React.FC = () => {
         </div>
       </div>
 
-      <section className='h-[80vh] flex gap-5 mt-5'>
-      <div className="flex flex-col gap-8 bg-blackSecondary w-[30%] p-5 rounded-lg">
+      <section className='w-full flex flex-col xl:flex-row gap-5 mt-4'>
+      <div className='flex flex-col bg-blackSecondary w-full xl:w-[30%] max-h-fit p-5 rounded-lg'>
             <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
             <div className='grid grid-cols-2 gap-3 py-3'>
               <button 
@@ -155,17 +155,17 @@ const Inventory: React.FC = () => {
           ) : products.map(product => (
             <ProductCard
               key={product.idProduct}
-              idProduct={product.idProduct}
-              name={product.nameProduct}
-              category={product.category}
-              image={product.image}
-              stock={product.currentQuantity}
+              idProduct={product.idProduct} 
+              name={product.nameProduct} 
+              category={product.category} 
+              image={product.image} 
+              stock={product.currentQuantity} 
             />
           ))}
                 <Pagination
                   currentPage={currentPage} 
                   totalPages={totalPages} 
-                  onPageChange={setCurrentPage}
+                  onPageChange={setCurrentPage} 
                 />
         </div>
       </section>

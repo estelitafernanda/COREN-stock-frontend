@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import axios from 'axios';
-import api from '@/app/api/axios';
+import { useApiWithAuth } from '@/app/api/axios';
 import { FaTrash } from 'react-icons/fa6';
 import { ImExit } from 'react-icons/im';
 import { FaEdit } from 'react-icons/fa';
@@ -36,6 +35,7 @@ interface Notification {
 }
 
 export default function NotificationModal() {
+  const api = useApiWithAuth(); // instância do hook
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,13 +58,13 @@ export default function NotificationModal() {
     };
 
     fetchNotifications();
-  }, []);
+  }, [api]);
 
   return (
     <div className='rounded-md'>
-          <div className="cursor-pointer relative flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur hover:bg-[#26475a] transition duration-300 " onClick={handleOpen}>
-            <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-red"></div>
-            <IoIosNotifications size={25} />
+          <div className="group cursor-pointer relative border-[2px] border-transparent flex items-center justify-center size-11 rounded-xl bg-white/10 backdrop-blur hover:border-red transition duration-300 " onClick={handleOpen}>
+            <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-primary group-hover:bg-red transition duration-300"></div>
+            <IoIosNotifications size={25} className='group-hover:text-red transition duration-300'/>
           </div>
       <Modal
         aria-labelledby="transition-modal-title"

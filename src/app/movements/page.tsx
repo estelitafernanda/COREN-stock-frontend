@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { FaHeadset, FaSearch } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { Autocomplete, TextField } from '@mui/material';
@@ -104,10 +103,10 @@ export default function Movements() {
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const productResponse = await axios.get('http://127.0.0.1:8000/api/productFiltered');
+        const productResponse = await api.get('http://127.0.0.1:8000/api/productFiltered');
         setProducts(productResponse.data);
 
-        const userResponse = await axios.get('http://127.0.0.1:8000/api/users');
+        const userResponse = await api.get('http://127.0.0.1:8000/api/users');
         setUsers(userResponse.data);
       } catch (error) {
         console.error('Erro ao buscar opções de filtro:', error);
@@ -115,7 +114,7 @@ export default function Movements() {
     };
 
     fetchOptions();
-  }, []);
+  }, [api]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value); 
@@ -131,24 +130,24 @@ export default function Movements() {
 
   return (
     <div className="mx-auto w-[95vw] mt-7 flex flex-col justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
-      <div className="flex justify-between w-full">
-        <div className="flex items-center gap-5">
-          <h1 className="text-3xl font-bold text-lightW">Movimentação:</h1>
-          <p className="text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30">
+      <div className="flex flex-col md:flex-row xl:justify-between gap-4 w-full">
+        <div className='flex items-center gap-2 xl:gap-5 min-w-max'>
+          <h1 className="text-2xl md:text-3xl font-bold text-lightW">Movimentação:</h1>
+          <p className='hidden md:flex text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>
             Total de movimentos: <span className="text-lightW">{total}</span>
           </p>
         </div>
-        <div className=' flex items-center bg-blackSecondary border border-lightW/30 p-5 rounded-lg w-[30%] h-3 gap-2'>
+        <div className=' flex items-center w-full md:ml-24 bg-blackSecondary border border-lightW/30 p-5 rounded-lg xl:w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
             <input
               type="text"
               placeholder='Buscar' 
               value={search}
               onChange={handleSearchChange}
-              className='text-sm font-bold text-lightW/30 w-[100%] bg-blackSecondary outline-none'
+              className='text-sm font-bold text-lightW/30  bg-blackSecondary outline-none w-[100%]'
             />
         </div>
-        <div className="flex gap-4">
+        <div className="gap-4 hidden xl:flex">
           <button className="hover:bg-primary group hover:text-lightW flex gap-1 border-[1px] border-primary py-2 px-5 rounded-lg text-primary text-md font-semibold transition duration-300">
             <FaHeadset size={20} className="hover:text-lightW" /> Contato com suporte
           </button>
@@ -160,11 +159,11 @@ export default function Movements() {
         </div>
       </div>
 
-      <section className="h-[80vh] flex gap-5 mt-5">
-        <div className="flex flex-col max-h-fit gap-4 bg-blackSecondary w-[30%] p-5 rounded-lg">
+      <section className="w-full flex flex-col xl:flex-row gap-5 mt-5">
+        <div className="flex flex-col max-h-fit gap-4 bg-blackSecondary w-full xl:w-[30%] p-5 rounded-lg">
           <h2 className='text-lg uppercase tracking-widest font-black text-lightW/50'>Filtros:</h2>
           <div className='flex flex-col gap-2'>
-            <label htmlFor="" className='font-bold text-lg'>Status:</label>
+            <label htmlFor="" className='font-bold text-base xl:text-lg'>Status:</label>
             <select
               name="movementStatus"
               value={tempFilters.movementStatus} 
@@ -178,7 +177,7 @@ export default function Movements() {
             </select>
           </div>
           <div>
-            <label htmlFor="" className='font-bold text-lg'>Tipo</label>
+            <label htmlFor="" className='font-bold text-base xl:text-lg'>Tipo</label>
             <select
             name="type"
             value={tempFilters.type}
@@ -192,7 +191,7 @@ export default function Movements() {
             </div>
 
               <div className='flex flex-col gap-2'>
-                <label htmlFor="" className='font-bold text-lg'>Produtos</label>
+                <label htmlFor="" className='font-bold text-base xl:text-lg'>Produtos</label>
                 <Autocomplete
                 options={products}
                 getOptionLabel={(option) => option.nameProduct}
@@ -237,7 +236,7 @@ export default function Movements() {
               </div>
             
               <div className='flex flex-col gap-2'>
-                <label htmlFor="" className='font-bold text-lg'>Usuários</label>
+                <label htmlFor="" className='font-bold text-base xl:text-lg'>Usuários</label>
                 <Autocomplete
                 options={users}
                 getOptionLabel={(option) => option.nameUser} 
@@ -285,13 +284,13 @@ export default function Movements() {
 
           <div className='flex gap-3'>
                 <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-sm xl:text-base font-semibold text-blackPrimary'
                   onClick={applyFilters}
                 >
                   Filtrar
                 </button>
                 <button
-                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary'
+                  className='border gap-1 items-center border-primary bg-primary transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-sm xl:text-base font-semibold text-blackPrimary'
                   onClick={() => {
                     setFilters({
                       product_name: '',

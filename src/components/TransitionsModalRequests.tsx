@@ -22,7 +22,16 @@ const style = {
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,
+  '@media (max-width: 1280px)': {
+    width: '90%',
+    right: '3%',
+    transform: 'translate(0, -50%)',
+    borderRadius: '10px',
+    padding: '20px',
+    margin: '10px 10px',
+  }
 };
+
 
 interface Request {
   idRequest: number;
@@ -93,7 +102,8 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
 
   return (
     <div className='hover:bg-[#26475a] transition duration-300 rounded-md'>
-      <Button onClick={handleOpen} style={{ color: '#56cbec', fontWeight: 'bold' }} className='normal-case items-center border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg text-base font-semibold text-primary'>mais informações &gt;&gt;</Button>
+      <Button onClick={handleOpen} style={{ color: '#56cbec'}}>
+        <p  className='items-center bg-transparent transition duration-300 hover:text-[#B4FFFF] flex rounded-lg text-xs md:text-sm xl:text-base font-semibold text-primary'>Ver Mais &gt;&gt;</p></Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -121,7 +131,7 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                   <button
                     onClick={handleUpdateRequest}
                     disabled={request?.status === 'aceito'}
-                    className={`group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg transition duration-300 w-full ${
+                    className={`group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-2 md:px-8 rounded-lg transition duration-300 w-full ${
                       request?.status === 'aceito' ? 'opacity-50 cursor-not-allowed' : 'hover:text-green hover:border-green'
                     }`}
                   >
@@ -134,12 +144,6 @@ export default function TransitionsModalRequests({ infoIdData }: { infoIdData: n
                     />
                   </button>
                   
-                    <button
-                      onClick={() => request?.idRequest && handleDeleteRequest(request.idRequest)} 
-                      className="cursor-pointer relative flex items-center justify-center size-11 rounded-xl bg-white/10 hover:text-red border-[2px] border-transparent hover:border-red transition duration-300"
-                    >
-                      <FaTrash size={20} />
-                    </button>
                   </div>
                 </div>
             <div className='mt-8'>

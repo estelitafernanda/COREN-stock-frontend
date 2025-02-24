@@ -30,14 +30,11 @@ export default function RootLayout({
     <KeycloakProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar flex flex-col min-h-screen`}
         >
           <Header />
-          {children}
-          <div className=" bottom-0 mt-36">
-            <Footer/>
-          </div>
-          
+          <main className="flex-grow">{children}</main>
+          <Footer />
         </body>
       </html>
     </KeycloakProvider>
