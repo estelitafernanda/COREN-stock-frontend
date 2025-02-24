@@ -13,7 +13,6 @@ function RequestCard({product, userName, desc, date, qnt, department, idRequest,
         return `${day}/${month}/${year}`;
     };
 
-    // Limite de caracteres para a descrição
     const maxDescLength = 20;
     const truncatedDesc = desc.length > maxDescLength ? desc.substring(0, maxDescLength) + "..." : desc;
 

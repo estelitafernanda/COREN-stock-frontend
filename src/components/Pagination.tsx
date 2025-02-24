@@ -12,7 +12,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     const isNextDisabled = currentPage === totalPages;
   
     return (
-      <div className="flex gap-5 items-center mt-2">
+      <div className="flex gap-5 justify-center md:justify-normal items-center mt-2">
         <button
           className={`px-5 py-2 rounded-lg text-blackPrimary bg-primary border-transparent ${isPrevDisabled ? "border gap-1 items-center hover:border-primary bg-lightW transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary" : "border gap-1 items-center hover:border-primary bg-lightW transition duration-300 hover:bg-transparent hover:text-primary flex py-2 px-5 rounded-lg text-md font-semibold text-blackPrimary"}`}
           onClick={() => onPageChange(currentPage - 1)} // TypeScript já sabe que currentPage é um número

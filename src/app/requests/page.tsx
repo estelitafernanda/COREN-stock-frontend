@@ -158,12 +158,12 @@ export default function Order() {
     <div className="mx-auto w-[95vw] mt-7 flex flex-col gap-5 justify-center min-h-full font-[family-name:var(--font-geist-sans)]">
       <div className="flex xl:justify-between w-full">
         <div className='flex items-center gap-2 xl:gap-5 min-w-max'>
-          <h1 className="text-3xl font-bold text-lightW">Pedidos:</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-lightW">Pedidos:</h1>
           <p className='hidden md:flex text-sm font-bold text-lightW/30 bg-lightW/10 px-3 py-1 rounded-full border border-lightW/30'>
             Total de pedidos: <span className='text-lightW'>{total}</span>
           </p>
         </div>
-        <div className=' flex items-center w-full ml-10 md:ml-24 bg-blackSecondary border border-lightW/30 p-5 rounded-lg xl:w-[30%] h-3 gap-2'>
+        <div className=' flex items-center w-full ml-3 md:ml-24 bg-blackSecondary border border-lightW/30 p-5 rounded-lg xl:w-[30%] h-3 gap-2'>
           <FaSearch size={20} className='text-lightW/30'/>
             <input
               type="text"
@@ -185,7 +185,7 @@ export default function Order() {
         </div>
       </div>
 
-      <section className=' w-full flex flex-col xl:flex-row gap-5 mt-5'>
+      <section className='w-full flex flex-col xl:flex-row gap-5 mt-5'>
         <div className='flex flex-col gap-8 bg-blackSecondary w-full xl:w-[30%] max-h-fit p-5 rounded-lg'>
           <div className='flex flex-col'>
             <h2 className='text-lg uppercase tracking-widest font-bold text-lightW/50'>Filtros:</h2>
@@ -373,7 +373,7 @@ export default function Order() {
           </div>
         </div>
 
-        <div className='flex flex-col h-[80vh] w-full'>
+        <div className='flex flex-col w-full'>
           <div className='flex flex-col w-full bg-blackSecondary relative h-full rounded-lg'>
             <div className='flex flex-col gap-4 px-4 pt-4'>
               {loading ? (

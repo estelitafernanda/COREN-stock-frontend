@@ -62,9 +62,9 @@ export default function NotificationModal() {
 
   return (
     <div className='rounded-md'>
-          <div className="cursor-pointer relative flex items-center justify-center size-10 rounded-xl bg-white/10 backdrop-blur hover:bg-[#26475a] transition duration-300 " onClick={handleOpen}>
-            <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-red"></div>
-            <IoIosNotifications size={25} />
+          <div className="group cursor-pointer relative border-[2px] border-transparent flex items-center justify-center size-11 rounded-xl bg-white/10 backdrop-blur hover:border-red transition duration-300 " onClick={handleOpen}>
+            <div className="absolute rounded-full size-2 top-0 -left-[3px] bg-primary group-hover:bg-red transition duration-300"></div>
+            <IoIosNotifications size={25} className='group-hover:text-red transition duration-300'/>
           </div>
       <Modal
         aria-labelledby="transition-modal-title"

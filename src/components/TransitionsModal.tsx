@@ -15,15 +15,23 @@ import { useApiWithAuth } from '@/app/api/axios';
 const style = {
   position: 'absolute',
   top: '50%',
-  left: '80%',
+  right: '-20%',
   transform: 'translate(-50%, -50%)',
-  width: '40%',
-  height: '100vh',
+  width: "40%",
+  height: "100vh",
   bgcolor: '#1a262d',
   border: '2px solid #202e36',
   borderRadius: '15px',
   boxShadow: 24,
   p: 4,
+  '@media (max-width: 1280px)': {
+    width: '90%',
+    right: '3%',
+    transform: 'translate(0, -50%)',
+    borderRadius: '10px',
+    padding: '20px',
+    margin: '10px 10px',
+  }
 };
 
 interface Product {
@@ -85,7 +93,9 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
 
   return (
     <div>
-      <Button onClick={handleOpen} className='normal-case text-primary font-black items-center bol border bg-transparent transition duration-300 hover:text-[#B4FFFF] flex py-2 px-5 rounded-lg'  style={{ color: '#56cbec' , fontWeight: 'bold' }}>mais informações &gt;&gt;</Button>
+      <Button onClick={handleOpen} style={{ color: '#56cbec' , fontWeight: 'bold' }}>
+        <p className='items-center bg-transparent transition duration-300 hover:text-[#B4FFFF] flex rounded-lg text-xs md:text-sm xl:text-base font-bold text-primary'>Ver Mais &gt;&gt;</p>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -110,7 +120,7 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                   </div>
                   { <div className='flex gap-5'>
                     <a href={`edit/product/${idProduct}`}>
-                      <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
+                      <button className="group font-bold flex gap-2 py-2 border-[2px] border-transparent text-lightW bg-white/10 px-2 md:px-8 rounded-lg hover:text-green hover:border-green transition duration-300 w-full">
                         Editar
                         <FaEdit className='group-hover:text-green transition duration-300' size={20} />
                       </button>
@@ -125,33 +135,32 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
               </div>
             <div className='flex py-12 font-[family-name:var(--font-geist-sans)]'>
 
-              <div className='w-[100%] ml-5 mt-1'>
+              <div className='w-[300px] md:w-full p-4 md:ml-5 mt-1'>
                 {alert && (
                     <Alert severity={alert.severity} className='absolute top-7 w-full right-[70%]'>{alert.message}</Alert>
                 )}
-                    <div className='flex gap-5 border-b-[2px] w-full pb-5 border-lightW/20'>
-                      <div className='bg-lightW w-[50%] max-h-[50%] rounded-lg border-[3px] border-primary/50'>
-                        <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
-                      </div>  
-                      <div className='flex flex-col gap-4'>
-                        <div className='flex flex-col gap-1'>
-                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
-                          <p className='text-xl font-bold text-lightW py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
+                        <div className='flex flex-col md:flex-row gap-5 border-b-[2px] w-full pb-5 border-lightW/20'>
+                          <div className='bg-lightW w-[40%] h-[40%] md:w-[50%] md:max-h-[50%] rounded-lg border-[3px] border-primary/50'>
+                            <Image src={`http://127.0.0.1:8000/images/products/${product?.image}`} alt="Avatar" width={500} height={500}/>
+                          </div>  
+                          <div className='flex flex-col gap-4'>
+                            <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Nome do Produto:</h2>
+                              <p className='text-xl font-bold text-lightW py-[2px] items-center rounded-md w-fit'>{product?.nameProduct}</p>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Código:</h2>
+                              <p className='text-xl font-bold text-lightW  py-[2px] items-center rounded-md w-fit '>{product?.code}</p>
+                            </div>
+                            <div className='flex flex-col gap-1'>
+                              <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
+                              <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
+                            </div>
+                          </div>
                         </div>
-                        <div className='flex flex-col gap-1'>
-                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Código:</h2>
-                          <p className='text-xl font-bold text-lightW  py-[2px] items-center rounded-md w-fit '>{product?.code}</p>
-                        </div>
-                        <div className='flex flex-col gap-1'>
-                          <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Categoria:</h2>
-                          <p className='text-xl font-bold text-lightW bg-[#2f3d46] px-3 py-[2px] items-center rounded-md w-fit '>{product?.category}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='py-3'>
-                        <div className='flex flex-col gap-4'>
+                        <div className='flex flex-col gap-4 mt-4'>
                           <h2 className='font-bold text-2xl text-lightW'>Informações Gerais:</h2>
-                          <div className='flex flex-col gap-3'>
+                          <div className='flex flex-col gap-3 bg-blackThirdy rounded-md p-3'>
                             <div className='flex gap-2 items-center'>
                                 <h2 className='text-md font-bold tracking-wide uppercase text-lightW/50'>Valor Unitário: </h2>
                                 <p className='text-xl w-fit font-bold text-green rounded-md bg-blackThirdy px-3'>R${product?.unitPrice}</p>
@@ -176,7 +185,6 @@ export default function TransitionsModal({idProduct}: {idProduct: number}) {
                           </div>
                           
                         </div>
-                    </div>
                     
               </div>  
 

@@ -26,7 +26,7 @@ function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-      <div className="mx-auto mt-7 z-50 flex flex-wrap items-center justify-between px-4 md:px-8 lg:px-12">
+      <div className="mx-auto mt-7 z-50 flex flex-wrap w-full items-center justify-between px-4 md:px-8 lg:px-12">
         <Link href="/">
           <h1 className="font-black text-2xl tracking-wider text-primary">CorenStock</h1>
         </Link>
